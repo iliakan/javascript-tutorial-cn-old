@@ -1,7 +1,7 @@
 
 # The JavaScript Tutorial
 
-This repository hosts the content of the JavaScript Tutorial, to be published at a subdomain of [https://javascript.info](https://javascript.info) when the 1st part is ready.
+This repository hosts the content of the JavaScript Tutorial, to be published at the Chinese subdomain of [https://javascript.info](https://javascript.info) when the 1st part is ready.
 
 Please use this repository to file issues and suggest PRs for the text.
 
