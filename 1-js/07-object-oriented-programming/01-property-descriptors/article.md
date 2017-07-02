@@ -1,10 +1,9 @@
 
-# Property flags and descriptors
+# 属性标志与描述符
 
-As we know, objects can store properties.
+我们知道， 对象可以存储属性。
 
-Till now, a property was a simple "key-value" pair to us. But an object property is actually more complex and tunable thing.
-
+目前为止， 一个属性对我们来说仅仅是一个键值对。但是事实上对象属性是一个复杂和可调控的事物。
 [cut]
 
 ## Property flags
