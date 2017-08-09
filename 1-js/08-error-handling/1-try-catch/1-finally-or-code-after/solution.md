@@ -1,8 +1,8 @@
-The difference becomes obvious when we look at the code inside a function.
+当我们把代码放到函数中时, 差异变得很明显.
 
-The behavior is different if there's a "jump out" of `try..catch`.
+如果 `try..catch` 中有一个"跳出", 两者的行为是不一致的.
 
-For instance, when there's a `return` inside `try..catch`. The `finally` clause works in case of *any* exit from `try..catch`, even via the `return` statement: right after `try..catch` is done, but before the calling code gets the control.
+例如, 当 `try..catch` 中有一个 `return` 语句的时候. `finally` 子句在 `try..catch` 中的*任何*退出都有效, 甚至是 `return` 语句: 在 `try..catch` 完成之后, 在控制返回到调用的代码之前.
 
 ```js run
 function f() {
@@ -21,7 +21,7 @@ function f() {
 f(); // cleanup!
 ```
 
-...Or when there's a `throw`, like here:
+...或者有一个 `throw` 语句, 像这里:
 
 ```js run
 function f() {
@@ -44,4 +44,4 @@ function f() {
 f(); // cleanup!
 ```
 
-It's `finally` that guarantees the cleanup here. If we just put the code at the end of `f`, it wouldn't run.
+这里, `finally` 保证了清理工作的完成. 如果我们只是把清理代码放到 `f` 之后, 它不会被执行.
