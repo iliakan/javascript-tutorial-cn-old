@@ -5,7 +5,6 @@
 通常, 出现错误的时候脚本会"挂掉"(立即终止), 将错误输出至控制台.
 
 但有一个语法结构 `try..catch` 允许"捕获"错误并做一些更合理的处理而不是挂掉.
-But there's a syntax construct `try..catch` that allows to "catch" errors and, instead of dying, do something more reasonable.
 
 [cut]
 
