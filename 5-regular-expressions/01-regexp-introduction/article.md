@@ -1,115 +1,116 @@
-# Patterns and flags
+# 模式和标志
 
-Regular expressions is a powerful way of searching and replacing inside a string.
+正则表达式是一种在字符串内进行搜索和替换的强大方法。
 
-In JavaScript regular expressions are implemented using objects of a built-in `RegExp` class and integrated with strings.
+在 JavaScript 里，正则表达式是以内建类型 `RegExp` 实现，并集成在 string 里。
 
-Please note that regular expressions vary between programming languages. In this tutorial we concentrate on JavaScript. Of course there's a lot in common, but they are a somewhat different in Perl, Ruby, PHP etc.
+值得注意的是，正则表达式因编程语言而异。在本教程中，我们只专注于 JavaScript。诚然，它在 Perl、Ruby、PHP 等语言中有很多相似之处，但也略有所不同。
 
 [cut]
 
-## Regular expressions
+## 正则表达式
 
-A regular expression (also "regexp", or just "reg") consists of a *pattern* and optional *flags*.
+一个正则表达式 (也称 "regexp"， 或简称 "reg") 由一个 *pattern* 和一个可选项 *flags* 组成。
 
-There are two syntaxes to create a regular expression object.
+有两种语法来创建正则表达式对象。
 
-The long syntax:
+长语法：
+
 
 ```js
 regexp = new RegExp("pattern", "flags");
 ```
 
-...And the short one, using slashes `"/"`:
+...和短语法, 使用斜杠 `"/"`:
 
 ```js
-regexp = /pattern/; // no flags
-regexp = /pattern/gmi; // with flags g,m and i (to be covered soon)
+regexp = /pattern/; // 没有标志
+regexp = /pattern/gmi; // 有标志 g、m 和 i (后文会介绍)
 ```
 
-Slashes `"/"` tell JavaScript that we are creating a regular expression. They play the same role as quotes for strings.
+斜杠 `"/"` 告诉 JavaScript 我们在创建一个正则表达式。它们与字符串的引号起着相同的作用。
 
-## Usage
+## 用法
 
-To search inside a string, we can use method [search](mdn:js/String/search).
+要搜索一个字符串, 我们可以使用 [search](mdn:js/String/search) 方法。
 
-Here's an example:
+举个例子：
 
 ```js run
-let str = "I love JavaScript!"; // will search here
+let str = "I love JavaScript!"; // 从此搜索
 
 let regexp = /love/;
 alert( str.search(regexp) ); // 2
 ```
 
-The `str.search` method looks for the pattern `pattern:/love/` and returns the position inside the string. As we might guess, `pattern:/love/` is the simplest possible pattern. What it does is a simple substring search.
+`str.search` 方法寻找模式 `pattern:/love/` 并返回其在字符串中的位置。 正如我们所猜想的那样, `pattern:/love/` 是最简单的一种模式. 它所做的是一个简单的子串搜索。
 
-The code above is the same as:
+上述代码和下面效果一致：
 
 ```js run
-let str = "I love JavaScript!"; // will search here
+let str = "I love JavaScript!"; // 从此搜索
 
 let substr = 'love';
 alert( str.search(substr) ); // 2
 ```
 
-So searching for `pattern:/love/` is the same as searching for `"love"`.
+所以搜索 `pattern:/love/` 与搜索 `"love"` 相同。
 
-But that's only for now. Soon we'll create more complex regular expressions with much searching more power.
+但仅限于此。很快，我们将创建更复杂的、拥有更强搜索能力正则表达式。
 
 ```smart header="Colors"
-From here on the color scheme is:
+后文的配色方案:
 
-- regexp -- `pattern:red`
-- string (where we search) -- `subject:blue`
-- result -- `match:green`
+- 正则式 -- `pattern:red`
+- 字符串 (从哪里搜索) -- `subject:blue`
+- 结果 -- `match:green`
 ```
 
 
-````smart header="When to use `new RegExp`?"
-Normally we use the short syntax `/.../`. But it does not allow any variables insertions, so we must know the exact regexp at the time of writing the code.
+````smart header="何时使用 `new RegExp`？"
+通常我们使用短语法 `/.../`。但它不允许任何变量插入，所以我们在编写代码时必须实时知道其准确的正则式。
 
-From the other hand, `new RegExp` allows to construct a pattern dynamically from a string.
+然而，`new RegExp` 允许我们使用字符串动态创建模式。
 
-So we can figure out what we need to search and create `new RegExp` from it:
+所以我们可以动态确定我们需要搜索什么，然后从中创建 `new RegExp`
 
 ```js run
 let search = prompt("What you want to search?", "love");
 let regexp = new RegExp(search);
 
-// find whatever the user wants
+// 查找任何用户想要的东西
 alert( "I love JavaScript".search(regexp));
 ```
 ````
 
 
-## Flags
+## 标志
 
-Regular expressions may have flags that affect the search.
+正则表达式可以包含一些影响其搜索的标志。
 
-There are only 5 of them in JavaScript:
+在 JavaScript 这类标志一共有5种。
 
 `i`
-: With this flag the search is case-insensitive: no difference between `A` and `a` (see the example below).
+：大小写不敏感 : `A` 与 `a` 之间没有不同（例子见下文）。
 
 `g`
-: With this flag the search looks for all matches, without it -- only the first one (we'll see uses in the next chapter).
+ 使用此标志会搜索所有的匹配, 反之只搜索第一个匹配 (详见下章)。
 
 `m`
-: Multiline mode (covered in the chapter <info:regexp-multiline>).
+: 多行模式（在章节 <info:regexp-multiline> 里讲述）。
 
 `u`
-: Enables full unicode support. The flag enables correct processing of surrogate pairs. More about that in the chapter <info:regexp-unicode>.
+: 开启全 unicode 支持。 此标志可正确处理代理对。详见 <info:regexp-unicode> 章节。
 
 `y`
-: Sticky mode (covered in the [next chapter](info:regexp-methods#y-flag))
+: 粘连模式（详见[下章]（info:regexp-methods#y-flag））
 
 
-## The "i" flag
+## "i" 标志
 
-The simplest flag is `i`.
+`i` 是最简单的标志
 
-An example with it:
+一个例子:
 
 ```js run
 let str = "I love JavaScript!";
@@ -118,14 +119,14 @@ alert( str.search(/LOVE/) ); // -1 (not found)
 alert( str.search(/LOVE/i) ); // 2
 ```
 
-1. The first search returns `-1` (not found), because the search is case-sensitive by default.
-2. With the flag `pattern:/LOVE/i` the search found `match:love` at position 2.
+1. 第一个搜索返回 `-1`（未找到）， 因为搜索默认是大小写敏感的。
+2. 使用标志的 `pattern:/LOVE/i` 搜索会在位置 2 处找到 `match:love` 。
 
-So the `i` flag already makes regular expressions more powerful than a simple substring search. But there's so much more. We'll cover other flags and features in the next chapters.
+所以标志 `i` 已经让正则表达式比简单的子串搜索更加强大。但正则表达式的威力远不止如此，我们会在接下来的章节讲解其它的标志和功能。
 
 
-## Summary
+## 概要
 
-- A regular expression consists of a pattern and optional flags: `g`, `i`, `m`, `u`, `y`.
-- Without flags and special symbols that we'll study later, the search by a regexp is the same as a  substring search.
-- The method `str.search(regexp)` returns the index where the match is found or `-1` if there's no match.
+- 一个正则表达式由一个模式和一些可选标志（`g`, `i`, `m`, `u`, `y`）组成。
+- 没有标志和一些我们即将学到的特殊符号，正则式搜索就和子串搜索一样。
+- 方法 `str.search(regexp)` 会返回匹配位置，或者如果没有匹配，则返回 -1 。
