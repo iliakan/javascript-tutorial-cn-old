@@ -1,60 +1,60 @@
-# Introduction to browser events
+# 浏览器事件入门
 
-*An event* is a signal that something has happened. All DOM nodes generate such signals (but events are not limited to DOM).
+*事件*是当某个交互产生时的信号。所有的 DOM 节点都会产生这样的信号（但事件的产生并不限于 DOM 节点）。
 
 [cut]
 
-Here's a list of the most useful DOM events, just to take a look at:
+以下是最常用的 DOM 事件的列表，让我们先来看看：
 
-**Mouse events:**
-- `click` -- when the mouse clicks on an element (touchscreen devices generate it on a tap).
-- `contextmenu` -- when the mouse right-clicks on an element.
-- `mouseover` -- when the mouse cursor comes over an element.
-- `mousedown` and `mouseup` -- when the mouse button is pressed and released over an element.
-- `mousemove` -- when the mouse is moved.
+**鼠标事件：**
+- `click` - 当鼠标点击某个元素时（在触屏设备上，tap 事件会触发 click 事件）。
+- `contextmenu` - 当鼠标右键单击某个元素时。
+- `mouseover` - 当鼠标光标到悬停在某个元素上时。
+- `mousedown` 和 `mouseup` - 当鼠标按键在某个元素上按下和松开时。
+- `mousemove` - 鼠标移动时。
 
-**Form element events:**
-- `submit` -- when the visitor submits a `<form>`.
-- `focus` --  when the visitor focuses on an element, e.g. on an `<input>`.
+**表单事件：**
+- `submit` - 当网页用户提交表单`<form>`时。
+- `focus` - 当用户选中某个元素，使其获得焦点时，例如选中输入框`<input>`。
 
-**Keyboard events:**
-- `keydown` and `keyup` -- when the visitor presses and then releases the button.
+**键盘事件：**
+- `keydown` 和 `keyup` - 当用户按下然后松开键盘按键时。
 
-**Document events**
-- `DOMContentLoaded` -- when the HTML is loaded and processed, DOM is fully built.
+**文档事件**
+- `DOMContentLoaded` - 当 HTML 页面被加载和处理时，DOM 树被完全创建时。
 
-**CSS events:**
-- `transitionend` -- when a CSS-animation finishes.
+** CSS事件：**
+- `transitionend` - 当CSS动画结束时。
 
-There are many other events.
+此外，还有很多其他种类的事件。
 
-## Event handlers
+## 事件处理器(Event handler)
 
-To react on events we can assign a *handler* -- a function that runs in case of an event.
+为了对事件做出反应，我们可以给事件绑定一个* 处理器 * - 这是一个函数，会在事件触发的时候被执行。
 
-Handlers is a way to run JavaScript code in case of user actions.
+当用户和页面进行交互时，事件处理器会根据交互行为执行JavaScript代码。
 
-There are several ways to assign a handler. Let's see them, starting from the simplest one.
+绑定事件处理器有多种方法。让我们先从一个简单的例子开始。
 
-### HTML-attribute
+### HTML属性(HTML-attribute)
 
-A handler can be set in HTML with an attribute named `on<event>`.
+事件处理函数可以设置在HTML元素的属性中，属性名称为`on <event>`。
 
-For instance, to assign a `click` handler for an `input`, we can use `onclick`, like here:
+例如，要为`input`元素分配一个`click`的事件处理器，我们可以使用`onclick`，如下所示：
 
 ```html run
 <input value="Click me" *!*onclick="alert('Click!')"*/!* type="button">
 ```
 
-On mouse click, the code inside `onclick` runs.
+在鼠标点击按钮后，会执行`onclick`中的代码。
 
-Please note that inside `onclick` we use single quotes, because the attribute itself is in double quotes. If we fforget that the code is inside the attribute and use double quotes inside, like this:  `onclick="alert("Click!")"`, then it won't work right.
+注意，在`onclick`的函数参数中，我们用的是单引号，因为属性绑定时用的是双引号。如果我们忘记了代码是在属性内部，然后使用了双引号，就像这样：`onclick="alert("Click!")"`，程序就会报错。
 
-An HTML-attribute is not a convenient place to write a lot of code, so we'd better create a JavaScript function and call it there.
+不推荐在HTML属性中编写大量代码，我们最好创建一个JavaScript函数，然后调用这个函数。
 
-Here a click runs the function `countRabbits()`:
+例如，点击时执行函数`countRabbits()`:
 
-```html autorun height=50
+```html autorun height = 50
 <script>
   function countRabbits() {
     for(let i=1; i<=3; i++) {
@@ -66,13 +66,13 @@ Here a click runs the function `countRabbits()`:
 <input type="button" *!*onclick="countRabbits()"*/!* value="Count rabbits!">
 ```
 
-As we know, HTML attribute names are not case-sensitive, so `ONCLICK` works as well as `onClick` and `onCLICK`... But usually attributes are lowercased: `onclick`.
+正如我们所知道的，HTML属性名称不区分大小写，因此`ONCLICK`, `onClick`和`onCLICK`都是一样的。但通常属性名都使用小写：`onclick`。
 
-### DOM property
+### DOM属性
 
-We can assign a handler using a DOM property `on<event>`.
+我们可以使用DOM属性`on <event>`来绑定一个事件处理器。
 
-For instance, `elem.onclick`:
+例如`elem.onclick`：
 
 ```html autorun
 <input id="elem" type="button" value="Click me">
@@ -85,20 +85,20 @@ For instance, `elem.onclick`:
 </script>
 ```
 
-If the handler is assigned using an HTML-attribute then the browser reads it, creates a new function from the attribute content and writes it to the DOM property.
+在使用HTML属性绑定事件处理器时，浏览器会读取HTML属性，然后根据属性内容创建一个新函数，并将这个属性绑定至DOM属性。
 
-So this way is actually the same as the previous one.
+所以这个绑定方法其实和前一个方法是一样的。
 
-**The handler is always in the DOM property: the HTML-attribute is just one of the ways to initialize it.**
+**事件处理器始终被绑定在DOM属性中：HTML属性只是初始化它的一种方法。**
 
-These two code pieces work the same:
+以下的两个代码片段的工作原理是相同的：
 
-1. Only HTML:
+1. 只用HTML：
 
     ```html autorun height=50
     <input type="button" *!*onclick="alert('Click!')"*/!* value="Button">
     ```
-2. HTML + JS:
+2.HTML + JS：
 
     ```html autorun height=50
     <input type="button" id="button" value="Button">
@@ -111,9 +111,9 @@ These two code pieces work the same:
     </script>
     ```
 
-**As there's only one `onclick` property, we can't assign more than one event handler.**
+**由于一个DOM元素中只有一个`onclick`属性，对于一个DOM元素，不能绑定多个事件处理程序。**
 
-In the example below adding a handler with JavaScript overwrites the existing handler:
+例如下面的代码，用JavaScript绑定事件处理器时，会重写已经绑定了的处理器：
 
 ```html run height=50 autorun
 <input type="button" id="elem" onclick="alert('Before')" value="Click me">
@@ -126,7 +126,7 @@ In the example below adding a handler with JavaScript overwrites the existing ha
 </script>
 ```
 
-By the way, we can assign an existing function as a handler directly:
+顺便说一下，我们可以直接将一个现有的函数绑定到一个事件处理器：
 
 ```js
 function sayThanks() {
@@ -136,43 +136,43 @@ function sayThanks() {
 elem.onclick = sayThanks;
 ```
 
-To remove a handler -- assign `elem.onclick = null`.
+要删除一个事件处理器 - 将处理器赋值为空`elem.onclick = null`。
 
-## Accessing the element: this
+## 通过this访问元素
 
-The value of `this` inside a handler is the element. The one which has the handler on it.
+当事件处理器绑定在某个元素上，在处理函数中`this`的值就表示被绑定的元素。
 
-In the code below `button` shows its contents using `this.innerHTML`:
+在下面的代码中，点击`button`按钮时，通过调用`this.innerHTML`，显示按钮内的文本内容：
 
 ```html height=50 autorun
 <button onclick="alert(this.innerHTML)">Click me</button>
 ```
 
-## Possible mistakes
+##容易犯的一些错误
 
-If you're starting to work with event -- please note some subtleties.
+如果你开始使用事件处理器 - 请注意一些细节。
 
-**The function should be assigned as `sayThanks`, not `sayThanks()`.**
+**下面所示的例子中，应该使用`sayThanks`对函数赋值，而不是`sayThanks()`。**
 
 ```js
-// right
+// 正确
 button.onclick = sayThanks;
 
-// wrong
+// 错误
 button.onclick = sayThanks();
 ```
 
-If we add brackets, then `sayThanks()` --  will be the *result* of the function execution, so `onclick` in the last code becomes `undefined` (the function returns nothing). That won't work.
+如果我们添加了括号，那么`sayThanks()`将是函数执行后的*返回值*，于是错误代码中的`onclick`会被赋值为`undefined`（因为该函数不返回任何东西）。按钮点击之后也不会有任何反应。
 
-...But in the markup we do need the brackets:
+...但是在HTML元素标记中，我们需要使用括号：
 
 ```html
 <input type="button" id="button" onclick="sayThanks()">
 ```
 
-The difference is easy to explain. When the browser reads the attribute, it creates a handler function with the body from its content.
+两种方式的区别可以这样理解。当浏览器读取元素中的属性时，它会用属性值创建一个新的处理函数。
 
-So the last example is the same as:
+所以上一个例子就可以等同于：
 ```js
 button.onclick = function() {
 *!*
@@ -181,67 +181,67 @@ button.onclick = function() {
 };
 ```
 
-**Use functions, not strings.**
+**使用函数，而不是用字符串。**
 
-The assignment `elem.onclick = "alert(1)"` would work too. It works for compatibility reasons, but strongly not recommended.
+这样的赋值`elem.onclick = "alert(1)"`也可以被执行。但由于浏览器兼容性的原因，但不推荐这样使用。
 
-**Don't use `setAttribute` for handlers.**
+**不要对事件处理器使用`setAttribute`。**
 
-Such a call won't work:
+例如下面的例子就不能绑定点击事件：
 
 ```js run no-beautify
-// a click on <body> will generate errors,
-// because attributes are always strings, function becomes a string
+//点击<body>会产生错误，
+//因为属性总应该是字符串，所以强行将函数赋值为字符串，就会报错
 document.body.setAttribute('onclick', function() { alert(1) });
 ```
 
-**DOM-property case matters.**
+** DOM属性事件。**
 
-Assign a handler to `elem.onclick`, not `elem.ONCLICK`, because DOM properties are case-sensitive.
+为`elem.onclick`绑定一个事件处理器，注意不是`elem.ONCLICK`，因为DOM属性是区分大小写的。
 
 ## addEventListener
 
-The fundamental problem of the aforementioned ways to assign handlers -- we can't assign multiple handlers to one event.
+用这种方式绑定事件处理器时，有一个根本问题 - 我们不能对一个事件绑定多个处理器。
 
-For instance, one part of our code wants to highlight a button on click, and another one wants to show a message.
+例如，点击某个按钮时，我们想要高亮显示这个按钮，同时又想要显示一条消息。
 
-We'd like to assign two event handlers for that. But a new DOM property will overwrite the existing one:
+我们对这个按钮绑定两个事件处理器。但是一个对DOM属性赋值时，新的赋值将覆盖现有的DOM属性：
 
 ```js no-beautify
 input.onclick = function() { alert(1); }
 // ...
-input.onclick = function() { alert(2); } // replaces the previous handler
+input.onclick = function() { alert(2); } // 重写上个处理函数
 ```
 
-Web-standard developers understood that long ago and suggested an alternative way of managing handlers using special methods `addEventListener` and `removeEventListener`. They are free of such a problem.
+网络标准的开发人员们很久以前就意识到这一点，并提出了使用另一种替代方法`addEventListener`和`removeEventListener`来管理事件处理器，来避免上述的问题。
 
-The syntax to add a handler:
+添加事件处理的语法：
 
 ```js
 element.addEventListener(event, handler[, phase]);
 ```
 
 `event`
-: Event name, e.g. `"click"`.
+: 事件名称, 例如`"click"`
 
 `handler`
-: The handler function.
+: 事件处理函数
 
 `phase`
-: An optional argument, the "phase" for the handler to work. To be covered later. Usually we don't use it.
+：可选参数，表示在某个“阶段”触发事件处理器。这个会在后文提到。通常我们不用这个参数。
 
-To remove the handler, use `removeEventListener`:
+用`removeEventListener`来删除某个事件处理器：
 
 
 ```js
-// exactly the same arguments as addEventListener
+// 参数与addEventListener完全相同
 element.removeEventListener(event, handler[, phase]);
 ```
 
 ````warn header="Removal requires the same function"
-To remove a handler we should pass exactly the same function as was assigned.
+要删除某个事件处理时，我们应该传递在和添加时传递的完全一样的函数。
 
-That doesn't work:
+下面的例子就不起效：
 
 ```js no-beautify
 elem.addEventListener( "click" , () => alert('Thanks!'));
@@ -249,9 +249,9 @@ elem.addEventListener( "click" , () => alert('Thanks!'));
 elem.removeEventListener( "click", () => alert('Thanks!'));
 ```
 
-The handler won't be removed, because `removeEventListener` gets another function -- with the same code, but that doesn't matter.
+事件处理器并不会被删除，因为`removeEventListener`得到的是另一个函数 - 只不过函数使用了相同的代码。
 
-Here's the right way:
+以下是正确的方法：
 
 ```js
 function handler() {
@@ -263,10 +263,10 @@ input.addEventListener("click", handler);
 input.removeEventListener("click", handler);
 ```
 
-Please note -- if we don't store the function in a variable, then we can't remove it. There's no way to "read back" handlers assigned by `addEventListener`.
+请注意 - 如果我们不把函数存储在某个变量中，那么之后我们无法将其删除。因为没有办法“找回” 传递给“addEventListener”的处理函数。
 ````
 
-Multiple calls to `addEventListener` allow to add multiple handlers, like this:
+对`addEventListener`多次调用，便可以添加多个事件处理，如下所示：
 
 ```html run no-beautify
 <input id="elem" type="button" value="Click me"/>
@@ -288,16 +288,16 @@ Multiple calls to `addEventListener` allow to add multiple handlers, like this:
 </script>
 ```
 
-As we can see in the example above, we can set handlers *both* using a DOM-property and `addEventListener`. But generally we use only one of these ways.
+通过上面的例子，我们可以看到，DOM属性和`addEventListener`都可以来设置事件处理器*。但一般来说，我们只使用其中一种。
 
 ````warn header="For some events handlers only work with `addEventListener`"
-There exist events that can't be assigned via a DOM-property. Must use `addEventListener`.
+还有一些无法通过DOM属性来绑定的事件。这些事件必须通过`addEventListener`来绑定。
 
-For instance, the event `transitionend` (CSS animation finished) is like that.
+例如，事件`transitionend`（CSS动画完成时调用）就是这样的。
 
-Try the code below. In most browsers only the second handler works, not the first one.
+试着执行下面的代码。在大多数浏览器中，只有第二段代码会正常执行，而第一端不能。
 
-```html run
+```html运行
 <style>
   input {
     transition: width 1s;
@@ -326,13 +326,13 @@ Try the code below. In most browsers only the second handler works, not the firs
 ````
 
 
-## Event object
+## 事件对象
 
-To properly handle an event we'd want to know more about what's happened. Not just a "click" or a "keypress", but what were the pointer coordinates? Which key was pressed? And so on.
+要正确的处理事件，我们需要更多地了解事件中产生的细节。不仅仅只是“点击”或“按键”，而是鼠标指针点击的坐标在哪里？键盘按下了哪个按键？等等
 
-When an event happens, the browser creates an *event object*, puts details into it and passes it as an argument to the handler.
+当事件发生时，浏览器创建一个*事件对象*，将细节放在其中，并将其作为参数传递给事件处理器。
 
-Here's an example of getting mouse coordinates from the event object:
+以下是从事件对象中获取鼠标坐标的示例：
 
 ```html run
 <input type="button" value="Click me" id="elem">
@@ -346,43 +346,43 @@ Here's an example of getting mouse coordinates from the event object:
 </script>
 ```
 
-Some properties of `event` object:
+`event`对象的一些属性：
 
 `event.type`
-: Event type, here it's `"click"`.
+：事件类型，这里是`"click"`.。
 
 `event.currentTarget`
-: Element that handled the event. That's exactly the same as `this`, unless you bind `this` to something else, and then `event.currentTarget` becomes useful.
+：处理事件的元素。这里与`this`完全相同，除非你将这个处理函数`bind'绑定到别的对象，这时`event.currentTarget`可以和this区分开用。
 
 `event.clientX / event.clientY`
-: Window-relative coordinates of the cursor, for mouse events.
+：光标的窗口相对坐标，用于鼠标事件。
 
-There are more properties. They depend on the event type, so we'll study them later when come to different events in details.
+还有很多的属性。它们依赖于事件类型，所以我们稍后在详细介绍不同的事件时，再来学习。
 
 ````smart header="The event object is also accessible from HTML"
-If we assign a handler in HTML, we can also use the `event` object, like this:
+如果我们在HTML中绑定一个事件处理器，我们也可以使用`event`对象，像这样：
 
 ```html autorun height=60
 <input type="button" onclick="*!*alert(event.type)*/!*" value="Event type">
 ```
 
-That's possible because when the browser reads the attribute, it creates a handler like this:  `function(event) { alert(event.type) }`. That is: its first argument is called `"event"`, and the body is taken from the attribute.
+这是可行的，因为当浏览器读取属性时，它会创建一个这样的处理函数：`function(event) { alert(event.type) }`。这个处理函数的第一个参数是`"event"`，而函数体则是onclick的属性值。
 ````
 
-## Summary
+## 总结
 
-There are 3 ways to assign event handlers:
+有3种方式来绑定事件处理器：
 
-1. HTML attribute: `onclick="..."`.
-2. DOM property: `elem.onclick = function`.
-3. Methods `elem.addEventListener(event, handler[, phase])`, to remove: `removeEventListener`.
+1. HTML属性：`onclick="..."`
+2. DOM属性：`elem.onclick = function`
+3. 通过调用方法添加`elem.addEventListener(event, handler[, phase])`，或是删除：`removeEventListener`。
 
-HTML attributes are used sparingly, because JavaScript in the middle of an HTML tag looks a little bit odd and alien. Also can't write lots of code in there.
+谨慎使用HTML属性绑定，因为HTML标签中间掺杂JavaScript会看起来有点奇怪。也不建议在属性中写大量的代码。
 
-DOM properties are ok to use, but we can't assign more than one handler of the particular event. In many cases that limitation is not pressing.
+可以使用DOM属性，但是我们不能为特定事件绑定多个处理函数。大多情况下，这点限制并不是什么问题。
 
-The last way is the most flexible, but it is also the longest to write. There are few events that only work with it, for instance `transtionend` and `DOMContentLoaded` (to be covered).
+最后的方式是最灵活的，但代码写起来最长。有些事件绑定必须用这种方式，例如`transtionend`和`DOMContentLoaded`（还有其他的一些）。
 
-When a handler is called, it gets an event objects as the first argument. It contains details about what's happened. We'll see more of them later.
+当处理函数被调用时，它将获取一个事件对象，并将该事件对象作为第一个参数。该对象包含发生的事件的详细信息。之后我们会学习更多。
 
-As of now we're just starting to work with events. More details in the next chapters.
+现在，我们只是学习了事件处理的基础。在接下来的章节中，会讨论更多细节。
