@@ -24,23 +24,23 @@
 - `DOMContentLoaded` - 当 HTML 页面被加载和处理时，DOM 树被完全创建时。
 
 ** CSS事件：**
-- `transitionend` - 当CSS动画结束时。
+- `transitionend` - 当 CSS 动画结束时。
 
 此外，还有很多其他种类的事件。
 
 ## 事件处理器(Event handler)
 
-为了对事件做出反应，我们可以给事件绑定一个* 处理器 * - 这是一个函数，会在事件触发的时候被执行。
+为了对事件做出反应，我们可以给事件绑定一个*处理器* - 这是一个函数，会在事件触发的时候被执行。
 
-当用户和页面进行交互时，事件处理器会根据交互行为执行JavaScript代码。
+当用户和页面进行交互时，事件处理器会根据交互行为执行 JavaScript 代码。
 
 绑定事件处理器有多种方法。让我们先从一个简单的例子开始。
 
 ### HTML属性(HTML-attribute)
 
-事件处理函数可以设置在HTML元素的属性中，属性名称为`on <event>`。
+事件处理函数可以设置在 HTML 元素的属性中，属性名称为`on <event>`。
 
-例如，要为`input`元素分配一个`click`的事件处理器，我们可以使用`onclick`，如下所示：
+例如，给`input`元素绑定一个`click`的事件处理器，我们可以使用`onclick`，如下所示：
 
 ```html run
 <input value="Click me" *!*onclick="alert('Click!')"*/!* type="button">
@@ -50,7 +50,7 @@
 
 注意，在`onclick`的函数参数中，我们用的是单引号，因为属性绑定时用的是双引号。如果我们忘记了代码是在属性内部，然后使用了双引号，就像这样：`onclick="alert("Click!")"`，程序就会报错。
 
-不推荐在HTML属性中编写大量代码，我们最好创建一个JavaScript函数，然后调用这个函数。
+不推荐在 HTML 属性中编写大量代码，我们最好创建一个 JavaScript 函数，然后调用这个函数。
 
 例如，点击时执行函数`countRabbits()`:
 
@@ -66,11 +66,11 @@
 <input type="button" *!*onclick="countRabbits()"*/!* value="Count rabbits!">
 ```
 
-正如我们所知道的，HTML属性名称不区分大小写，因此`ONCLICK`, `onClick`和`onCLICK`都是一样的。但通常属性名都使用小写：`onclick`。
+正如我们所知道的，HTML 属性名称不区分大小写，因此`ONCLICK`, `onClick`和`onCLICK`都是一样的。但通常属性名都使用小写：`onclick`。
 
-### DOM属性
+### DOM 属性
 
-我们可以使用DOM属性`on <event>`来绑定一个事件处理器。
+我们可以使用 DOM 属性`on <event>`来绑定一个事件处理器。
 
 例如`elem.onclick`：
 
@@ -85,20 +85,20 @@
 </script>
 ```
 
-在使用HTML属性绑定事件处理器时，浏览器会读取HTML属性，然后根据属性内容创建一个新函数，并将这个属性绑定至DOM属性。
+在使用 HTML 属性绑定事件处理器时，浏览器会读取 HTML 属性，然后根据属性内容创建一个新函数，并将这个属性绑定至 DOM 属性。
 
 所以这个绑定方法其实和前一个方法是一样的。
 
-**事件处理器始终被绑定在DOM属性中：HTML属性只是初始化它的一种方法。**
+**事件处理器始终被绑定在 DOM 属性中：HTML 属性只是初始化它的一种方法。**
 
 以下的两个代码片段的工作原理是相同的：
 
-1. 只用HTML：
+1. 只用 HTML：
 
     ```html autorun height=50
     <input type="button" *!*onclick="alert('Click!')"*/!* value="Button">
     ```
-2.HTML + JS：
+2. HTML + JS：
 
     ```html autorun height=50
     <input type="button" id="button" value="Button">
@@ -111,9 +111,9 @@
     </script>
     ```
 
-**由于一个DOM元素中只有一个`onclick`属性，对于一个DOM元素，不能绑定多个事件处理程序。**
+**由于一个 DOM 元素中只有一个`onclick`属性，对于一个 DOM 元素，不能绑定多个事件处理程序。**
 
-例如下面的代码，用JavaScript绑定事件处理器时，会重写已经绑定了的处理器：
+例如下面的代码，用 JavaScript 绑定事件处理器时，会重写已经绑定了的处理器：
 
 ```html run height=50 autorun
 <input type="button" id="elem" onclick="alert('Before')" value="Click me">
@@ -138,7 +138,7 @@ elem.onclick = sayThanks;
 
 要删除一个事件处理器 - 将处理器赋值为空`elem.onclick = null`。
 
-## 通过this访问元素
+## 通过 this 访问元素
 
 当事件处理器绑定在某个元素上，在处理函数中`this`的值就表示被绑定的元素。
 
@@ -148,7 +148,7 @@ elem.onclick = sayThanks;
 <button onclick="alert(this.innerHTML)">Click me</button>
 ```
 
-##容易犯的一些错误
+## 容易犯的一些错误
 
 如果你开始使用事件处理器 - 请注意一些细节。
 
@@ -190,14 +190,14 @@ button.onclick = function() {
 例如下面的例子就不能绑定点击事件：
 
 ```js run no-beautify
-//点击<body>会产生错误，
-//因为属性总应该是字符串，所以强行将函数赋值为字符串，就会报错
+// 点击 <body> 会产生错误，
+// 因为属性总应该是字符串，如果强行将函数赋值为字符串，就会报错
 document.body.setAttribute('onclick', function() { alert(1) });
 ```
 
-** DOM属性事件。**
+** DOM 属性事件。**
 
-为`elem.onclick`绑定一个事件处理器，注意不是`elem.ONCLICK`，因为DOM属性是区分大小写的。
+为`elem.onclick`绑定一个事件处理器，注意不是`elem.ONCLICK`，因为 DOM 属性是区分大小写的。
 
 ## addEventListener
 
@@ -205,7 +205,7 @@ document.body.setAttribute('onclick', function() { alert(1) });
 
 例如，点击某个按钮时，我们想要高亮显示这个按钮，同时又想要显示一条消息。
 
-我们对这个按钮绑定两个事件处理器。但是一个对DOM属性赋值时，新的赋值将覆盖现有的DOM属性：
+我们对这个按钮绑定两个事件处理器。但是一个对 DOM 属性赋值时，新的赋值将覆盖现有的 DOM 属性：
 
 ```js no-beautify
 input.onclick = function() { alert(1); }
@@ -352,7 +352,7 @@ input.removeEventListener("click", handler);
 ：事件类型，这里是`"click"`.。
 
 `event.currentTarget`
-：处理事件的元素。这里与`this`完全相同，除非你将这个处理函数`bind'绑定到别的对象，这时`event.currentTarget`可以和this区分开用。
+：处理事件的元素。这里与`this`完全相同，除非你将这个处理函数`bind'绑定到别的对象，这时`event.currentTarget`可以和 this 区分开用。
 
 `event.clientX / event.clientY`
 ：光标的窗口相对坐标，用于鼠标事件。
@@ -366,20 +366,20 @@ input.removeEventListener("click", handler);
 <input type="button" onclick="*!*alert(event.type)*/!*" value="Event type">
 ```
 
-这是可行的，因为当浏览器读取属性时，它会创建一个这样的处理函数：`function(event) { alert(event.type) }`。这个处理函数的第一个参数是`"event"`，而函数体则是onclick的属性值。
+这是可行的，因为当浏览器读取属性时，它会创建一个这样的处理函数：`function(event) { alert(event.type) }`。这个处理函数的第一个参数是`"event"`，而函数体则是 onclick 的属性值。
 ````
 
 ## 总结
 
 有3种方式来绑定事件处理器：
 
-1. HTML属性：`onclick="..."`
-2. DOM属性：`elem.onclick = function`
+1. HTML 属性：`onclick="..."`
+2. DOM 属性：`elem.onclick = function`
 3. 通过调用方法添加`elem.addEventListener(event, handler[, phase])`，或是删除：`removeEventListener`。
 
-谨慎使用HTML属性绑定，因为HTML标签中间掺杂JavaScript会看起来有点奇怪。也不建议在属性中写大量的代码。
+谨慎使用 HTML 属性绑定，因为HTML标签中间掺杂 JavaScript 会看起来有点奇怪。也不建议在属性中写大量的代码。
 
-可以使用DOM属性，但是我们不能为特定事件绑定多个处理函数。大多情况下，这点限制并不是什么问题。
+可以使用 DOM 属性，但是我们不能为特定事件绑定多个处理函数。大多情况下，这点限制并不是什么问题。
 
 最后的方式是最灵活的，但代码写起来最长。有些事件绑定必须用这种方式，例如`transtionend`和`DOMContentLoaded`（还有其他的一些）。
 
