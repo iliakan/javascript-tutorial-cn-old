@@ -1,63 +1,64 @@
-# An introduction to JavaScript
+# JavaScript 简介
 
 Let's see what's so special about JavaScript, what we can achieve with it and which other technologies play well with it.
+我们一起来聊一下JavaScript，用它能做什么，它有哪些特性，已经跟它配合使用的一些技术。
 
-## What is JavaScript?
+## 什么是 JavaScript？
 
-*JavaScript* was initially created to *"make webpages alive"*.
+*JavaScript* 最初的目的是为了 *"让网页动起来"*。
 
-The programs in this language are called *scripts*. They can be written right in the HTML and execute automatically as the page loads.
+这种编程语言我们称之为*脚本*。把它嵌入到HTML当中，在页面加载的时候会自动执行。
 
-Scripts are provided and executed as a plain text. They don't need a special preparation or a compilation to run.
+脚本作为纯文本存在和执行，并不需要编译执行。
 
-In this aspect, JavaScript is very different from another language called [Java](http://en.wikipedia.org/wiki/Java).
+这方面，JavaScript和[Java](http://en.wikipedia.org/wiki/Java)有很大的区别。
 
 ```smart header="Why <u>Java</u>Script?"
-When JavaScript was created, it initially had another name: "LiveScript". But Java language was very popular at that time, so it was decided that positioning a new language as a "younger brother" of Java would help.
+JavaScript在创建的时候，它的名字叫"LiveScript"。因为当时Java很流行，所以就取了个名字叫JavaScript。这样就可以让大家认为，JavaScript是Java的弟弟。
 
-But as it evolved, JavaScript became a fully independent language, with its own specification called [ECMAScript](http://en.wikipedia.org/wiki/ECMAScript), and now it has no relation to Java at all.
+随时JavaScript的发展，它已经变成了一种独立的语言，同时也有了自己的语言规范[ECMAScript](http://en.wikipedia.org/wiki/ECMAScript)。现在，Java和JavaScript已经是两门不同的语言，彼此之前也没有任何关系。
 ```
+现在，JavaScript不仅仅是在浏览器内执行，也可以在服务端执行。甚至在任意存在[JavaScript 引擎](https://en.wikipedia.org/wiki/JavaScript_engine)的环境中，都可以执行。
 
-At present, JavaScript can execute not only in the browser, but also on the server, or actually on any device where exists a special program called [the JavaScript engine](https://en.wikipedia.org/wiki/JavaScript_engine).
-
+浏览器中嵌入了JavaScript引擎，有时也称作JavaScript虚拟机。
 The browser has an embedded engine, sometimes it's also called a "JavaScript virtual machine".
 
-Different engines have different "codenames", for example:
+不同的引擎有不同的名字，例如：
 
-- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome and Opera.
-- [Gecko](https://en.wikipedia.org/wiki/Gecko_(software)) -- in Firefox.
-- ...There are other codenames like "Trident", "Chakra" for different versions of IE, "ChakraCore" for Microsoft Edge, "Nitro" and "SquirrelFish" for Safari etc.
+- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) --Chrome和Opera中的JavaScript引擎.
+- [Gecko](https://en.wikipedia.org/wiki/Gecko_(software)) --Firefox中的JavaScript引擎。
+- ...也有一些其他的JavaScript引擎，"Trident"和"Chakra"是不同版本IE的JavaScript引擎，"ChakraCore"是Microsoft Edge的JavaScript引擎, "Nitro"和"SquirrelFish"是Safari的JavaScript引擎，等等。
 
 These terms above are good to remember, because they are used in developer articles in the internet. We'll use them too. For instance, if "a feature X is supported by V8", then it probably works in Chrome and Opera.
+上面这些经常在一些关于开发的文章中提到；也很方便记忆。比喻：某个新的功能，JavaScript引擎V8是支持的；那么我们可以认为这个功能在Chrome和Opera中可以正常运行。
 
 ```smart header="How the engines work?"
+引擎很复杂，但是基本原理很简单。
 
-Engines are complicated. But the basics are easy.
+1. 脚本是纯文本（可以被压缩）。
+2. 引擎（通常嵌入在浏览器中）读取（理解）这些文本并转化（编译）成机器语言。
+3. 然后就可以在机器上飞速的运行。
 
-1. The script is written and distributed as a plain text (can be compressed/optimized by so-called "javascript minifiers").
-2. The engine (embedded if it's a browser) reads the script ("parses") and converts ("compiles") it to the machine language.
-3. And then it runs, pretty fast.
-
-The engine applies optimizations on every stage of the process. It even watches the script as it runs, analyzes the data which flows through it and applies optimizations to the machine-code basing on that knowledge.
+在每一个阶段，引擎都会做一些优化。引擎甚至会监视脚本的执行，分析数据流，从而采取相应的优化措施。
 ```
 
-## What can in-browser JavaScript do?
+## 浏览器中的JavaScript能干什么?
+现在的JavaScript是一种安全语言。它不会去操作计算机的内存和CPU。因为JavaScript最开始就是为浏览器准备的，浏览器也不需要操作这些。
 
-The modern JavaScript is a "safe" programming language. It does not provide low-level access to memory or CPU, because it was initially created for browsers which do not require it.
+JavaScript的能力依赖于它执行的环境。比喻：[Node.JS](https://wikipedia.org/wiki/Node.js)就可以读写文件，可以发送响应网络请求。
 
-The capabilities greatly depend on the environment which runs JavaScript. For instance, [Node.JS](https://wikipedia.org/wiki/Node.js) supports functions that allows JavaScript to read/write arbitrary files, perform network requests etc.
+浏览器中的JavaScript只处理和网页相关的操作，处理网页和用户的交互以及网页和服务端的网络请求。
 
-In-browser JavaScript can do everything related to webpage manipulation, interaction with the user and the webserver.
+浏览器中的JavaScript，可以干下面这些事：
 
-For instance, in-browser JavaScript is able to:
+- 在网页中插入新的HTML，修改现有的网页内容和网页的样式。
+- 响应用户的行为，响应鼠标的点击或移动，键盘的敲击。
+- 向远处服务器发送请求，下载或上传文件（[AJAX](https://en.wikipedia.org/wiki/Ajax_(programming))和[COMET](https://en.wikipedia.org/wiki/Comet_(programming))技术）。
+- 获取或修改cookie，向用访问者发送消息，问问题。
+- 存储浏览器端的一些本地数据（本地存储）。
 
-- Add new HTML to the page, change the existing content, modify styles.
-- React on user actions, run on mouse clicks, pointer movements, key presses.
-- Send requests over the network to remote servers, download and upload files (so-called [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) and [COMET](https://en.wikipedia.org/wiki/Comet_(programming)) technologies).
-- Get and set cookies, ask questions to the visitor, show messages.
-- Remember the data on the browser side ("local storage").
 
-## What can in-browser JavaScript NOT do?
+## 浏览器中的JavaScript*不*能干什么?
 
 JavaScript abilities in the browser are limited for the sake of the user's safety. The aim is to prevent an evil webpage from accessing private information or harming the user's data.
 
