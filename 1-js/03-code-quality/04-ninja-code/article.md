@@ -1,7 +1,5 @@
 # 如何编写不良代码？
 
-Programmer ninjas of the past used these tricks to make code maintainers cry. Code review gurus look for them in test tasks. Novice developers sometimes use them even better than programmer ninjas.
-
 过去的程序员忍者使用这些技巧来使代码维护者哭泣。代码审查大师在测试任务中寻找它们。一些新入门的开发者有时候使用它们甚至比程序员忍者更好。
 
 仔细阅读它们，找出你是谁 —— 一个忍者、一个新手、或者一个代码审查者？
@@ -53,8 +51,6 @@ i = i ? i < 0 ? Math.max(0, len + i) : i : 0;
 - `userAgent` -> `ua`.
 - `browser` -> `brsr`.
 - ...等等
-
-Only the one with a truly good intuition will be able to understand all such names. Try to shorten everything. Only a worthy person will be able to uphold the development of such code.
 
 只有具有真正良好直觉的人才能够理解所有的这些名字。尽量缩短一切。只有一个有价值的人才能够维护这种代码的开发。
 
@@ -192,8 +188,6 @@ function render() {
 有些函数看起来它们不会改变任何东西。例如 `isReady()`、`checkPermission()`、`findTags()`... 它们被假定为会执行计算，查找和返回数据，而不需要更改任何外部的数据。这被称为“无副作用”。
 
 **一个非常好的技巧 - 除了主要任务之外，还要向它们添加一个“有用的”动作**
-
-The expression of dazed surprise on the face of your colleague when he see a function named `is..`, `check..` or `find...` changing something -- will definitely broaden your boundaries of reason.
 
 当你的同事看到被命名为 `is..`、`check..` 或 `find...` 的函数改变了某些东西的时候，他的脸上肯定是一脸懵逼的状态。
 
