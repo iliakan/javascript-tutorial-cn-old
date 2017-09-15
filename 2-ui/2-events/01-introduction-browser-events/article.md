@@ -1,6 +1,6 @@
 # 浏览器事件入门
 
-*事件*是当某个交互产生时的信号。所有的 DOM 节点都会产生这样的信号（但事件的产生并不限于 DOM 节点）。
+**事件**是当某个交互产生时的信号。所有的 DOM 节点都会产生这样的信号（但事件的产生并不限于 DOM 节点）。
 
 [cut]
 
@@ -23,14 +23,14 @@
 **文档事件**
 - `DOMContentLoaded` - 当 HTML 页面被加载和处理时，DOM 树被完全创建时。
 
-** CSS事件：**
+**CSS事件：**
 - `transitionend` - 当 CSS 动画结束时。
 
 此外，还有很多其他种类的事件。
 
 ## 事件处理器(Event handler)
 
-为了对事件做出反应，我们可以给事件绑定一个*处理器* - 这是一个函数，会在事件触发的时候被执行。
+为了对事件做出反应，我们可以给事件绑定一个**处理器** - 这是一个函数，会在事件触发的时候被执行。
 
 当用户和页面进行交互时，事件处理器会根据交互行为执行 JavaScript 代码。
 
@@ -38,7 +38,7 @@
 
 ### HTML属性(HTML-attribute)
 
-事件处理函数可以设置在 HTML 元素的属性中，属性名称为`on <event>`。
+事件处理函数可以设置在 HTML 元素的属性中，属性名称为`on<event>`。
 
 例如，给`input`元素绑定一个`click`的事件处理器，我们可以使用`onclick`，如下所示：
 
@@ -54,7 +54,7 @@
 
 例如，点击时执行函数`countRabbits()`:
 
-```html autorun height = 50
+```html autorun height=50
 <script>
   function countRabbits() {
     for(let i=1; i<=3; i++) {
@@ -70,7 +70,7 @@
 
 ### DOM 属性
 
-我们可以使用 DOM 属性`on <event>`来绑定一个事件处理器。
+我们可以使用 DOM 属性`on<event>`来绑定一个事件处理器。
 
 例如`elem.onclick`：
 
@@ -119,8 +119,8 @@
 <input type="button" id="elem" onclick="alert('Before')" value="Click me">
 <script>
 *!*
-  elem.onclick = function() { // overwrites the existing handler
-    alert('After'); // only this will be shown
+  elem.onclick = function() { // 会重写已经被绑定的事件处理器
+    alert('After'); // 点击按钮时，只有这段代码会被执行
   };
 */!*
 </script>
@@ -162,7 +162,7 @@ button.onclick = sayThanks;
 button.onclick = sayThanks();
 ```
 
-如果我们添加了括号，那么`sayThanks()`将是函数执行后的*返回值*，于是错误代码中的`onclick`会被赋值为`undefined`（因为该函数不返回任何东西）。按钮点击之后也不会有任何反应。
+如果我们添加了括号，那么`sayThanks()`将是函数执行后的**返回值**，于是错误代码中的`onclick`会被赋值为`undefined`（因为该函数不返回任何东西）。按钮点击之后也不会有任何反应。
 
 ...但是在HTML元素标记中，我们需要使用括号：
 
@@ -176,14 +176,14 @@ button.onclick = sayThanks();
 ```js
 button.onclick = function() {
 *!*
-  sayThanks(); // the attribute content
+  sayThanks(); // HTML元素的属性值
 */!*
 };
 ```
 
 **使用函数，而不是用字符串。**
 
-这样的赋值`elem.onclick = "alert(1)"`也可以被执行。但由于浏览器兼容性的原因，但不推荐这样使用。
+这样的赋值`elem.onclick = "alert(1)"`也可以被执行。这是由于浏览器兼容性的原因，但不推荐这样使用。
 
 **不要对事件处理器使用`setAttribute`。**
 
@@ -195,13 +195,13 @@ button.onclick = function() {
 document.body.setAttribute('onclick', function() { alert(1) });
 ```
 
-** DOM 属性事件。**
+**DOM 属性事件。**
 
 为`elem.onclick`绑定一个事件处理器，注意不是`elem.ONCLICK`，因为 DOM 属性是区分大小写的。
 
 ## addEventListener
 
-用这种方式绑定事件处理器时，有一个根本问题 - 我们不能对一个事件绑定多个处理器。
+用上述的方式绑定事件处理器时，有一个根本问题 - 我们不能对一个事件绑定多个处理器。
 
 例如，点击某个按钮时，我们想要高亮显示这个按钮，同时又想要显示一条消息。
 
@@ -238,7 +238,7 @@ element.addEventListener(event, handler[, phase]);
 element.removeEventListener(event, handler[, phase]);
 ```
 
-````warn header="Removal requires the same function"
+````warn header="删除操作，需要传递完全一样的函数作为参数"
 要删除某个事件处理时，我们应该传递在和添加时传递的完全一样的函数。
 
 下面的例子就不起效：
@@ -263,7 +263,7 @@ input.addEventListener("click", handler);
 input.removeEventListener("click", handler);
 ```
 
-请注意 - 如果我们不把函数存储在某个变量中，那么之后我们无法将其删除。因为没有办法“找回” 传递给“addEventListener”的处理函数。
+请注意 - 如果我们不把函数存储在某个变量中，那么之后我们无法将其删除。因为没有办法“找回”传递给`addEventListener`的处理函数。
 ````
 
 对`addEventListener`多次调用，便可以添加多个事件处理，如下所示：
@@ -290,12 +290,12 @@ input.removeEventListener("click", handler);
 
 通过上面的例子，我们可以看到，DOM属性和`addEventListener`都可以来设置事件处理器*。但一般来说，我们只使用其中一种。
 
-````warn header="For some events handlers only work with `addEventListener`"
+````warn header="一些事件只能通过`addEventListener`来绑定"
 还有一些无法通过DOM属性来绑定的事件。这些事件必须通过`addEventListener`来绑定。
 
 例如，事件`transitionend`（CSS动画完成时调用）就是这样的。
 
-试着执行下面的代码。在大多数浏览器中，只有第二段代码会正常执行，而第一端不能。
+试着执行下面的代码。在大多数浏览器中，只有第二段代码会正常执行，而第一段不能。
 
 ```html运行
 <style>
@@ -313,12 +313,12 @@ input.removeEventListener("click", handler);
 
 <script>
   elem.ontransitionend = function() {
-    alert("DOM property"); // doesn't work
+    alert("DOM property"); // 这段代码不会被执行
   };
 
 *!*
   elem.addEventListener("transitionend", function() {
-    alert("addEventListener"); // shows up when the animation finishes
+    alert("addEventListener"); // 当动画结束时，这段代码会被执行，显示弹出框
   });
 */!*
 </script>
@@ -339,7 +339,7 @@ input.removeEventListener("click", handler);
 
 <script>
   elem.onclick = function(*!*event*/!*) {
-    // show event type, element and coordinates of the click
+    // 显示事件的类型，事件发生的元素，和点击的坐标
     alert(event.type + " at " + event.currentTarget);
     alert(event.clientX + ":" + event.clientY);
   };
@@ -357,9 +357,9 @@ input.removeEventListener("click", handler);
 `event.clientX / event.clientY`
 ：光标的窗口相对坐标，用于鼠标事件。
 
-还有很多的属性。它们依赖于事件类型，所以我们稍后在详细介绍不同的事件时，再来学习。
+还有很多的属性。它们依赖于事件类型，所以我们稍后在详细介绍不同的事件时再来学习。
 
-````smart header="The event object is also accessible from HTML"
+````smart header="event 对象在HTML中也可以访问"
 如果我们在HTML中绑定一个事件处理器，我们也可以使用`event`对象，像这样：
 
 ```html autorun height=60
