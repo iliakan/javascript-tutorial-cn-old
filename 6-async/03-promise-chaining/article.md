@@ -1,18 +1,18 @@
 
-# Promises chaining
+# Promises 链式操作
 
-Let's return to the problem mentioned in the chapter <info:callbacks>:
+让我们回到在回调那一章提到的问题:
 
-- We have a sequence of asynchronous tasks to be done one after another. For instance, loading scripts.
-- How to code it well?
+- 我们有一系列需要一个接一个完成的异步任务。例如，载入新的脚本文件。
+- 怎样优雅的书写代码？
 
-Promises provide a couple of recipes to do that.
+Promises 提供了优雅的解决方案。
 
 [cut]
 
-In this chapter we cover promise chaining.
+在这章中，我们将讨论 promises 链式操作。
 
-It looks like this:
+它就像这样：
 
 ```js run
 new Promise(function(resolve, reject) {
@@ -37,23 +37,23 @@ new Promise(function(resolve, reject) {
 });
 ```
 
-The idea is that the result is passed through the chain of `.then` handlers.
+技巧是，我们将上一步的结果传递给 `.then` 链。 
 
-Here the flow is:
-1. The initial promise resolves in 1 second `(*)`,
-2. Then the `.this` handler is called `(**)`.
-3. The value that it returns is passed to the next `.this` handler `(***)`
-4. ...and so on.
+它的流程是这样的：
+1. 初始的 promise 在一秒以后成功 `(*)`，
+2. 然后 `.then` 处理者被执行 `(**)`。
+3. 上一步的返回值被传递到下一个 `.then` 处理者 `(***)`
+4. ...等等。
 
-As the result is passed along the chain of handlers, we can see a sequence of `alert` calls: `1` -> `2` -> `4`.
+当结果被一步一步传递给处理者链以后，`alert` 被按照顺序一步一步执行：`1` -> `2` -> `4`。
 
 ![](promise-then-chain.png)
 
-The whole thing works, because a call to `promise.then` returns a promise, so that we can call next `.then` on it.
+整个流程没毛病，这是因为 `promise.then` 会返回 promise ，所以我们可以继续使用 `.then` 执行它。
 
-When a handler returns a value, it becomes the result of that promise, so the next `.then` is called with it.
+每当处理者返回一个值，它就变成了那个 promise 的结果，所以下一个 `.then` 通过它被执行。
 
-To make these words more clear, here's the start of the chain:
+不跟你多BB，下面是一个简单粗暴的链式操作例子：
 
 ```js run
 new Promise(function(resolve, reject) {
@@ -69,9 +69,9 @@ new Promise(function(resolve, reject) {
 // .then…
 ```
 
-The value returned by `.then` is a promise, that's why we are able to add another `.then` at `(2)`. When the value is returned in `(1)`, that promise becomes resolved, so the next handler runs with the value.
+`.then` 的返回值也是一个 promise ，这就是为什么我们能继续在 `(2)` 添加 `.then` 。当 `(1)` 的值返回以后，promise 变成 resolved 状态，所以下一个处理者使用那个结果继续执行。 
 
-Unlike the chaining, technically we can also add many `.then` to a single promise, like this:
+和链式操作不一样的是，技术上来说，我们可以给单个 promise 添加很多个 `.then` ，就像这样：
 
 ```js run
 let promise = new Promise(function(resolve, reject) {
@@ -94,21 +94,21 @@ promise.then(function(result) {
 });
 ```
 
-...But that's a totally different thing. Here's the picture (compare it with the chaining above):
+...它们是完全不一样的事情。有图有真相：
 
 ![](promise-then-many.png)
 
-All `.then` on the same promise get the same result -- the result of that promise. So in the code above all `alert` show the same: `1`. There is no result-passing between them.
+同一个 promise 的所有 `.then` 都会返回相同的结果 -- 这个 promise 的结果。所以上图的代码的所有 `alert` 都会返回相同的结果： `1`。他们之间没有传递结果。
 
-In practice we rarely need multiple handlers for one promise. Chaining is used much more often.
+一般来说，一个 promise 很少需要多个处理者。链式操作使用的更多一点。
 
-## Returning promises
+## 返回 promises
 
-Normally, a value returned by a `.then` handler is immediately passed to the next handler. But there's an exception.
+一般而言，`.then` 的返回值会立刻传递给下一个处理者。但是也有例外的时候。
 
-If the returned value is a promise, then the further execution is suspended until it settles. After that, the result of that promise is given to the next `.then` handler.
+如果返回值是一个 promise ，之后的代码会等待这个 promise 完成之后执行。promise 完成之后，它的返回值会被传递给下一个 `.then` 。
 
-For instance:
+例如：
 
 ```js run
 new Promise(function(resolve, reject) {
@@ -140,15 +140,15 @@ new Promise(function(resolve, reject) {
 });
 ```
 
-Here the first `.then` shows `1` returns `new Promise(…)` in the line `(*)`. After one second it resolves, and the result (the argument of `resolve`, here it's `result*2`) is passed on to handler of the second `.then` in the line `(**)`. It shows `2` and does the same thing.
+第一个 `.then` 显示 `1` 然后在 `(*)` 处返回 `new Promise(…)` 。一秒钟之后执行成功，然后他的结果（ `resolve` 的参数，在这儿就是 `result*2`）被传递给在 `(**)` 的第二个 `.then`。他会显示 `2`，然后做了相同的事情。
 
-So the output is again 1 -> 2 > 4, but now with 1 second delay between `alert` calls.
+返回的结果依然是 1 -> 2 > 4，但是每个 `alert` 之间多了1秒的延迟。
 
-Returning promises allows us to build chains of asynchronous actions.
+返回 promises 创建异步动作的链式操作。
 
-## Example: loadScript
+## 例子: loadScript
 
-Let's use this feature with `loadScript` to load scripts one by one, in sequence:
+让我们用上面的特性来让 `loadScript` 可以按照顺序一个一个的载入新脚本文件：
 
 ```js run
 loadScript("/article/promise-chaining/one.js")
@@ -159,46 +159,44 @@ loadScript("/article/promise-chaining/one.js")
     return loadScript("/article/promise-chaining/three.js");
   })
   .then(function(script) {
-    // use functions declared in scripts
-    // to show that they indeed loaded
+    // 使用载入的脚本文件里面定义的函数
+    // 显示它们确实已经载入成功了
     one();
     two();
     three();
   });
 ```
 
-Here each `loadScript` call returns a promise, and the next `.then` runs when it resolves. Then it initiates the loading of the next script. So scripts are loaded one after another.
+在上面的代码中，每一个 `loadScript` 执行完成都会返回一个 promise，当 它执行完成以后，下一个 `.then` 就会被执行。然后开始加载一个脚本文件。所有的脚本文件都会按照顺序一个接一个加载。
 
-We can add more asynchronous actions to the chain. Please note that code is still "flat", it grows down, not to the right. There are no signs of "pyramid of doom".
+我们可以给链式操作添加更多的异步动作。请注意，代码依然是扁平的，它会向下发展而不是向右。妈妈再也不用担心我会写出 "恶魔金字塔" 那样的代码啦。
 
-Please note that technically it is also possible to write `.then` directly after each promise, without returning them, like this:
+请注意，技术上来说也可以直接在每个 promise 后面写 `.then` 而不是返回他们，就像这样：
 
 ```js run
+});
 loadScript("/article/promise-chaining/one.js").then(function(script1) {
   loadScript("/article/promise-chaining/two.js").then(function(script2) {
     loadScript("/article/promise-chaining/three.js").then(function(script3) {
-      // this function has access to variables script1, script2 and script3
+      // 这个函数可以使用变量 script1, script2 and script3
       one();
       two();
       three();
     });
   });
-});
 ```
 
-This code does the same: loads 3 scripts in sequence. But it "grows to the right". So we have the same problem as with callbacks. Use chaining (return promises from `.then`) to evade it.
+上面的代码结果是一样的：按照顺序载入三个脚本文件。但是代码是 "向右发展". 这就和我们在回调那一章遇到的问题一样了。使用链式操作（在 `.then` 内返回 promise）可以有效的解决这种问题。
 
-Sometimes it's ok to write `.then` directly, because the nested function has access to the outer scope (here the most nested callback has access to all variables `scriptX`), but that's an exception rather than a rule.
+有些时候直接写 `.then` 也是可以的，因为内层的函数可以访问外层的变量（上面的例子中，最内层的函数可以访问所有的 `scriptX`），所以编写代码的时候还是得具体情况具体分析。
 
+值得庆幸的是，`.then` 可以返回任何的 "thenable" 对象，它会被像 promise 一样对待。
 
-````smart header="Thenables"
-To be precise, `.then` may return an arbitrary "thenable" object, and it will be treated the same way as a promise.
+任何使用 `.then` 的对象都是 "thenable" 对象。
 
-A "thenable" object is any object with a method `.then`.
+第三方库可以设计它自己的 "可兼容 promise " 对象。他们可以扩展设置方法，同时可以兼容原生的 promises ，因为他们使用了 `.then`。
 
-The idea is that 3rd-party libraries may implement "promise-compatible" objects of their own. They can have extended set of methods, but also be compatible with native promises, because they implement `.then`.
-
-Here's an example of a thenable object:
+下面是一个 thenable 对象的例子：
 
 ```js run
 class Thenable {
@@ -207,7 +205,7 @@ class Thenable {
   }
   then(resolve, reject) {
     alert(resolve); // function() { native code }
-    // resolve with this.num*2 after the 1 secound
+    // 1秒以后成功，并返回 this.num*2 
     setTimeout(() => resolve(this.num * 2), 1000); // (**)
   }
 }
@@ -216,70 +214,70 @@ new Promise(resolve => resolve(1))
   .then(result => {
     return new Thenable(result); // (*)
   })
-  .then(alert); // shows 2 after 1000ms
+  .then(alert); // 1000ms 以后显示2
 ```
 
-JavaScript checks the object returned by `.then` handler in the line `(*)`: if it has a callable method named `then`, then it calls that method providing native functions `resolve`, `reject` as arguments (similar to executor) and waits until one of them is called. In the example above `resolve(2)` is called after 1 second `(**)`. Then the result is passed further down the chain.
+JavaScript 会检查 `.then` 在 `(*)` 处返回的对象：如果它有一个被叫做 `then` 的可执行方法，然后它就会执行这个方法，并且它会提供原生的 `resolve`, `reject` 函数作为参数。在上面的例子中，在  `(**)`处的 `resolve(2)` 在1秒以后被执行。然后结果被传递给更深的链。
 
-This feature allows to integrate custom objects with promise chains without having to inherit from `Promise`.
-````
+这个特性允许我们不需要继承  `Promise` 就可以直接整合定制的对象到 promise 链。
 
 
-## Bigger example: fetch
 
-In frontend programming promises are often used for network requests. So let's see an extended example of that.
+## 更大的例子：fetch
 
-We'll use the [fetch](mdn:api/WindowOrWorkerGlobalScope/fetch) method to load the information about the user from the remote server. The method is quite complex, it has many optional parameters, but the basic usage is quite simple:
+在前端代码中，promises 通常被用来做网络请求。我们现在就来看一个这样的例子。
+
+我们会使用 [fetch](mdn:api/WindowOrWorkerGlobalScope/fetch) 方法从远程服务器载入用户的信息。这个方法很复杂，它有很多可选的参数，但是基本使用非常简单：
 
 ```js
 let promise = fetch(url);
 ```
 
-This makes a network request to the `url` and returns a promise. The promise resolves with a `response` object when the remote server responds with headers, but *before the full response is downloaded*.
+上面的代码会向 `url` 发起一个网络请求，然后返回一个 promise 。当远程服务器返回头部响应之后，*在整个响应被下载之前*，这个 promise 会被置为解决并返回一个  `response` 对象。
 
-To read the full response, we should call a method `response.text()`: it returns a promise that resolves  when the full text downloaded from the remote server, with that text as a result.
+我们可以执行 `response.text()` 方法来获取整个响应：当从远程服务器下载完完整的文本后，它会返回一个解决的 promise。
 
-The code below makes a request to `user.json` and loads its text from the server:
+下面的代码向 `user.json` 发出一个请求，然后载入它的文本：
 
 ```js run
 fetch('/article/promise-chaining/user.json')
-  // .then below runs when the remote server responds
+  // 下面的 .then 会在远程服务器响应之后运行
   .then(function(response) {
-    // response.text() returns a new promise that resolves with the full response text
-    // when we finish downloading it
+    // response.text() 会返回一个新的，会返回完整文本的 promise
+    // 当我们完成以后就下载它
     return response.text();
   })
   .then(function(text) {
-    // ...and here's the content of the remote file
+    // ...这就是远程文件的内容
     alert(text); // {"name": "iliakan", isAdmin: true}
   });
 ```
 
-There is also a method `response.json()` that reads the remote data and parses it as JSON. In our case that's even more convenient, so let's switch to it.
+`response.json()` 方法会读取远程数据然后把它转换成 JSON 格式。这对我们来说更方便，所以现在让我们换成它试试。
 
-We'll also use arrow functions for brevity:
+为了更简洁，我们将使用箭头函数：
 
 ```js run
-// same as above, but response.json() parses the remote content as JSON
+// 基本和上面一样，但是 response.json() 会将远程内容转换成 JSON 格式
 fetch('/article/promise-chaining/user.json')
   .then(response => response.json())
   .then(user => alert(user.name)); // iliakan
 ```
 
-Now let's do something with the loaded user.
+现在让我们用已经载入的用户信息搞点事情。
 
-For instance, we can make one more request to github, load the user profile and show the avatar:
+例如，我们可以再向 github 发起一个请求，加载用户的简介然后展示其头像：
 
 ```js run
-// Make a request for user.json
+// 向 user.json 发起一个请求
 fetch('/article/promise-chaining/user.json')
-  // Load it as json
+  // 载入 json 格式的数据
   .then(response => response.json())
-  // Make a request to github
+  // 向 github 发起一个请求
   .then(user => fetch(`https://api.github.com/users/${user.name}`))
-  // Load the response as json
+  // 载入 json 格式的数据
   .then(response => response.json())
-  // Show the avatar image (githubUser.avatar_url) for 3 seconds (maybe animate it)
+  // 展示头像图片（githubUser.avatar_url）3秒钟（也许可以搞个动画）
   .then(githubUser => {
     let img = document.createElement('img');
     img.src = githubUser.avatar_url;
@@ -290,13 +288,13 @@ fetch('/article/promise-chaining/user.json')
   });
 ```
 
-The code works, see comments about the details, but it should be quite self-descriptive. Although, there's a potential problem in it, a typical error of those who begin to use promises.
+上面的代码运行起来没毛病，看看备注就很容易看懂。但是它存在一个 promises 初学者非常喜欢犯的问题。
 
-Look at the line `(*)`: how can we do something *after* the avatar has finished showing and gets removed? For instance, we'd like to show a form for editing that user or something else. As of now, there's no way.
+注意观察 `(*)` 处：如果我们想在头像展示和移除 *以后* 干点啥，该怎样实现？例如，我们想展示一个可以编辑用户信息的表单。就目前来说，臣妾做不到啊。
 
-To make the chain extendable, we need to return a promise that resolves when the avatar finishes showing.
+为了将这个链变成可扩展的，我们需要返回一个 promise，它会在在头像展示完成之后置为解决。
 
-Like this:
+就像这样：
 
 ```js run
 fetch('/article/promise-chaining/user.json')
@@ -318,17 +316,17 @@ fetch('/article/promise-chaining/user.json')
 */!*
     }, 3000);
   }))
-  // triggers after 3 seconds
+  // 3秒之后触发
   .then(githubUser => alert(`Finished showing ${githubUser.name}`));
 ```
 
-Now right after `setTimeout` runs `img.remove()`, it calls `resolve(githubUser)`, thus passing the control to the next `.then` in the chain and passing forward the user data.
+现在，当 `setTimeout` 运行 `img.remove()` 后，它会执行 `resolve(githubUser)`，因此将控制权传递给下一个链中的 `.then`，同时也会传递用户的数据。
 
-As a rule, an asynchronous action should always return a promise.
+一般来说，异步动作应该都返回一个 promise。
 
-That makes possible to plan actions after it. Even if we don't plan to extend the chain now, we may need it later.
+这让扩展计划任务变为可能。即时我们现在没有扩展链的计划，我们之后可能会需要它。
 
-Finally, we can split the code into reusable functions:
+最后，我们将代码分成可以重复使用的函数：
 
 ```js run
 function loadJson(url) {
@@ -355,7 +353,7 @@ function showAvatar(githubUser) {
   });
 }
 
-// Use them:
+// 使用它们
 loadJson('/article/promise-chaining/user.json')
   .then(user => loadGithubUser(user.name))
   .then(showAvatar)
