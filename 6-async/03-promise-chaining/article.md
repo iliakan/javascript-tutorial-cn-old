@@ -361,34 +361,34 @@ loadJson('/article/promise-chaining/user.json')
   // ...
 ```
 
-## Error handling
+## 错误处理
 
-Asynchronous actions may sometimes fail: in case of an error the corresponding promises becomes rejected. For instance, `fetch` fails if the remote server is not available. We can use `.catch` to handle errors (rejections).
+异步操作有时候可能失败：当发生错误的时候，对应的 promises 就会变成拒绝状态。例如，`fetch` 在远程服务器宕机的时候就会失败。这种时候我们可以用 `.catch` 来处理错误。
 
-Promise chaining is great at that aspect. When a promise rejects, the control jumps to the closest rejection handler down the chain. That's very convenient in practice.
+Promise 链在处理这种情况也是棒棒哒。当一个 promise 返回拒绝，控制权会传递给之后最近的拒绝处理者。这在实际应用中实在是太方便啦。
 
-For instance, in the code below the URL is wrong (no such server) and `.catch` handles the error:
+例如，下面代码中的 URL 是错的（不存在这样的服务器），那么 `.catch` 就会处理这个错误：
 
 ```js run
 *!*
-fetch('https://no-such-server.blabla') // rejects
+fetch('https://no-such-server.blabla') // 拒绝
 */!*
   .then(response => response.json())
-  .catch(err => alert(err)) // TypeError: failed to fetch (the text may vary)
+  .catch(err => alert(err)) // TypeError: fetch 失败（文字可能不同）
 ```
 
-Or, maybe, everything is all right with the server, but the response is not a valid JSON:
+或者，就算服务器没有一毛钱问题，但是返回值不是合法的 JSON 数据格式：
 
 ```js run
-fetch('/') // fetch works fine now, the server responds successfully
+fetch('/') // fetch 现在可以正常工作，服务器有响应
 *!*
-  .then(response => response.json()) // rejects: the page is HTML, not a valid json
+  .then(response => response.json()) // 拒绝：这个页面是 HTML，不是一个合法的 JSON
 */!*
-  .catch(err => alert(err)) // SyntaxError: Unexpected token < in JSON at position 0
+  .catch(err => alert(err)) // SyntaxError: Unexpected token < in JSON at position 0 （这个都看不懂，就太尴尬了）
 ```
 
 
-In the example below we append `.catch` to handle all errors in the avatar-loading-and-showing chain:
+在下面的例子中，我们在「头像加载并且展示」链的最后追加了 `.catch` 处理所有的错误：
 
 ```js run
 fetch('/article/promise-chaining/user.json')
@@ -409,13 +409,13 @@ fetch('/article/promise-chaining/user.json')
   .catch(error => alert(error.message));
 ```
 
-Here `.catch` doesn't trigger at all, because there are no errors. But if any of the promises above rejects, then it would execute.
+上面的 `.catch` 并不会被触发，因为没有错误。但是。如果任意一个 promise 返回拒绝，`.catch` 就会被执行了。
 
-## Implicit try..catch
+## 隐形的 try..catch
 
-The code of the executor and promise handlers has an "invisible `try..catch`" around it. If an error happens, it gets caught and treated as a rejection.
+在 promise 被处理或者执行的时候，会有一个 "隐形的 `try..catch`"。如果发生了错误，它就会被当成拒绝触发。
 
-For instance, this code:
+例如下面的代码：
 
 ```js run
 new Promise(function(resolve, reject) {
@@ -425,7 +425,7 @@ new Promise(function(resolve, reject) {
 }).catch(alert); // Error: Whoops!
 ```
 
-...Works the same way as this:
+...下面也一样：
 
 ```js run
 new Promise(function(resolve, reject) {
@@ -435,62 +435,62 @@ new Promise(function(resolve, reject) {
 }).catch(alert); // Error: Whoops!
 ```
 
-The "invisible `try..catch`" around the executor automatically catches the error and treats it as a rejection.
+执行者的 "隐形的 `try..catch`" 会自动捕获错误然后当成拒绝触发。
 
-That's so not only in the executor, but in handlers as well. If we `throw` inside `.then` handler, that means a rejected promise, so the control jumps to the nearest error handler.
+和执行者一样，处理者也存在 "隐形的 `try..catch`"。如果我们在  `.then` 内 `throw` 错误，这表示一个拒绝的 promise，所以控制权会给到最近的错误处理者。
 
-Here's an example:
+下面是一个例子：
 
 ```js run
 new Promise(function(resolve, reject) {
   resolve("ok");
 }).then(function(result) {
 *!*
-  throw new Error("Whoops!"); // rejects the promise
+  throw new Error("Whoops!"); // 拒绝 promise
 */!*
 }).catch(alert); // Error: Whoops!
 ```
 
-That's so not only for `throw`, but for any errors, including programming errors as well:
+不仅仅是 `throw` 的错误，包括编程错误在内的错误都会被捕获到：
 
 ```js run
 new Promise(function(resolve, reject) {
   resolve("ok");
 }).then(function(result) {
 *!*
-  blabla(); // no such function
+  blabla(); // 不存在的函数
 */!*
 }).catch(alert); // ReferenceError: blabla is not defined
 ```
 
-As a side effect, the final `.catch` not only catches explicit rejections, but also occasional errors in the handlers above.
+作为副作用，最终的 `.catch` 不仅会捕获到明确的拒绝，同时也偶尔捕获之前的处理者的错误。
 
-## Rethrowing
+## 重新抛出
 
-As we already noticed, `.catch` behaves like `try..catch`. We may have as many `.then` as we want, and then use a single `.catch` at the end to handle errors in all of them.
+我们已经知道了，`.catch` 和 `try..catch` 一样。我可以写多个 `.then` ，然后只在最后写一个 `.catch` 来处理所有的错误。
 
-In a regular `try..catch` we can analyze the error and maybe rethrow it if can't handle. The same thing is possible for promises. If we `throw` inside `.catch`, then the control goes to the next closest error handler. And if we handle the error and finish normally, then it continues to the closest successful `.then` handler.
+在正常的 `try..catch` 中，我们可以分析错误，如果无法处理的话我们会把它重新抛出。在 promises 我们当然也可以这样做。如果我们在  `.then` 内 `throw` 错误，控制权会给到最近的错误处理者。如果我们正常处理错误，它会继续执行最近的成功的 `.then` 处理者。
 
-In the example below the `.catch` successfully handles the error:
+在下面的例子中，`.catch` 成功测处理了错误：
 ```js run
-// the execution: catch -> then
+// 执行过程： catch -> then
 new Promise(function(resolve, reject) {
 
   throw new Error("Whoops!");
 
 }).catch(function(error) {
 
-  alert("The error is handled, continue normally");
+  alert("错误被正常处理，继续正常执行");
 
-}).then(() => alert("Next successful handler runs"));
+}).then(() => alert("下一个成功的处理者被执行"));
 ```
 
-Here the `.catch` block finishes normally. So the next successful handler is called. Or it could return something, that would be the same.
+这里的 `.catch` 正常完成。所以下一个成功的处理者被执行。或者它会返回一些东西，没什么却别。
 
-...And here the `.catch` block analyzes the error and throws it again:
+...下面的 `.catch` 分析错误，然后再次抛出它：
 
 ```js run
-// the execution: catch -> catch -> then
+// 执行过程： catch -> catch -> then
 new Promise(function(resolve, reject) {
 
   throw new Error("Whoops!");
@@ -498,36 +498,36 @@ new Promise(function(resolve, reject) {
 }).catch(function(error) { // (*)
 
   if (error instanceof URIError) {
-    // handle it
+    // 处理它
   } else {
-    alert("Can't handle such error");
+    alert("不能处理这样的错误");
 
 *!*
-    throw error; // throwing this or another error jumps to the next catch
+    throw error; // 抛出这个或者其他错误，跳到下一个 catch
 */!*
   }
 
 }).then(function() {
-  /* never runs here */
+  /* 永远不会执行到这儿 */
 }).catch(error => { // (**)
 
-  alert(`The unknown error has occured: ${error}`);
-  // don't return anything => execution goes the normal way
+  alert(`发生未知错误： ${error}`);
+  // 不会返回任何事情 => 正常流程执行
 
 });
 ```
 
-The handler `(*)` catches the error and just can't handle it, because it's not `URIError`, so it throws it again. Then the execution jumps to the next `.catch` down the chain `(**)`.
+在 `(*)` 出的处理者捕获到错误，但是不能处理它，因为错误不是 `URIError`，所以它再次爆出它。然后程序会跳到在 `(**)` 处的链的下一个 `.catch`。
 
 In the section below we'll see a practical example of rethrowing.
 
-## Fetch error handling example
+## Fetch 错误处理例子
 
-Let's improve error handling for the user-loading example.
+现在让我们给上面的用户加载的例子添加错误处理。
 
-The promise returned by [fetch](mdn:api/WindowOrWorkerGlobalScope/fetch) rejects when it's impossible to make a request. For instance, a remote server is not available, or the URL is malformed. But if the remote server responds with error 404, or even error 500, then it's considered a valid response.
+[fetch](mdn:api/WindowOrWorkerGlobalScope/fetch) 返回的 promise 会在请求无法完成的时候拒绝。例如，远程服务器挂了，或者不正确的 URL。但是如果服务器响应了404甚至505错误，然后它会被认为是有效的响应。
 
-What if the server returns a non-JSON page with error 500 in the line `(*)`? What if there's no such user, and github returns a page with error 404 at `(**)`?
+如果服务器在 `(*)` 处返回的是一个500错误的非 JSON 页面会怎样? 如果在 `(**)` 处，根本没有这样的用户， 然后 github 返回了一个404错误的页面又会怎样？
 
 ```js run
 fetch('no-such-user.json') // (*)
@@ -539,11 +539,11 @@ fetch('no-such-user.json') // (*)
 ```
 
 
-As of now, the code tries to load the response as JSON no matter what and dies with a syntax error. You can see that by running the example above, as the file `no-such-user.json` doesn't exist.
+目前来说，不管服务器是挂了还是返回任何东西，我们的代码都会尝试将反应当做 JSON 对待。运行上面的代码你就会发现问题，因为 `no-such-user.json` 根本不存在。
 
-That's not good, because the error just falls through the chain, without details: what failed and where.
+这就有问题了，因为错误通过链流走了，没有任何详细信息：发送了什么错误，哪儿发生的错误？
 
-So let's add one more step: we should check the `response.status` property that has HTTP status, and if it's not 200, then throw an error.
+所以，让我们再多加一步来加以完善：我们应该要检查拥有 HTTP 状态的 `response.status` 属性，如果不是200，那就抛出一个错误。
 
 ```js run
 class HttpError extends Error { // (1)
@@ -569,19 +569,19 @@ loadJson('no-such-user.json') // (3)
   .catch(alert); // HttpError: 404 for .../no-such-user.json
 ```
 
-1. We make a custom class for HTTP Errors to distinguish them from other types of errors. Besides, the new class has a constructor that accepts the `response` object and saves it in the error. So error-handling code will be able to access it.
-2. Then we put together the requesting and error-handling code into a function that fetches the `url` *and* treats any non-200 status as an error. That's convenient, because we often need such logic.
-3. Now `alert` shows better message.
+1. 我们写了一个自定义 class 来区别 HTTP 错误和其他类型的错误。另外，这个 class 的构造函数接受 `response` 对象作为参数，然后把它保存进错误。所以错误处理代码可以进入它。
+2. 然后，我们把请求和错误代码放进一个函数，这个函数会请求 `url` *并且* 将任何非200状态当成错误。这就很有灵性了：因为我们经常会需要这样的逻辑处理。
+3. 现在 `alert` 会展示更好的信息。
 
-The great thing about having our own class for errors is that we can easily check for it in error-handling code.
+写一个自己的错误处理 class 的好处是，我们很容易在错误处理代码中检查它。
 
-For instance, we can make a request, and then if we get 404 -- ask the user to modify the information.
+例如，我们发起一个请求，如果我们接到404返回 -- 就让用户修改信息。
 
-The code below loads a user with the given name from github. If there's no such user, then it asks for the correct name:
+下面的代码中，会先让用户输入一个用户名，然后加载他的 github 页面。如果输入的用户不存在，则代码会要求用户再次输入：
 
 ```js run
 function demoGithubUser() {
-  let name = prompt("Enter a name?", "iliakan");
+  let name = prompt("请输入用户名", "iliakan");
 
   return loadJson(`https://api.github.com/users/${name}`)
     .then(user => {
@@ -592,7 +592,7 @@ function demoGithubUser() {
 *!*
       if (err instanceof HttpError && err.response.status == 404) { // (2)
 */!*
-        alert("No such user, please reenter.");
+        alert("用户不存在，请再次输入。");
         return demoGithubUser();
       } else {
         throw err;
@@ -603,22 +603,22 @@ function demoGithubUser() {
 demoGithubUser();
 ```
 
-Here:
+解释一下：
 
-1. If `loadJson` returns a valid user object, then the name is shown `(1)`, and the user is returned, so that we can add more user-related actions to the chain. In that case the `.catch` below is ignored, everything's very simple and fine.
-2. Otherwise, in case of an error, we check it in the line `(2)`. Only if it's indeed the HTTP error, and the status is 404 (Not found), we ask the user to reenter. For other errors -- we don't know how to handle, so we just rethrow them.
+1. 如果 `loadJson` 返回一个合法的用户对象，在 `(1)` 处会显示出用户的名字，同时返回该用户，然后我们可以在链中添加更多的跟用户有关的操作。在这样的情况下，之后的 `.catch` 就会被忽略，一切都那么简单美好。
+2. 否则，如果发生了一个错误，我们会在检查它 `(2)` 。只有是 HTTP 错误并且状态是404的时候，我们会让用户再次输入。至于其他的错误 -- 我们不知道怎样处理他， 所以我们就重新抛出它。
 
-## Unhandled rejections
+## 没有被处理的拒绝
 
-What happens when an error is not handled? For instance, after the rethrow as in the example above. Or if we forget to append an error handler to the end of the chain, like here:
+如果一个错误没有被处理会发生什么呢？例如，在上面例子中重新抛出之后。或者，如果我们忘记在链的最后加上错误处理，就像这样：
 
 ```js untrusted run refresh
 new Promise(function() {
-  noSuchFunction(); // Error here (no such function)
+  noSuchFunction(); // 错误（没有这个函数）
 });
 ```
 
-Or here:
+或者这样：
 
 ```js untrusted run refresh
 new Promise(function() {
@@ -628,56 +628,56 @@ new Promise(function() {
 }).then(function() {
   // ...something else...
 }).then(function() {
-  // ...but no catch after it!
+  // ...之后没有 catch
 });
 ```
 
-In theory, nothing should happen. In case of an error happens, the promise state becomes "rejected", and the execution should jump to the closest rejection handler. But there is no such handler in the examples above. So the error gets "stuck".
+理论上来讲，什么都不会发生。如果发生了一个错误，promise 的状态就会变成 "已拒绝"，然后程序就会跳到最近的拒绝处理者那里。但是如果跟上面的代码一样，没有这样的错误处理者的话，错误就被卡住。
 
-In practice, that means that the code is bad. Indeed, how come that there's no error handling?
+在实际中，这样的代码就很差了。的确，好的代码怎么可能没有错误处理呢？
 
-Most JavaScript engines track such situations and generate a global error in that case. We can see it in the console.
+大部门的 JavaScript 引擎会追踪这种情况，然后生成一个全局的错误。我们可以在 console 中打印出来。
 
-In the browser we can catch it using the event `unhandledrejection`:
+在浏览器中，我们可以通过事件 `unhandledrejection` 捕获它：
 
 ```js run
 *!*
 window.addEventListener('unhandledrejection', function(event) {
-  // the event object has two special properties:
-  alert(event.promise); // [object Promise] - the promise that generated the error
-  alert(event.reason); // Error: Whoops! - the unhandled error object
+  // 这个事件对象有两个特殊的属性：
+  alert(event.promise); // [object Promise] - 生成错误的 promise 
+  alert(event.reason); // Error: Whoops! - 没有被处理的错误对象object
 });
 */!*
 
 new Promise(function() {
   throw new Error("Whoops!");
-}); // no catch to handle the error
+}); // 没有 catch 来处理错误
 ```
 
-The event is the part of the [HTML standard](https://html.spec.whatwg.org/multipage/webappapis.html#unhandled-promise-rejections). Now if an error occurs, and there's no `.catch`, the `unhandledrejection` handler triggers: the `event` object has the information about the error, so we can do something with it.
+该事件是[HTML standard](https://html.spec.whatwg.org/multipage/webappapis.html#unhandled-promise-rejections)的一部分。现在，如果发生了一个错误，并且没有 `.catch` 来处理它，那么 `unhandledrejection` 就会被触发：这个 `event` 对象包含关于错误的信息，那我们就可以利用它搞事情了。
 
-Usually such errors are unrecoverable, so our best way out is to inform the user about the problem and probably report about the incident to the server.
+一般来说，这样的错误是无法回收的，所以我们最好的处理方式是，将错误告诉给用户，同时也尽可能报告给服务器。
 
-In non-browser environments like Node.JS there are other similar ways to track unhandled errors.
+在像 Node.JS 这样的非浏览器环境下会有一些其他的类似的方法来追中没有被处理的错误。
 
-## Summary
+## 总结
 
-To summarize, `.then/catch(handler)` returns a new promise that changes depending on what handler does:
+总而言之，`.then/catch(handler)` 会根据错误处理者的不用返回不用的新 promise：
 
-1. If it returns a value or finishes without a `return` (same as `return undefined`), then the new promise becomes resolved, and the closest resolve handler (the first argument of `.then`) is called with that value.
-2. If it throws an error, then the new promise becomes rejected, and the closest rejection handler (second argument of `.then` or `.catch`) is called with it.
-3. If it returns a promise, then JavaScript waits until it settles and then acts on its outcome the same way.
+1. 如果它返回一个值或者没有 `return` 就完成了（和 `return undefined` 一样），那么新的 promise 就变成已解决状态，最近的解决处理者（`.then` 的第一个参数）被执行。
+2. 如果它抛出一个错误，那么新的 promise 就变成已拒绝状态，最近的拒绝处理者（`.then` 的第二个参数）被执行。
+3. 如果它返回一个 promise，那么 JavaScript 会等到它再次执行完成然后根据它的返回值做类似上面的处理。
 
-The picture of how the promise returned by `.then/catch` changes:
+下面的图片展示了 `.then/catch` 返回的 promise 是如何改变的：
 
 ![](promise-handler-variants.png)
 
-The smaller picture of how handlers are called:
+简洁一点的图：
 
 ![](promise-handler-variants-2.png)
 
-In the examples of error handling above the `.catch` was always the last in the chain. In practice though, not every promise chain has a `.catch`. Just like regular code is not always wrapped in `try..catch`.
+在上面的错误处理的例子中，`.catch` 通常都会被放到链的最后。在实际应用中，并不是每一个 promise 链都有 `.catch`。就像平常代码也不全都会被 `try..catch` 包裹一样。
 
-We should place `.catch` exactly in the places where we want to handle errors and know how to handle them. Using custom error classes can help to analyze errors and rethrow those that we can't handle.
+我应该把 `.catch` 放在我们正好需要处理错误的地方。使用定制的错误处理 class 能帮助我们分析错误，然后将我们不能处理的错误再次抛出。
 
-For errors that fall outside of our scope we should have the `unhandledrejection` event handler (for browsers, and analogs for other environments). Such unknown errors are usually unrecoverable, so all we should do is to inform the user and probably report to our server about the incident.
+我们应该用 `unhandledrejection` 事件去处理那些在我们处理范围之外的错误（就浏览器环境而言，其他环境有类似的方法）。这样的错误通常是无法回收的，所以我们最好的处理方式是，将错误告诉给用户，同时也尽可能报告给服务器。
