@@ -1,10 +1,10 @@
 
 
-# Introduction: callbacks
+# 回调简介
 
-Many actions in Javascript are *asynchronous*.
+Javascript中的很多操作都是 *异步*.
 
-For instance, take a look at the function `loadScript(src)`:
+例如下面的这个 `loadScript(src)` 函数:
 
 ```js
 function loadScript(src) {
@@ -14,39 +14,39 @@ function loadScript(src) {
 }
 ```
 
-The purpose of the function is to load a new script. When it adds the `<script src="…">` to the document, the browser loads and executes it.
+这个函数的功能是载入新的Javascript文件. 当它成功将 `<script src="…">` 添加到文档以后, 浏览器就会加载然后执行新的Javascript文件.
 
-We can use it like this:
+我们可以这样使用它:
 
 ```js
-// loads and executes the script
+// 加载然后执行新的Javascript文件
 loadScript('/my/script.js');
 ```
 
-The function is called "asynchronous", because the action (script loading) finishes not now, but later.
+我们之所以叫这个函数为异步函数,是因为这个函数无法马上执行完成而是需要等待文件载入成功.
 
-The call initiates the script loading, then the execution continues. While the script is loading, the code below may finish executing, and if the loading takes time, other scripts may run meanwhile too.
+这个函数首先是加载文件,然后执行文件. 当文件在加载的时候, 函数后面的代码可能会已经执行完成, 在加载文件的同时, 其他的Javascript文件也会执行.
 
 ```js
 loadScript('/my/script.js');
-// the code below doesn't wait for the script loading to finish
+// 之后的代码不会等待文件的载入完成
 ```
 
-Now let's say we want to use the new script when it loads. It probably declares new functions, so we'd like to run them.
+现在假设我们希望使用上面的函数,在新的Javascript文件载入完成以后使用它所定义的新函数. 
 
-...But if we do that immediately after the `loadScript(…)` call, that wouldn't work:
+...如果我们在 `loadScript(…)` 函数之后想马上使用新载入的函数, 就会出现问题:
 
 ```js
-loadScript('/my/script.js'); // the script has "function newFunction() {…}"
+loadScript('/my/script.js'); // 这个文件中定义了一个函数 "function newFunction() {…}"
 
 *!*
-newFunction(); // no such function!
+newFunction(); // 不存在滴!
 */!*
 ```
 
-Naturally, the browser probably didn't have time to load the script. As of now, `loadScript` function doesn't provide a way to track the load completion. The script loads and eventually runs, that's all. But we'd like to know when happens, to use new functions and variables from that script.
+一般而言, 浏览器还没有时间去载入Javascript文件. 就目前而言, `loadScript` 函数没有提供任何手段让我们去追踪载入是否完成. 它所能做的只是载入文件, 然后执行. 但是,我们需要知道载入文件什么时候完成, 我们什么时候能使用载入文件里面的新函数和变量.
 
-Let's add a `callback` function as a second argument to `loadScript` that should execute when the script loads:
+现在让我们给 `loadScript` 添加一个 `回调` 函数参数, `回调` 函数会在载入完成以后执行:
 
 ```js
 function loadScript(src, *!*callback*/!*) {
@@ -61,19 +61,19 @@ function loadScript(src, *!*callback*/!*) {
 }
 ```
 
-Now if we want to call new functions from the script, we should write that in the callback:
+现在如果我们想使用新文件里面的函数, 把它写在回调函数里面就可以啦:
 
 ```js
 loadScript('/my/script.js', function() {
-  // the callback runs after the script is loaded
-  newFunction(); // so now it works
+  // 回调函数会在载入完成以后执行
+  newFunction(); // 成功啦!
   ...
 });
 ```
 
-That's the idea: the second argument is a function (usually anonymous) that runs when the action is completed.
+这就是我们的解决方案: 第二个参数是一个函数 (通常是匿名函数), 会在动作执行完成之后执行.
 
-Here's a runnable example with a real script:
+下面是一段可以执行的例子:
 
 ```js run
 function loadScript(src, callback) {
@@ -86,20 +86,20 @@ function loadScript(src, callback) {
 *!*
 loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', script => {
   alert(`Cool, the ${script.src} is loaded`);
-  alert( _ ); // function declared in the loaded script
+  alert( _ ); // _在刚才载入的文件中定义
 });
 */!*
 ```
 
-That's called a "callback-based" style of asynchronous programming. A function that does something asynchronously should provide a `callback` argument where we put the function to run after it's complete.
+这种方式通常被称为基于回调函数的异步编程. 异步函数应该提供一个回调函数参数, 在异步动作执行完成以后我们会执行回调函数 .
 
-Here we did it in `loadScript`, but of course it's a general approach.
+这就是我们在 `loadScript` 函数中所做的事情, 很明显, 这是非常一般的解决方案.
 
-## Callback in callback
+## 回调中再回调
 
-How to load two scripts sequentially: the first one, and then the second one after it?
+怎么样按照顺序载入两个文件: 先载入第一个然后载入第二个 ?
 
-The natural solution would be to put the second `loadScript` call inside the callback, like this:
+最容易想到的解决方案是在 `loadScript` 的回调函数里面再次执行 `loadScript` :
 
 ```js
 loadScript('/my/script.js', function(script) {
@@ -115,9 +115,9 @@ loadScript('/my/script.js', function(script) {
 });
 ```
 
-After the outer `loadScript` is complete, the callback initiates the inner one.
+等待外层的 `loadScript` 执行完成以后 , 回调函数执行内层的 `loadScript` , 看起来还不错, 没毛病.
 
-...What if we want one more script?
+...但是如果有人就是要刁难我胖虎, 一定要载入很多个文件呢 ?
 
 ```js
 loadScript('/my/script.js', function(script) {
@@ -126,7 +126,7 @@ loadScript('/my/script.js', function(script) {
 
 *!*
     loadScript('/my/script3.js', function(script) {
-      // ...continue after all scripts are loaded
+      // ...胖虎已经感觉很难受了
     });
 */!*
 
@@ -135,13 +135,13 @@ loadScript('/my/script.js', function(script) {
 });
 ```
 
-So, every new action is inside a callback. That's fine for few actions, but not good for many, so we'll see other variants soon.
+我们必须把代码写进一个又一个的回调函数里面. 当层级多了以后, 代码就会显得臃肿难看了, 我们很快会讨论新的解决方案解决这个问题.
 
-## Handling errors
+## 错误处理
 
-In examples above we didn't consider errors. What if the script loading fails? Our callback should be able to react on that.
+在上面的代码中, 我们没有考虑过报错的问题 . 如果载入报错会怎样 ? 我们的回调函数应该足够健壮, 有能力去处理错误 .
 
-Here's an improved version of `loadScript` that tracks loading errors:
+下面是一个改进版的, 可以处理错误的 `loadScript` 函数:
 
 ```js run
 function loadScript(src, callback) {
@@ -157,32 +157,32 @@ function loadScript(src, callback) {
 }
 ```
 
-It calls `callback(null, script)` for successful load and `callback(error)` otherwise.
+载入成功后会执行 `callback(null, script)` , 否则会执行 `callback(error)`.
 
-The usage:
+使用方法:
 ```js
 loadScript('/my/script.js', function(error, script) {
   if (error) {
-    // handle error
+    // 错误处理
   } else {
-    // script loaded successfully
+    // 载入成功
   }
 });
 ```
 
-Once again, the recipe that we used for `loadScript` is actually quite common. It's called the "error-first callback" style.
+上面的代码是非常常见的开发模式. 它被称为 "error-first callback".
 
-The convention is:
-1. The first argument of `callback` is reserved for an error if it occurs. Then `callback(err)` is called.
-2. The second argument (and the next ones if needed) are for the successful result. Then `callback(null, result1, result2…)` is called.
+按照约定俗成的规则:
+1. `回调` 的第一个参数预订为错误处理, 如果出现错误了就执行 `callback(err)`.
+2. 第二个参数 (和剩下的, 如果有的话) 用来处理执行成功之后. 然后 `callback(null, result1, result2…)` 被执行.
 
-So the single `callback` function is used both for reporting errors and passing back results.
+用单个 `回掉` 函数来处理错误和成功. 
 
-## Pyramid of doom
+## 恶魔金字塔
 
-From the first look it's a viable way of asynchronous coding. And indeed it is. For one or maybe two nested calls it looks fine.
+`回调` 看起来是一个可行的异步编程方案. 实际上回调层级很少的时候, `回调` 确实是一个不错的解决方案. 
 
-But for multiple asynchronous actions that follow one after another we'll have a code like this:
+但是当回调层级过多的时候, 我们的代码就会非常臃肿难看:
 
 ```js
 loadScript('1.js', function(error, script) {
@@ -201,7 +201,7 @@ loadScript('1.js', function(error, script) {
             handleError(error);
           } else {
   *!*
-            // ...continue after all scripts are loaded (*)
+            // ...直到世界的尽头 (*)
   */!*
           }
         });
@@ -212,22 +212,22 @@ loadScript('1.js', function(error, script) {
 });
 ```
 
-In the code above:
-1. We load `1.js`, then if there's no error.
-2. We load `2.js`, then if there's no error.
-3. We load `3.js`, then if there's no error -- do something else `(*)`.
+在上面的代码中:
+1. 载入 `1.js`, 如果没有出错的话.
+2. 载入 `2.js`, 如果没有出错的话.
+3. 载入 `3.js`,如果没有出错的话 -- 继续执行回调 `(*)`.
 
-As calls become more nested, the code becomes deeper and increasingly more difficult to manage, especially if we have a real code instead of `...`, that may include more loops, conditional statements and so on.
+当层级越来越多了以后, 代码变得越来越深, 非常难以管理, 在实际写代码的时候会比上面的代码更加难以管理,  因为实际代码中会有各种循环, 条件控制, 而不是简单的 `...` .
 
-That's sometimes called "callback hell" or "pyramid of doom".
+我们通常把这种情况叫做 "回调地狱" 或者 "恶魔金字塔".
 
 ![](callback-hell.png)
 
-The "pyramid" of nested calls grows to the right with every asynchronous action. Soon it spirales out of control.
+每一个异步操作都会让"金字塔"的层级变大. 很快它就会膨胀到无法控制.
 
-So this way of coding isn't very good.
+所以这种代码编写方式并不是特别好 . 
 
-We can try to alleviate the problem by making every action a standalone function, like this:
+为了减轻问题, 我们可以给每个异步操作定义一个单独的函数, 就像下面这样:
 
 ```js
 loadScript('1.js', step1);
@@ -259,12 +259,12 @@ function step3(error, script) {
 };
 ```
 
-See? It does the same, and there's no deep nesting now, because we made every action a separate top-level function.
+看见了吧? 它做了同样的事情, 同时也没有了层级, 因为我们给每个操作都定义了一个单独的顶层函数.
 
-It works, but the code looks like a torn apart spreadsheet. It's difficult to read, you probably noticed that. One needs to eye-jump between pieces while reading it. That's inconvenient, especially the reader is not familiar with the code and doesn't know where to eye-jump.
+它确实解决了我们的一些问题, 但是我们的代码却变得跟撕碎的excel表格似的. 也许你已经察觉到了, 它非常难以阅读. 人们在阅读代码的时候需要去寻找所定义的函数在哪儿. 这是非常不方便的, 特别是当读者对代码不了解的时候, 他们不知道去那儿找到对应的函数.
 
-Also the functions named `step*` are all of a single use, they are created only to evade the "pyramid of doom". No one is going to reuse them outside of the action chain. So there's a bit of a namespace cluttering here.
+同时, 那些叫 `step*` 的函数都只是一次性使用, 定义他们只是为了减轻 `恶魔金字塔`. 没有人会在回调操作链之外使用到它们. 所以它们会污染命名空间. 
 
-We'd like to have a something better.
+很明显, 我们需要更好的解决方案.
 
-Luckily, there are other ways to evade such pyramids. One of the best ways is to use "promises", described in the next chapter.
+幸运的是, 我们有一些其他的方法来解决臃肿的金字塔. 其中最好的方法是使用 "promises", 我们会在下一章节讨论它.
