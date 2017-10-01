@@ -1,12 +1,12 @@
-importance: 5
+重要度: 5
 
 ---
 
 # Sum all numbers till the given one
 
-Write a function `sumTo(n)` that calculates the sum of numbers `1 + 2 + ... + n`.
+编写一个函数： `sumTo(n)`，计算以下数字的和： `1 + 2 + ... + n`.
 
-For instance:
+例如:
 
 ```js no-beautify
 sumTo(1) = 1
@@ -17,13 +17,13 @@ sumTo(4) = 4 + 3 + 2 + 1 = 10
 sumTo(100) = 100 + 99 + ... + 2 + 1 = 5050
 ```
 
-Make 3 solution variants:
+使用三种不同的解法:
 
-1. Using a for loop.
-2. Using a recursion, cause `sumTo(n) = n + sumTo(n-1)` for `n > 1`.
-3. Using the [arithmetic progression](https://en.wikipedia.org/wiki/Arithmetic_progression) formula.
+1. 使用循环.
+2. 使用递归，在`'n > 1`时， `sumTo(n) = n + sumTo(n-1)` .
+3. 使用数学公式 [arithmetic progression](https://en.wikipedia.org/wiki/Arithmetic_progression) formula.
 
-An example of the result:
+结果示例:
 
 ```js
 function sumTo(n) { /*... your code ... */ }
@@ -31,6 +31,6 @@ function sumTo(n) { /*... your code ... */ }
 alert( sumTo(100) ); // 5050
 ```
 
-P.S. Which solution variant is the fastest? The slowest? Why?
+附注：那种方案最快？那种最慢？为啥？
 
-P.P.S. Can we use recursion to count `sumTo(100000)`? 
+又注：我们能用递归方法计算 `sumTo(100000)`吗? 

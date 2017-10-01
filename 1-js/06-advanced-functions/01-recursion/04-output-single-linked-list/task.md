@@ -1,10 +1,10 @@
-importance: 5
+重要度: 5
 
 ---
 
-# Output a single-linked list
+# 输出单项链接的列表
 
-Let's say we have a single-linked list (as described in the chapter <info:recursion>):
+假设我们有一个单向链接列表，如同<info:recursion>章节中所描述的：
 
 ```js
 let list = {
@@ -22,8 +22,8 @@ let list = {
 };
 ```
 
-Write a function `printList(list)` that outputs list items one-by-one.
+编写一个函数 `printList(list)` ，它能一个一个地输出每个列表中的元素。
 
-Make two variants of the solution: using a loop and using recursion.
+请分别使用循环与递归实现。
 
-What's better: with recursion or without it?
+使用递归与不使用递归，哪个更好？

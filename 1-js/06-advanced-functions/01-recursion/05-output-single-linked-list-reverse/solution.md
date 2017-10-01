@@ -1,8 +1,8 @@
-# Using a recursion
+# 使用递归
 
-The recursive logic is a little bit tricky here.
+递归逻辑在这里有点绕。
 
-We need to first output the rest of the list and *then* output the current one:
+我们必须先输出列表的剩余部分，*然后* 再输出当前的这个元素：
 
 ```js run
 let list = {
@@ -31,13 +31,13 @@ function printReverseList(list) {
 printReverseList(list);
 ```
 
-# Using a loop
+# 使用循环
 
-The loop variant is also a little bit more complicated then the direct output.
+使用循环的解法与上个章节相比也会复杂些。
 
-There is no way to get the last value in our `list`. We also can't "go back".
+我们既不能直接获取列表`list`中的最后一个值，也不能“走回头路”。
 
-So what we can do is to first go through the items in the direct order and rememeber them in an array, and then output what we remembered in the reverse order:
+所以，我们要做的首先是按照正常次序遍历整个列表，将每个元素记忆在一个数组中，然后再将数组中的元素逆序输出：
 
 ```js run
 let list = {
@@ -71,4 +71,4 @@ function printReverseList(list) {
 printReverseList(list);
 ```
 
-Please note that the recursive solution actually does exactly the same: it follows the list, remembers the items in the chain of nested calls (in the execution context stack), and then outputs them. 
+请注意，递归解法其实做法完全一样，它先沿着列表遍历，将列表中的每个元素记忆在嵌套调用中（即：执行上下文堆栈中），然后再输出他们。

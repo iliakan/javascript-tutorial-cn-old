@@ -1,6 +1,6 @@
-The first solution we could try here is the recursive one.
+第一个能够应用的解法是使用递归。
 
-Fibonacci numbers are recursive by definition:
+斐波拉契数列按照定义是递归性质的:
 
 ```js run
 function fib(n) {
@@ -12,11 +12,11 @@ alert( fib(7) ); // 13
 // fib(77); // will be extremely slow!
 ```
 
-...But for big values of `n` it's very slow. For instance, `fib(77)` may hang up the engine for some time eating all CPU resources.
+...但这种解法在 `n` 很大时会非常慢。 例如： `fib(77)` 会将引擎挂起一段时间并消耗所有的 CPU 资源。
 
-That's because the function makes too many subcalls. The same values are re-evaluated again and again.
+这是因为这样的函数需要调用太多次，相同的数字需要一再被计算。
 
-For instance, let's see a piece of calculations for `fib(5)`:
+以 `fib(5)` 为例，来看看有哪些调用与计算发生：
 
 ```js no-beautify
 ...
@@ -25,23 +25,23 @@ fib(4) = fib(3) + fib(2)
 ...
 ```
 
-Here we can see that the value of `fib(3)` is needed for both `fib(5)` and `fib(4)`. So `fib(3)` will be called and evaluated two times completely independently.
+这里我们可以看到计算 `fib(5)` 与 `fib(4)` 时，都需要 `fib(3)` 的值。所有 `fib(3)` 需要至少两次完全独立的调用与计算。
 
-Here's the full recursion tree:
+完整的递归调用可以从这里的树状图看出：
 
 ![fibonacci recursion tree](fibonacci-recursion-tree.png)
 
-We can clearly notice that `fib(3)` is evaluated two times and `fib(2)` is evaluated three times. The total amount of computations grows much faster than `n`, making it enormous even for `n=77`.
+我们可以很清晰地看到， `fib(3)` 被计算了两次，且 `fib(2)` 被计算了三次。 总的计算次数增长的速度超过了 `n` 的增长速度, 当 `n=77` 时这个差异就很明显了。
 
-We can optimize that by remembering already-evaluated values: if a value of say `fib(3)` is calculated once, then we can just reuse it in future computations.
+我们可以通过记住已经计算过的数字的方式来优化： 如果 `fib(3)` 的结果已经计算出，那么我们可以记住它并在以后的计算中直接使用。
 
-Another variant would be to give up recursion and use a totally different loop-based algorithm.
+另外一种变通方案是放弃递归，使用完全基于循环的算法。
 
-Instead of going from `n` down to lower values, we can make a loop that starts from `1` and `2`, then gets `fib(3)` as their sum, then `fib(4)` as the sum of two previous values, then `fib(5)` and goes up and up, till it gets to the needed value. On each step we only need to remember two previous values.
+与从 `n` 由大到小计算的方案相反，我们可以从 `1` 和 `2` 开始循环，得到 `fib(3)` 的值，然后根据之前两个值的和计算出 `fib(4)` ，然后计算出 `fib(5)` ，以此类推，直到计算到所需要的值。用这种方法，我们就只需要记下前两个值。
 
-Here are the steps of the new algorithm in details.
+新算法的计算步骤如下。
 
-The start:
+开始：
 
 ```js
 // a = fib(1), b = fib(2), these values are by definition 1
@@ -56,9 +56,9 @@ a  b  c
 */
 ```
 
-Now we want to get `fib(4) = fib(2) + fib(3)`.
+现在我们想通过 `fib(4) = fib(2) + fib(3)` 得到 `4` 的计算结果。
 
-Let's shift the variables: `a,b` will get `fib(2),fib(3)`, and `c` will get their sum:
+我们可以将 `fib(2),fib(3)` 在前一步计算出来的结果放入 `a,b` ， 那么 `c` 所包含的就是他们的和：
 
 ```js no-beautify
 a = b; // now a = fib(2)
@@ -71,7 +71,7 @@ c = a + b; // c = fib(4)
 */
 ```
 
-The next step gives another sequence number:
+再继续一轮，就可以得到下一个数列的值：
 
 ```js no-beautify
 a = b; // now a = fib(3)
@@ -84,9 +84,9 @@ c = a + b; // c = fib(5)
 */
 ```
 
-...And so on until we get the needed value. That's much faster than recursion and involves no duplicate computations.
+以此类推，直到我们到达想要计算的值。 这种方法就比递归快很多，并且没有重复的计算。
 
-The full code:
+完整的代码如下：
 
 ```js run
 function fib(n) {
@@ -105,6 +105,6 @@ alert( fib(7) ); // 13
 alert( fib(77) ); // 5527939700884757
 ```
 
-The loop starts with `i=3`, because the first and the second sequence values are hard-coded into variables `a=1`, `b=1`.
+因为数列中的第一个、第二个值已经通过变量赋值 `a=1`, `b=1` 进行了硬编码，因此循环可以从 `i=3` 开始。
 
-The approach is called [dynamic programming bottom-up](https://en.wikipedia.org/wiki/Dynamic_programming).
+这种方法又称之为：自底向上的动态编程 [dynamic programming bottom-up](https://en.wikipedia.org/wiki/Dynamic_programming) 。

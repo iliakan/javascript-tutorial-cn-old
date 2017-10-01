@@ -1,6 +1,6 @@
-# Loop-based solution
+# 使用循环的方案
 
-The loop-based variant of the solution:
+使用循环的方案：
 
 ```js run
 let list = {
@@ -30,7 +30,7 @@ function printList(list) {
 printList(list);
 ```
 
-Please note that we use a temporary variable `tmp` to walk over the list. Technically, we could use a function parameter `list` instead:
+请注意这里我们使用了一个临时变量 `tmp`来走遍列表. 技术上，我们可以使用一个函数参数 `list` ：
 
 ```js
 function printList(list) {
@@ -43,15 +43,15 @@ function printList(list) {
 }
 ```
 
-...But that would be unwise. In the future we may need to extend a function, do something else with the list. If we change `list`, then we loose such ability.
+...但这种方式可能不明智，未来我们可能需要扩展一个函数，对列表做些别的事情。如果我们改成 `list`，我们可能会丧失一些灵活性。
 
-Talking about good variable names, `list` here is the list itself. The first element of it. And it should remain like that. That's clear and reliable.
+说到变量的命名，这里的 `list`是列表本身，也是列表的第一个元素。我们应该保持这种风格，因为可读性高且易于维护。
 
-From the other side, the role of `tmp` is exclusively a list traversal, like `i` in the `for` loop.
+另外一面， `tmp` 的角色就是专门用于列表的遍历变量，如同`for` 循环中的 `i`一样。
 
-# Recursive solution
+# 递归解法
 
-The recursive variant of `printList(list)` follows a simple logic: to output a list we should output the current element `list`, then do the same for `list.next`:
+问题 `printList(list)` 的递归解法使用一个简单的逻辑：当需要输出一个列表时，输出当前元素 `list` ，然后再输出当前元素的下一个元素 `list.next`：
 
 ```js run
 let list = {
@@ -70,10 +70,10 @@ let list = {
 
 function printList(list) {
 
-  alert(list.value); // output the current item
+  alert(list.value); // 输出当前元素
 
   if (list.next) {
-    printList(list.next); // do the same for the rest of the list
+    printList(list.next); // 如法炮制，输出后面的。
   }
 
 }
@@ -81,8 +81,8 @@ function printList(list) {
 printList(list);
 ```
 
-Now what's better?
+那现在看看哪个更好？
 
-Technically, the loop is more effective. These two variants do the same, but the loop does not spend resources for nested function calls.
+技术上来说，循环解法的效率更高。两种解法殊途同归，但循环解法无需为嵌套调用耗费额外的资源。
 
-From the other side, the recursive variant is shorter and sometimes easier to understand.
+事情的另外一面是：递归解法代码更短并且很多时候这也意味着更容易理解。

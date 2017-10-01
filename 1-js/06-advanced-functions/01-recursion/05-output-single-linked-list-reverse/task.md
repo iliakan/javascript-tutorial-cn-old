@@ -1,9 +1,9 @@
-importance: 5
+重要度： 5
 
 ---
 
-# Output a single-linked list in the reverse order
+# 以逆序输出一个单向链接的列表
 
-Output a single-linked list from the previous task <info:task/output-single-linked-list> in the reverse order.
+将前面章节任务中的单向链接列表 <info:task/output-single-linked-list> 以逆序方式输出。
 
-Make two solutions: using a loop and using a recursion.
+要求：分别使用循环的解法与递归的解法。
