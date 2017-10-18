@@ -1,68 +1,68 @@
-# Data types
+# 数据类型
 
-A variable in JavaScript can contain any data. A variable can at one moment be a string and later recieve a numeric value:
+JavaScript 中的变量可以保存任何数据。一个变量在前一刻可以是个字符串，然后又收到一个数值：
 
 ```js
-// no error
+// 没有错误
 let message = "hello";
 message = 123456;
 ```
 
-Programming languages that allow such thing are called "dynamically typed", meaning that there are data types, but variables are not bound to any of them.
+允许这种操作的编程的语言称之为“动态类型”（dynamically typed）的编程语言，意思是，拥有数据类型，但是变量并不限于数据类型中的任何一个。
 
-There are 7 basic data types in JavaScript. Here we'll study the basics, and in next chapters we'll talk about each of them in detail.
+在 JavaScript 中有七种基本数据类型。这一章我们会学习基本知识，下一章我们会详细介绍它们。
 
 [cut]
 
-## A number
+## number 类型
 
 ```js
 let n = 123;
 n = 12.345;
 ```
 
-The *number* type serves both for integer and floating point numbers.
+*number* 类型用于整数和浮点数。
 
-There are many operations for numbers, e.g. multiplication `*`, division `/`, addition `+`, substraction `-` and so on.
+数字有很多操作，比如，乘法 `*`，除法 `/`，加法 `+`，减法 `-` 等等。
 
-Besides regular numbers, there are so-called "special numeric values" which also belong to that type: `Infinity`, `-Infinity` and `NaN`.
+除了常规的数字，还包括所谓的 “特殊数值” 也属于这种类型：`Infinity`, `-Infinity` 和 `NaN`。
 
-- `Infinity` represents the mathematical [Infinity](https://en.wikipedia.org/wiki/Infinity) ∞. It is a special value that's greater than any number.
+- `Infinity` 代表数学概念中的[无限](https://en.wikipedia.org/wiki/Infinity) ∞。是一个比任何数字都大的特殊值。
 
-    We can get it as a result of division by zero:
+    我们可以通过除以0来得到它。
 
     ```js run
     alert( 1 / 0 ); // Infinity
     ```
 
-    Or just mention it in the code directly:
+    或者在代码中直接提及它。
 
     ```js run
     alert( Infinity ); // Infinity
     ```
-- `NaN` represents a computational error. It is a result of an incorrect or an undefined mathematical operation, for instance:
+- `NaN` 代表一个计算错误。它是一个不对的或者一个未定义的数学操作所得到的结果，比如：
 
     ```js run
-    alert( "not a number" / 2 ); // NaN, such division is erroneous
+    alert( "not a number" / 2 ); // NaN, 这样的除法是错误的
     ```
 
-    `NaN` is sticky. Any further operation on `NaN` would give `NaN`:
+    `NaN` 是粘性的。任何对 `NaN` 的进一步操作都会给出 `NaN`：
 
     ```js run
     alert( "not a number" / 2 + 5 ); // NaN
     ```
 
-    So, if there's `NaN` somewhere in a mathematical expression, it propagates to the whole result.
+    所以，如何在数学表达式有一个 `NaN`，它会传播到最终结果。
 
-```smart header="Mathematical operations are safe"
-Doing maths is safe in JavaScript. We can do anything: divide by zero, treat non-numeric strings as numbers, etc.
+```smart header="数学运算是安全的"
+在 JavaScript 中做数学运算是安全的。我们可以做任何事：除以0，将非数字字符串视为数字，等等。
 
-The script will never stop with a fatal error ("die"). At worst we'll get `NaN` as the result.
+脚本永远不会有致命的错误("死亡")。最坏的情况下，会得到 `NaN` 作为结果。
 ```
 
-Special numeric values formally belong to the "number" type. Of course they are not numbers in a common sense of this word.
+特殊的数值属于*number*类型。当然，在这个词一般认识下，它们并不是数字。
 
-We'll see more into working with numbers in the chapter <info:number>.
+我们将在章节 <info:number> 了解更多有关使用数字的内容。
 
 ## A string
 
