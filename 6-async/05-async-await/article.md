@@ -67,7 +67,7 @@ f();
 
 function 的执行在 `(*)` 处被 "暂停"，然后 promise 完成以后恢复执行，`result` 变成了它的结果。所以上面的代码会一秒以后显示 "done!"。
 
-再强调一下：`await` 使 JavaScript 等待直到 promise 完成，然后通过 promise 返回值继续执行。它不会花费任何 CPU 资源，因为引擎可以同时做其他的事情：执行其他的脚本，处理事件等。
+再强调一下：`await` 使 JavaScript 等待直到 promise 完成，然后通过 promise 返回值继续执行。它不会花费任何 CPU 资源，因为引擎可以同时做其它的事情：执行其它的脚本，处理事件等。
 
 它只是一个比 `promise.then` 更优雅的获取 promise 结果的语法，阅读和书写更简单。
 
@@ -154,7 +154,7 @@ async function f() {
 f();
 ```
 
-如果 `await` 得到一个包含 `.then` 的 non-promise 对象，它执行那个方法，并提供原生的函数 `resolves`，`reject`作为参数。然后 `wait` 等待直到他们中的一个被执行（在上面的代码中，在 `(*)`处），再通过它的返回值继续执行。
+如果 `await` 得到一个包含 `.then` 的 non-promise 对象，它执行那个方法，并提供原生的函数 `resolves`，`reject`作为参数。然后 `wait` 等待直到它们中的一个被执行（在上面的代码中，在 `(*)`处），再通过它的返回值继续执行。
 
 一个 class 的方法也能是 async，只用在它前面放一个 `async`。
 
@@ -257,7 +257,7 @@ f().catch(alert); // TypeError: 拉取失败 // (*)
 就像上面例子中的 `(*)` 处。
 ```
 
-当我们需要等待多个 promises 时，我们能用 `Promise.all` 包裹他们，然后 `await`：
+当我们需要等待多个 promises 时，我们能用 `Promise.all` 包裹它们，然后 `await`：
 
 ```js
 // 等待返回结果的数组
@@ -282,6 +282,6 @@ promise 前面的 `await` 关键词让 JavaScript 等待直到该 promise 完成
 1. 如果它是一个错误，就会生成异常，就像 `throw error` 在那个地方被执行一样。
 2. 否则，它返回结果，然后我们可以分配它给一个变量。
 
-他们提供了一个非常棒的框架来编写异步代码，读和写都非常简单。
+它们提供了一个非常棒的框架来编写异步代码，读和写都非常简单。
 
-使用 `async/await` 的时候，我们基本不需要写 `promise.then/catch`，但是我们任然不应该忘记它们是基于 promises，因为有时（e.g. 在最外层）我们不得不使用那些方法。同时， `Promise.all` 用来同时等待多个任务非常棒。
+使用 `async/await` 的时候，我们基本不需要写 `promise.then/catch`，但是我们仍然不应该忘记它们是基于 promises，因为有时（e.g. 在最外层）我们不得不使用那些方法。同时， `Promise.all` 用来同时等待多个任务非常棒。

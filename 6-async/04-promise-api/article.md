@@ -1,6 +1,6 @@
 # Promise API
 
-`Promise` 库包含四个静态的方法。下面我们马上就会讲解他们。
+`Promise` 库包含四个静态的方法。下面我们马上就会讲解它们。
 
 ## Promise.resolve
 
@@ -122,7 +122,7 @@ Promise.all(requests)
 
     return responses;
   })
-  // 使用 map 方法将响应数组放进 response.json() 的数组去读取他们的内容
+  // 使用 map 方法将响应数组放进 response.json() 的数组去读取它们的内容
   .then(responses => Promise.all(responses.map(r => r.json())))
   // 所有的 JSON 答案都被解析："users" 被解析后结果的数组
   .then(users => users.forEach(user => alert(user.name)));
@@ -145,7 +145,7 @@ Promise.all([
 
 上面的代码中，第二个 promise 会在两秒以后置为拒绝状态。这会导致 `Promise.all` 马上被置为拒绝状态，所以 `.catch` 被执行：返回的错误信息成为整个 `Promise.all` 的返回值。
 
-重要的是 promises 没有提供办法去 "取消" 或者 "退出" 它们的执行。所以其他的 promises 继续执行，最终被完成，但是他们的返回解决会被忽略。
+重要的是 promises 没有提供办法去 "取消" 或者 "退出" 它们的执行。所以其它的 promises 继续执行，最终被完成，但是它们的返回解决会被忽略。
 
 有办法避免这样的问题：我们可以写额外的代码去 `clearTimeout` （或者取消）报错的 promises，也可以将错误作为返回数组的成员展示出来（详情请看本章的 task）。
 
@@ -186,7 +186,7 @@ Promise.race([
 ]).then(alert); // 1
 ```
 
-所以，第一个结果/错误成了整个 `Promise.race` 的结果。等到第一个完成的 promise "赢得了赛跑"，所有其他的结果/错误都会被无视。
+所以，第一个结果/错误成了整个 `Promise.race` 的结果。等到第一个完成的 promise "赢得了赛跑"，所有其它的结果/错误都会被无视。
 
 ## Summary
 
@@ -194,7 +194,7 @@ Promise.race([
 
 1. `Promise.resolve(value)` -- 返回一个值，并将 promise 置为已处理，
 2. `Promise.reject(error)` -- 返回一个值，并将 promise 置为已拒绝，
-3. `Promise.all(promises)` -- 等待所有的 promises 完成，然后返回他们的结果的数组。如果其中任何一个 promise 被拒绝，则它会变成 `Promise.all` 的错误，其他的所有结果都会被无视。
+3. `Promise.all(promises)` -- 等待所有的 promises 完成，然后返回它们的结果的数组。如果其中任何一个 promise 被拒绝，则它会变成 `Promise.all` 的错误，其它的所有结果都会被无视。
 4. `Promise.race(promises)` -- 等待最先完成的 promise，然后它的结果/错误变成结果。
 
 `Promise.all` 是四个中是实际中使用最常见的一个。
