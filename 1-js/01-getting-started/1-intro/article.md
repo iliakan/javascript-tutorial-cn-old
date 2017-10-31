@@ -1,7 +1,6 @@
 # JavaScript 简介
 
-Let's see what's so special about JavaScript, what we can achieve with it and which other technologies play well with it.
-我们一起来聊一下JavaScript，用它能做什么，它有哪些特性，已经跟它配合使用的一些技术。
+我们一起来聊一下JavaScript，用它能做什么，它有哪些特性，以及一些跟它配合使用的技术。
 
 ## 什么是 JavaScript？
 
@@ -16,12 +15,11 @@ Let's see what's so special about JavaScript, what we can achieve with it and wh
 ```smart header="Why <u>Java</u>Script?"
 JavaScript在创建的时候，它的名字叫"LiveScript"。因为当时Java很流行，所以就取了个名字叫JavaScript。这样就可以让大家认为，JavaScript是Java的弟弟。
 
-随时JavaScript的发展，它已经变成了一种独立的语言，同时也有了自己的语言规范[ECMAScript](http://en.wikipedia.org/wiki/ECMAScript)。现在，Java和JavaScript已经是两门不同的语言，彼此之前也没有任何关系。
+随着JavaScript的发展，它已经变成了一门独立的语言，同时也有了自己的语言规范[ECMAScript](http://en.wikipedia.org/wiki/ECMAScript)。现在，Java和JavaScript已经是两门不同的语言，彼此之前也没有任何关系。
 ```
 现在，JavaScript不仅仅是在浏览器内执行，也可以在服务端执行。甚至在任意存在[JavaScript 引擎](https://en.wikipedia.org/wiki/JavaScript_engine)的环境中，都可以执行。
 
 浏览器中嵌入了JavaScript引擎，有时也称作JavaScript虚拟机。
-The browser has an embedded engine, sometimes it's also called a "JavaScript virtual machine".
 
 不同的引擎有不同的名字，例如：
 
@@ -29,7 +27,6 @@ The browser has an embedded engine, sometimes it's also called a "JavaScript vir
 - [Gecko](https://en.wikipedia.org/wiki/Gecko_(software)) --Firefox中的JavaScript引擎。
 - ...也有一些其他的JavaScript引擎，"Trident"和"Chakra"是不同版本IE的JavaScript引擎，"ChakraCore"是Microsoft Edge的JavaScript引擎, "Nitro"和"SquirrelFish"是Safari的JavaScript引擎，等等。
 
-These terms above are good to remember, because they are used in developer articles in the internet. We'll use them too. For instance, if "a feature X is supported by V8", then it probably works in Chrome and Opera.
 上面这些经常在一些关于开发的文章中提到；也很方便记忆。比喻：某个新的功能，JavaScript引擎V8是支持的；那么我们可以认为这个功能在Chrome和Opera中可以正常运行。
 
 ```smart header="How the engines work?"
@@ -45,7 +42,7 @@ These terms above are good to remember, because they are used in developer artic
 ## 浏览器中的JavaScript能干什么?
 现在的JavaScript是一种安全语言。它不会去操作计算机的内存和CPU。因为JavaScript最开始就是为浏览器准备的，浏览器也不需要操作这些。
 
-JavaScript的能力依赖于它执行的环境。比喻：[Node.JS](https://wikipedia.org/wiki/Node.js)就可以读写文件，可以发送响应网络请求。
+JavaScript的能力依赖于它执行的环境。例如：[Node.JS](https://wikipedia.org/wiki/Node.js)就可以读写文件，可以发送响应网络请求。
 
 浏览器中的JavaScript只处理和网页相关的操作，处理网页和用户的交互以及网页和服务端的网络请求。
 
@@ -54,69 +51,72 @@ JavaScript的能力依赖于它执行的环境。比喻：[Node.JS](https://wiki
 - 在网页中插入新的HTML，修改现有的网页内容和网页的样式。
 - 响应用户的行为，响应鼠标的点击或移动，键盘的敲击。
 - 向远处服务器发送请求，下载或上传文件（[AJAX](https://en.wikipedia.org/wiki/Ajax_(programming))和[COMET](https://en.wikipedia.org/wiki/Comet_(programming))技术）。
-- 获取或修改cookie，向用访问者发送消息，问问题。
+- 获取或修改cookie，向用访问者发送消息，提问题。
 - 存储浏览器端的一些本地数据（本地存储）。
 
 
 ## 浏览器中的JavaScript*不*能干什么?
 
-JavaScript abilities in the browser are limited for the sake of the user's safety. The aim is to prevent an evil webpage from accessing private information or harming the user's data.
+为了用户的（信息）安全，在浏览器中的JavaScript的能力是有限的。这样主要是为了阻止邪恶的网站获得或修改用户的私人数据。
 
-The examples of such restrictions are:
+例如：
 
-- JavaScript on the webpage may not read/write arbitrary files on the hard disk, copy them or execute programs. It has no direct access to OS system functions.
+- 网页中的JavaScript不能读、写、复制及执行用户磁盘上的文件或程序。也不能直接控制操作系统。
 
-    Modern browsers allow it to work with files, but the access is limited and only provided if the user does certain actions, like "dropping" a file into a browser window or selecting it via an `<input>` tag.
+    现代浏览器允许JavaScript做一些文件相关的操作，但是这个操作是受到限制的。仅当用户使用某个特定的动作，JavaScript才能操作这个文件。例如，把文件“拖”到浏览器中，或者通过`<input>` 标签选择文件。
 
-    There are ways to interact with camera/microphone and other devices, but they require an explicit user's permission. So a JavaScript-enabled page may not sneakily enable a web-camera, observe the surroundings and send the information to the [NSA](https://en.wikipedia.org/wiki/National_Security_Agency).
-- Different tabs/windows generally do not know about each other. Sometimes they do, for example when one window uses JavaScript to open the other one. But even in this case, JavaScript from one page may not access the other if they come from different sites (from a different domain, protocol or port).
+    JavaScript有很多方式和设备的照相机/麦克风交互，这些都需要提前获得用户的允许。所以，JavaScript并不会偷偷的通过你的摄像头观察你，更不会把你的信息发送到[NSA](https://en.wikipedia.org/wiki/National_Security_Agency)。
 
-    That is called a "Same Origin Policy". To workaround that, *both pages* must contain a special JavaScript code that handles data exchange.
 
-    The limitation is again for user's safety. A page from `http://anysite.com` which a user has opened occasionaly must not be able to open or access another browser tab with the URL `http://gmail.com` and steal information from there.
-- JavaScript can easily communicate over the net to the server where the current page came from. But its ability to receive data from other sites/domains is crippled. Though possible, it requires the explicit agreement (expressed in HTTP headers) from the remote side. Once again, that's safety limitations.
+- 不同的浏览器标签页基本彼此不相关。有时候，也会有一些关系。例如，通过JavaScript打开另外一个新的标签页。如果两个标签页打开的不是同一个网站，他们不能够相互通信（域名，协议或者端口任一不相同的网站，都认为是不同的网站）。
+
+    这就是“同源策略”。为了解决不同标签页交互的问题，两个同源的网站必须*都*包含特殊的JavaScript代码，才能够实现数据交换。
+
+    这个限制也是为了用户的信息安全。例如，来自`http://anysite.com`的网页的JavaScript不能够获取任何`http://gmail.com`（另外一个标签页打开的网页）页面的数据。
+- JavaScript通过互联网可以很容易的和服务器通讯（当前网页域名的服务器）通讯。但是从其他的服务器中获取数据的功能是受限的，需要（在HTTP头中）添加某些参数。这也是为了用户的数据安全。
 
 ![](limitations.png)
 
 Such limits do not exist if JavaScript is used outside of the browser, for example on a server. Modern browsers also allow installing plugin/extensions which may get extended permissions.
+非浏览器中的JavaScript，一般没有这些限制。例如服务端的JavaScript就没有这些限制。现代浏览器还允许通过JavaScript来安装浏览器插件/扩展，当然这也是在用户授权的前提下。
 
-## What makes JavaScript unique?
+## JavaScript为什么与众不同？
 
-There are at least *three* great things about JavaScript:
+至少有*3*件事值得一提：
 
 ```compare
-+ Full integration with HTML/CSS.
-+ Simple things done simply.
-+ Supported by all major browsers and enabled by default.
++ 和HTML/CSS完全的集成。
++ 使用简单的工具（语言）完成简单的任务。
++ 被所有的主流浏览器支持，并且默认开启。
 ```
 
-Combined, these 3 things only exist in JavaScript and no other browser technology.
+满足这三条的浏览器技术也只有JavaScript了。
 
-That's what makes JavaScript unique. That's why it is the most widespread way of creating browser interfaces.
+这就是为什么JavaScript与众不同！这也是为什么大家都通过JavaScript来跟浏览器交互。
 
-While planning to learn a new technology, it's beneficial to check its perspectives. So let's move on to the modern trends that include new languages and browser abilities.
+当然，学习一项新技术的时候，最好先看一下他的前景。所有，接下来，我们来看看新的趋势（包含一些新的语言）。
 
 
-## Languages "over" JavaScript
+## 比JavaScript“好”的语言
 
-The syntax of JavaScript does not suit everyone's needs. Different people want different features.
+不同的人喜欢不同的功能，JavaScript的语法也不能够满足所有人。
 
-That's normal, because projects and requirements are different for everyone.
+这是正常的，因为每个人的项目和需求都不一样。
 
-So recently a plethora of new languages appeared, which are *transpiled* (converted) to JavaScript before they run in the browser.
+所以，最近出现了很多不同的语言，这些语言在浏览器中执行之前，都会被*编译*（转化）成JavaScript。
 
-The modern tools make the transpilation very fast and transparent, actually allowing developers to code in another language, autoconverting it "under the hood".
+现代的工具编译得很快，并且让用户不可感知。这就允许开发中使用一种新的语言，就是使用JavaScript一样。
 
-Examples of such languages:
+例如：
 
-- [CoffeeScript](http://coffeescript.org/) is a "syntax sugar" for JavaScript, it introduces shorter syntax, allowing to write more precise and clear code. Usually Ruby guys like it.
-- [TypeScript](http://www.typescriptlang.org/) is concentrated on adding "strict data typing", to simplify development and support of complex systems. It is developed by Microsoft.
-- [Dart](https://www.dartlang.org/) is a standalone language that has its own engine that runs in non-browser environments (like mobile apps). It was initially offered by Google as a replacement for JavaScript, but as of now, browsers require it to be transpiled to JavaScript just like the ones above.
+- [CoffeeScript](http://coffeescript.org/) 是JavaScript的语法糖, 他语法简短，精确简捷。通常使用Ruby的人喜欢用。
+- [TypeScript](http://www.typescriptlang.org/) 主要是是添加了严格类型系统。这样就能简化开发，也能用于开发一些负责的系统。TypeScript是微软开发的。
+- [Dart](https://www.dartlang.org/)是一门独立的语言。他拥有自己的引擎，在非浏览器环境中运行（如：在手机应用中运行）。最开始是Google提供的，用于替代JavaScript的，但是现在，浏览器页需要他和上面的语言一样需要被编译成JavaScript。
 
-There are more. Of course even if we use one of those languages, we should also know JavaScript, to really understand what we're doing.
+当然，还有更多其他的语言。即使我们在使用这些语言，我们也需要知道JavaScript。因为学习JavaScript可以让我们真正明白我们自己在做什么。
 
-## Summary
+## 总结
 
-- JavaScript was initially created as a browser-only language, but now it is used in many other environments as well.
-- At this moment, JavaScript has a unique position as a most widely adopted browser language with full integration with HTML/CSS.
-- There are many languages that get "transpiled" to JavaScript and provide certain features. It is recommended to take a look at them, at least briefly, after mastering JavaScript.
+- JavaScript最开始是为浏览器设计的一门语言，但是现在其他的环境中运行。
+- 现在，JavaScript是在浏览中使用最广，并且能够很好集成HTML/CSS的一门语言。
+- 有很多其他的语言可以编译成JavaScript，这些语言还提供更多的功能。最好要了解一下这些语言，只是在掌握JavaScript之后，需要了解一下。
