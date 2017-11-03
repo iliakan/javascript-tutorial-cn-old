@@ -8,7 +8,7 @@
 
 ## IDE
 
-[IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) (集成开发环境) 是用于管理整个项目具有强大的编辑器。也就是是说，不仅仅是一款编辑器，而是开发环境。
+[IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) (集成开发环境) 是用于管理整个项目具有强大功能的编辑器。也就是说，不仅仅是编辑器，而且还是开发环境。
 
 IDE加载项目（通常包含多个文件），并且允许在不同文件之间切换。IDE还提供基于项目的自动补全功能，集成版本控制，集成测试环境等一些其他用于开发的东西。
 
@@ -25,14 +25,13 @@ IDE加载项目（通常包含多个文件），并且允许在不同文件之�
 
 大多数IDE是收费的，但是他们都可以试用。这些费用对于一个合格的程序员来说，肯定算不了什么，所有还是选一个最好的。
 
-## Lightweight editors
 ## 轻量编辑器
 
-“轻量编辑器”没哟IDE那么功能强大，但是他们一般很快，很简单，很优雅。
+“轻量编辑器”没有IDE那么功能强大，但是他们一般很快，简单，而且优雅。
  
 “轻量编辑器”主要用于立即打开编辑一个文件。
 
-“轻量编辑器”和IDE有很大的区别。IDE一般是项目中使用，就意味着一开始要加载很多数据，并且在使用的过程中会分析项目的结构。如果我们只需要编辑一个文件，那么“轻量编辑机”会更快的帮我们打开文件。
+“轻量编辑器”和IDE有很大的区别。IDE一般是项目中使用，就意味着一开始要加载很多数据，并且在使用的过程中会分析项目的结构和内容。如果我们只需要编辑一个文件，那么“轻量编辑机”会更快的帮我们打开文件。
 
 实际上，“轻量编辑器”一般都有各种各样的插件，这些插件可以做语法分析，可以补全代码。所以“轻量编辑器”和IDE也没有严格的界限。
 
@@ -46,11 +45,11 @@ IDE加载项目（通常包含多个文件），并且允许在不同文件之�
 
 ## 我喜欢的
 
-项目中我一般用IDE，编辑个别文件我会用“轻量编辑器”。
+项目开发我一般用IDE，编辑个别文件我会用“轻量编辑器”。
 
 我使用的编辑器：
 
-- [WebStorm](http://www.jetbrains.com/webstorm/) 写JS, 如果项目涉及其他语言我会选择 [PHPStorm](http://www.jetbrains.com/phpstorm/) (PHP), [IDEA](http://www.jetbrains.com/idea/) (Java), [RubyMine](http://www.jetbrains.com/ruby/) (Ruby)。 对于其他的语言还有一些其他的编辑器，不过我只用过上面的这几款。
+- IDE-- [WebStorm](http://www.jetbrains.com/webstorm/) 写JS, 如果项目涉及其他语言我会选择 [PHPStorm](http://www.jetbrains.com/phpstorm/) (PHP), [IDEA](http://www.jetbrains.com/idea/) (Java), [RubyMine](http://www.jetbrains.com/ruby/) (Ruby)。 对于其他的语言还有一些其他的编辑器，不过我只用过上面的这几款。
 - 轻量编辑器-- [Sublime Text](http://www.sublimetext.com)或[Atom](https://atom.io/)。
 
 如果你们不知道怎么选，可以考虑考虑这些。
@@ -61,4 +60,4 @@ IDE加载项目（通常包含多个文件），并且允许在不同文件之�
 
 世上还有很多其他的很好的编辑器，你们可以选择一个你们最喜欢的。
 
-选择编辑器就像选择其他工具一样。要看个人的习惯，个人的喜好，以及不同的项目。
+选择编辑器就像选择其他工具一样。要看个人的习惯，个人的喜好，以及开发的项目。
