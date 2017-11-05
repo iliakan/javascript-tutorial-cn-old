@@ -1,6 +1,8 @@
 
 # The JavaScript Tutorial
 
+**Translation lead needed. Due to the my poor Chinese knowledge, I can't review pull requests.**
+
 This repository hosts the content of the JavaScript Tutorial, to be published at the Chinese subdomain of [https://javascript.info](https://javascript.info) when the 1st part is ready.
 
 Please use this repository to file issues and suggest PRs for the text.
