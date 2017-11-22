@@ -299,7 +299,7 @@ Testing finished – after all tests (after)
 
 [edit src="beforeafter" title="Open the example in the sandbox."]
 
-通常地，`beforeEach/afterEach` (`before/each`) 用于初始化，清零计数器或做一些介于每个测试（或测试组）直接的事情。
+通常地，`beforeEach/afterEach` (`before/each`) 用于初始化，清零计数器或做一些介于每个测试（或测试组）之间的事情。
 ````
 
 ## 延伸的规范
@@ -381,7 +381,7 @@ function pow(x, n) {
 
 规范可以通过三种方式使用：
 
-1. **测试** 保证代码的正确工作。
+1. **测试** 保证代码正确工作。
 2. **文档** -- `describe` 的标题以及 `it` 告诉我们函数做了什么。
 3. **案例** -- 测试实际工作的例子显示了一个函数可以怎样被使用。
 
