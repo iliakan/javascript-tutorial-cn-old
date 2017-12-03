@@ -1,14 +1,14 @@
 # 编辑器
 
-程序员接触时间最长的就是代码编辑器 ( 后面简称编辑器 )。
+程序员接触时间最长的就是代码编辑器 （后面简称编辑器）。
 
-编辑器主要分两种：IDE( 集成开发环境 ) 和轻量编辑器。很多人喜欢这两种各选一个。
+编辑器主要分两种：IDE（集成开发环境） 和轻量编辑器。很多人喜欢这两种各选一个。
 
 [cut]
 
 ## IDE
 
-[IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) ( 集成开发环境 ) 是用于管理整个项目具有强大功能
+[IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) （集成开发环境） 是用于管理整个项目具有强大功能
 的编辑器。也就是说，不仅仅是编辑器，而且还是开发环境。
 
 IDE 加载项目（通常包含多个文件），并且允许在不同文件之间切换。IDE 还提供基于项目的自动补全功能，集成版本控制，集成测试环
@@ -57,8 +57,8 @@ IDE 加载项目（通常包含多个文件），并且允许在不同文件之�
 我使用的编辑器：
 
 * IDE-- [WebStorm](http://www.jetbrains.com/webstorm/) 写 JS, 如果项目涉及其他语言我会选择
-	[PHPStorm](http://www.jetbrains.com/phpstorm/) （PHP ）， [IDEA](http://www.jetbrains.com/idea/) （ Java），
-	[RubyMine](http://www.jetbrains.com/ruby/)（Ruby ）。 对于其他的语言还有一些其他的编辑器，不过我只用过上面的这几款。
+	[PHPStorm](http://www.jetbrains.com/phpstorm/) （PHP）， [IDEA](http://www.jetbrains.com/idea/) （Java），
+	[RubyMine](http://www.jetbrains.com/ruby/)（Ruby）。 对于其他的语言还有一些其他的编辑器，不过我只用过上面的这几款。
 * 轻量编辑器 -- [Sublime Text](http://www.sublimetext.com)或[Atom](https://atom.io/)。
 
 如果你们不知道怎么选，可以考虑考虑这些。
