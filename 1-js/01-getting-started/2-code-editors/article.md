@@ -2,7 +2,7 @@
 
 程序员接触时间最长的就是代码编辑器 ( 后面简称编辑器 )。
 
-编辑器主要分两种：IDE （集成开发环境）和轻量编辑器。很多人喜欢这两种各选一个。
+编辑器主要分两种：IDE( 集成开发环境 ) 和轻量编辑器。很多人喜欢这两种各选一个。
 
 [cut]
 
@@ -17,11 +17,11 @@ IDE 加载项目（通常包含多个文件），并且允许在不同文件之�
 如果你还没考虑好选哪一款 IDE，看看下面：
 
 * IntelliJ editors: [WebStorm](http://www.jetbrains.com/webstorm/) 供前端开发使用。 除了前端，如果你们还需要使用其他语言
-	，那么可以考虑[PHPStorm (PHP)](http://www.jetbrains.com/phpstorm/),
+	，那么可以考虑 [PHPStorm (PHP)](http://www.jetbrains.com/phpstorm/),
 	[IDEA (Java)](http://www.jetbrains.com/idea/),[RubyMine (Ruby)](http://www.jetbrains.com/ruby/) 。
 
 * Visual Studio 一般 .NET 开发者喜欢用。
-* 基于 Eclipse 的产品，例如 :[Aptana](http://www.aptana.com/) 和 Zend Studio。
+* 基于 Eclipse 的产品，例如 : [Aptana](http://www.aptana.com/) 和 Zend Studio。
 * [Komodo IDE](http://www.activestate.com/komodo-ide) 以及他的轻量版
 	[Komodo Edit](http://www.activestate.com/komodo-edit)。
 * [Netbeans](http://netbeans.org/)。

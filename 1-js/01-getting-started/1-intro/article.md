@@ -25,7 +25,7 @@ JavaScript 在创建的时候，它的名字叫 “LiveScript”。因为当时 
 
 不同的引擎有不同的名字，例如：
 
-* [V8](<https://en.wikipedia.org/wiki/V8_(JavaScript_engine)>) --Chrome 和 Opera 中的 JavaScript 引擎 .
+* [V8](<https://en.wikipedia.org/wiki/V8_(JavaScript_engine)>) --Chrome 和 Opera 中的 JavaScript 引擎 。
 * [Gecko](<https://en.wikipedia.org/wiki/Gecko_(software)>) --Firefox 中的 JavaScript 引擎。
 * ... 也有一些其他的 JavaScript 引擎，“Trident” 和 “Chakra” 是不同版本 IE 的 JavaScript 引擎，“ChakraCore” 是 Microsoft
 	Edge 的 JavaScript 引擎 , “Nitro” 和 “SquirrelFish” 是 Safari 的 JavaScript 引擎，等等。
@@ -90,8 +90,7 @@ JavaScript 的能力依赖于它执行的环境。例如：[Node.JS](https://wik
 
 ![](limitations.png)
 
-非浏览器中的 JavaScript ，一般没有这些限制。例如服务端的 JavaScript 就没有这些限制。现代浏览器还允许通过 JavaScript 来安
-装浏览器插件 / 扩展，当然这也是在用户授权的前提下。
+非浏览器中的 JavaScript ，一般没有这些限制。例如服务端的 JavaScript 就没有这些限制。现代浏览器还允许通过 JavaScript 来安装浏览器插件或扩展，当然这也是在用户授权的前提下。
 
 ## JavaScript 为什么与众不同？
 
