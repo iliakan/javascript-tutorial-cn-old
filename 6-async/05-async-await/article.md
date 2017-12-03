@@ -1,10 +1,10 @@
 # Async/await
 
-There's a special syntax to work with promises in a more comfort fashion, called "async/await". It's surprisingly easy to understand and use.
+使用 "async/await" 语法来书写 promises 代码会更简便舒适。而且它很容易理解和使用。
 
 ## Async functions
 
-Let's start with the `async` keyword. It can be placed before function, like this:
+让我们从 `async` 这个关键词着手开始。它可以被放置在 function 前面，就像这样：
 
 ```js
 async function f() {
@@ -12,11 +12,11 @@ async function f() {
 }
 ```
 
-The word "async" before a function means one simple thing: a function always returns a promise. If it's not so, then the value is wrapped in `Promise.resolve`.
+将 "async" 放在 function 的前面的意思非常简单：这个 function 永远返回一个 promise。如果不是，那该返回值会被 `Promise.resolve` 包裹起来。
 
-For instance, the code above returns `Promise.resolve(1)`:
+举个例子，下面的代码返回 `Promise.resolve(1)`:
 
-```js run
+```js
 async function f() {
   return 1;
 }
@@ -24,9 +24,9 @@ async function f() {
 f().then(alert); // 1
 ```
 
-...We can explicitly return a promise, that would be the same:
+...我们可以显式的返回一个 promise，它们效果一样：
 
-```js run
+```js
 async function f() {
   return Promise.resolve(1);
 }
@@ -34,21 +34,21 @@ async function f() {
 f().then(alert); // 1
 ```
 
-So, `async` ensures that the function returns a promise, wraps non-promises in it. Simple enough, right? But not only that. There's another keyword `await` that works only inside `async` functions, and it's pretty cool.
+所以，`async` 保证 function 返回一个 promise，用 promise 包裹非 promise。非常简单，对吧？但是这不是全部。另外一个关键词 `await` 只在 `async` function 内部工作，这非常的 coooool。
 
 ## Await
 
-The syntax:
+语法：
 
 ```js
-// works only inside async functions
+// 只在 async functions 内工作
 let value = await promise;
 ```
 
-The keyword `await` makes JavaScript wait until that promise settles and returns its result.
+关键词 `await` 使 JavaScript 一直等到 promise 执行完成并且返回它的结果。
 
-Here's example with a promise that resolves in 1 second:
-```js run
+下面是一个 promise 1秒后解决的例子：
+```js
 async function f() {
 
   let promise = new Promise((resolve, reject) => {
@@ -56,7 +56,7 @@ async function f() {
   });
 
 *!*
-  let result = await promise; // wait till the promise resolves (*)
+  let result = await promise; // 等待直到这个 promise 解决（*）
 */!*
 
   alert(result); // "done!"
@@ -65,50 +65,49 @@ async function f() {
 f();
 ```
 
-The function execution "pauses" at the line `(*)` and resumes when the promise settles, with `result` becoming its result. So the code above shows "done!" in one second.
+function 的执行在 `(*)` 处被 "暂停"，然后 promise 完成以后恢复执行，`result` 变成了它的结果。所以上面的代码会一秒以后显示 "done!"。
 
-Let's emphasize that: `await` literally makes JavaScript wait until the promise settles, and then go on with the result. That doesn't cost any CPU resources, because the engine can do other jobs meanwhile: execute other scripts, handle events etc.
+再强调一下：`await` 使 JavaScript 等待直到 promise 完成，然后通过 promise 返回值继续执行。它不会花费任何 CPU 资源，因为引擎可以同时做其它的事情：执行其它的脚本，处理事件等。
 
-It's just a more elegant syntax of getting the promise result than `promise.then`, easier to read and write.
+它只是一个比 `promise.then` 更优雅的获取 promise 结果的语法，阅读和书写更简单。
 
-````warn header="Can't use `await` in regular functions"
-If we try to use `await` in non-async function, that would be a syntax error:
 
-```js run
+如果我们尝试在 非-async function 内使用 `await`，会得到一个语法错误：
+
+```js 
 function f() {
   let promise = Promise.resolve(1);
 *!*
-  let result = await promise; // Syntax error
+  let result = await promise; // 语法错误
 */!*
 }
 ```
 
-We can get such error in case if we forget to put `async` before a function. As said, `await` only works inside `async function`.
-````
+如果我们忘记在 function 前放 `async`，我们会得到这样的错误。正如前面那样说的，`await` 只在 `async function` 内工作。
 
-Let's take `showAvatar()` example from the chapter <info:promise-chaining> and rewrite it using `async/await`:
+让我们再看看在 <promise-chaining> 那章的 `showAvatar()` 例子，我们将会用 `async/await` 重写它：
 
-1. First we'll need to replace `.then` calls by `await`.
-2. And we should make the function `async` for them to work.
+1. 首先我们需要用 `wait` 代替 `.then`。
+2. 然后，我们应该让 function `async` 化,这样 `wait` 才能工作。
 
-```js run
+```js 
 async function showAvatar() {
 
-  // read our JSON
+  // 读取我们的 JSON
   let response = await fetch('/article/promise-chaining/user.json');
   let user = await response.json();
 
-  // read github user
+  // 读取 github 用户
   let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
   let githubUser = await githubResponse.json();
 
-  // show the avatar
+  // 显示头像
   let img = document.createElement('img');
   img.src = githubUser.avatar_url;
   img.className = "promise-avatar-example";
   document.body.append(img);
 
-  // wait 3 seconds
+  // 等待3秒
   await new Promise((resolve, reject) => setTimeout(resolve, 3000));
 
   img.remove();
@@ -119,37 +118,35 @@ async function showAvatar() {
 showAvatar();
 ```
 
-Pretty clean and easy to read, right? Much better than before.
+非常简介，而且阅读方便，是吧？比以前好多了。
 
-````smart header="`await` won't work in the top-level code"
-People who are just starting to use `await` tend to forget that, but we can't write `await` in the top-level code. That wouldn't work:
+我们不能把 `await` 放在代码的最顶层，但是那些刚开始使用 `wait` 的人们往往会忘记。那不会工作：
 
 ```js run
-// syntax error in top-level code
+// 在最顶层的代码使用会出现语法错误
 let response = await fetch('/article/promise-chaining/user.json');
 let user = await response.json();
 ```
 
-So we need to have a wrapping async function for the code that awaits. Just as in the example above.
-````
-````smart header="`await` accepts thenables"
-Like `promise.then`, `await` allows to use thenable objects (those with a callable `then` method). Again, the idea is that a 3rd-party object may be not a promise, but promise-compatible: if it supports `.then`, that's enough to use with `await`.
+所以我们需要给那些 `awaits` 一个包裹 async function。就像上面的例子一样。
 
-For instance, here `await` accepts `new Thenable(1)`:
+和 `promise.then` 一样, `await` 允许使用 thenable 对象（那些有一个可执行的 `then` 方法）。 同时，第三方对象可能不是一个 promise，但是兼容 promise：如果它支持 `.then`,那它就可以使用`await`.
+
+举个例子，这里的 `await` 接受 `new Thenable(1)`：
 ```js run
 class Thenable {
   constructor(num) {
     this.num = num;
   }
   then(resolve, reject) {
-    alert(resolve); // function() { native code }
-    // resolve with this.num*2 after 1000ms
+    alert(resolve); // function() { 原生代码 }
+    // 1000ms 后解决，结果是 this.num*2
     setTimeout(() => resolve(this.num * 2), 1000); // (*)
   }
 };
 
 async function f() {
-  // waits for 1 second, then result becomes 2
+  // 等待1秒，然后结果变成2
   let result = await new Thenable(1);
   alert(result);
 }
@@ -157,15 +154,13 @@ async function f() {
 f();
 ```
 
-If `await` gets a non-promise object with `.then`, it calls that method providing native functions `resolve`, `reject` as arguments. Then `await` waits until one of them is called (in the example above it happens in the line `(*)`) and then proceeds with the result.
-````
+如果 `await` 得到一个包含 `.then` 的 non-promise 对象，它执行那个方法，并提供原生的函数 `resolves`，`reject`作为参数。然后 `wait` 等待直到它们中的一个被执行（在上面的代码中，在 `(*)`处），再通过它的返回值继续执行。
 
-````smart header="Async methods"
-A class method can also be async, just put `async` before it.
+一个 class 的方法也能是 async，只用在它前面放一个 `async`。
 
-Like here:
+就像这样：
 
-```js run
+```js
 class Waiter {
 *!*
   async wait() {
@@ -178,14 +173,13 @@ new Waiter()
   .wait()
   .then(alert); // 1
 ```
-The meaning is the same: it ensures that the returned value is a promise and enables `await`.
+它的含义是一样的：它保证方法的返回值是一个 promise，能 `await`。
 
-````
-## Error handling
+## 错误处理
 
-If a promise resolves normally, then `await promise` returns the result. But in case of a rejection it throws the error, just if there were a `throw` statement at that line.
+如果一个 promise 正常解决，那么 `await promise` 返回结果。但是如果 promise 被拒绝，抛出一个错误，就像有一个 `throw` 声明在那一行。
 
-This code:
+这个代码：
 
 ```js
 async function f() {
@@ -195,7 +189,7 @@ async function f() {
 }
 ```
 
-...Is the same as this:
+...和上面的一样：
 
 ```js
 async function f() {
@@ -205,18 +199,18 @@ async function f() {
 }
 ```
 
-In real situations the promise may take some time before it rejects. So `await` will wait, and then throw an error.
+在实际的情况下，promises 在它拒绝之前可能花费一段时间。所以 `await` 会等待，然后再抛出错误。
 
-We can catch that error using `try..catch`, the same way as a regular `throw`:
+我们可以使用 `try..catch` 捕捉到那个错误，和正常的 `throw` 一样：
 
-```js run
+```js
 async function f() {
 
   try {
     let response = await fetch('http://no-such-url');
   } catch(err) {
 *!*
-    alert(err); // TypeError: failed to fetch
+    alert(err); // TypeError: 拉取失败
 */!*
   }
 }
@@ -224,7 +218,7 @@ async function f() {
 f();
 ```
 
-In case of an error, the control jumps to the `catch` block. We can also wrap multiple lines:
+如果发生了错误，程序的控制权跳到 `catch` 代码块。我们也能用多行包裹：
 
 ```js run
 async function f() {
@@ -233,7 +227,7 @@ async function f() {
     let response = await fetch('/no-user-here');
     let user = await response.json();
   } catch(err) {
-    // catches errors both in fetch and response.json
+    // 同时捕获拉取和 response.json 的错误
     alert(err);
   }
 }
@@ -241,35 +235,32 @@ async function f() {
 f();
 ```
 
-If we don't have `try..catch`, then the promise generated by the call of the async function `f()` becomes rejected. We can append `.catch` to handle it:
+如果我们没有 `try..catch`，然后通过执行 async 函数 `f()` 生成的 promise 变成拒绝状态。我们可以添加 `.catch` 处理它：
 
 ```js run
 async function f() {
   let response = await fetch('http://no-such-url');
 }
 
-// f() becomes a rejected promise
+// f() 变成一个 拒绝的 promise
 *!*
-f().catch(alert); // TypeError: failed to fetch // (*)
+f().catch(alert); // TypeError: 拉取失败 // (*)
 */!*
 ```
 
-If we forget to add `.catch` there, then we get an unhandled promise error (and can see it in the console). We can catch such errors using a global event handler as described in the chapter <info:promise-chaining>.
+如果我们忘记添加 `.catch`，我们就会的到一个没有处理的 promise 错误（可以在 console 看见它）。我们像在 <promise-chaining> 所描述的一样可以用一个全局的事件捕获错误。
 
+当我们使用 `async/await` 的时候，我们很少需要 `.then`，因为 `await` 为我们处理等待。我们可以使用常用的 `try..catch` 代替 `.catch`。这通常（并不是一直）会更方便。
 
-```smart header="`async/await` and `promise.then/catch`"
-When we use `async/await`, we rarely need `.then`, because `await` handles the waiting for us. And we can use a regular `try..catch` instead of `.catch`. That's usually (not always) more convenient.
+但是在代码的最顶层，当我们在任何 `async` 函数外面时，我们语法上不能使用 `await`，所以添加 `.then/catch` 来处理最终结果或者错误是很有必要的。
 
-But at the top level of the code, when we're outside of any `async` function, we're syntactically unable to use `await`, so it's a normal practice to add `.then/catch` to handle the final result or falling-through errors.
-
-Like in the line `(*)` of the example above.
+就像上面例子中的 `(*)` 处。
 ```
 
-````smart header="`async/await` works well with `Promise.all`"
-When we need to wait for multiple promises, we can wrap them in `Promise.all` and then `await`:
+当我们需要等待多个 promises 时，我们能用 `Promise.all` 包裹它们，然后 `await`：
 
 ```js
-// wait for the array of results
+// 等待返回结果的数组
 let results = await Promise.all([
   fetch(url1),
   fetch(url2),
@@ -277,22 +268,20 @@ let results = await Promise.all([
 ]);
 ```
 
-In case of an error, it propagates as usual: from the failed promise to `Promise.all`, and then becomes an exception that we can catch using `try..catch` around the call.
+如果发生错误，它就像平常一样传递：从失败的 promise 到 `Promise.all`，然后变成一个我们可以用 `try..catch` 捕获的异常。
 
-````
+## 总结
 
-## Summary
+function 前面的 `async` 关键词有两个效果：
 
-The `async` keyword before a function has two effects:
+1. 让函数永远返回一个 promise。 
+2. 允许在函数里面使用 `await` 。
 
-1. Makes it always return a promise.
-2. Allows to use `await` in it.
+promise 前面的 `await` 关键词让 JavaScript 等待直到该 promise 完成，然后：
 
-The `await` keyword before a promise makes JavaScript wait until that promise settles, and then:
+1. 如果它是一个错误，就会生成异常，就像 `throw error` 在那个地方被执行一样。
+2. 否则，它返回结果，然后我们可以分配它给一个变量。
 
-1. If it's an error, the exception is generated, same as if `throw error` were called at that very place.
-2. Otherwise, it returns the result, so we can assign it to a value.
+它们提供了一个非常棒的框架来编写异步代码，读和写都非常简单。
 
-Together they provide a great framework to write asynchronous code that is easy both to read and write.
-
-With `async/await` we rarely need to write `promise.then/catch`, but we still shouldn't forget that they are based on promises, because sometimes (e.g. in the outmost scope) we have to use these methods. Also `Promise.all` is a nice thing to wait for many tasks simultaneously.
+使用 `async/await` 的时候，我们基本不需要写 `promise.then/catch`，但是我们仍然不应该忘记它们是基于 promises，因为有时（e.g. 在最外层）我们不得不使用那些方法。同时， `Promise.all` 用来同时等待多个任务非常棒。
