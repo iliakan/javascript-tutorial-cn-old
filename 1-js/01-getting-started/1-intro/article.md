@@ -13,13 +13,12 @@
 这方面， JavaScript 和 [Java](http://en.wikipedia.org/wiki/Java) 有很大的区别。
 
 ```smart header="Why <u>Java</u>Script?"
-JavaScript 在创建的时候，它的名字叫 “LiveScript”。因为当时 Java 很流行，所以就取了个名字叫 JavaScript。这样就可以让大家认为， JavaScript 是Java的弟弟。
+JavaScript 在创建的时候，它的名字叫 “LiveScript”。因为当时 Java 很流行，所以就取了个名字叫 JavaScript。这样就可以让大家认为， JavaScript 是 Java 的弟弟。
 
 随着 JavaScript 的发展，它已经变成了一门独立的语言，同时也有了自己的语言规范 [ECMAScript](http://en.wikipedia.org/wiki/ECMAScript)。现在，Java 和 JavaScript 已经是两门不同的语言，彼此之前也没有任何关系。
 ```
 
-现在，JavaScript 不仅仅是在浏览器内执行，也可以在服务端执行。甚至在任意存
-在[JavaScript 引擎](https://en.wikipedia.org/wiki/JavaScript_engine)的环境中，都可以执行。
+现在，JavaScript 不仅仅是在浏览器内执行，也可以在服务端执行。甚至在存在任意 [JavaScript 引擎](https://en.wikipedia.org/wiki/JavaScript_engine)的环境中都可以执行。
 
 浏览器中嵌入了 JavaScript 引擎，有时也称作 JavaScript 虚拟机。
 
@@ -120,18 +119,14 @@ JavaScript 的能力依赖于它执行的环境。例如：[Node.JS](https://wik
 
 例如：
 
-* [CoffeeScript](http://coffeescript.org/) 是 JavaScript 的语法糖 , 他语法简短，精确简捷。通常使用 Ruby 的人喜欢用。
-* [TypeScript](http://www.typescriptlang.org/) 主要是是添加了严格类型系统。这样就能简化开发，也能用于开发复杂的系统
-	。TypeScript 是微软开发的。
-* [Dart](https://www.dartlang.org/) 是一门独立的语言。他拥有自己的引擎，在非浏览器环境中运行（如：在手机应用中运行）。最
-	开始是 Google 提供的，用于替代 JavaScript 的，但是现在，浏览器页需要他和上面的语言一样需要被编译成 JavaScript 。
+* [CoffeeScript](http://coffeescript.org/) 是 JavaScript 的语法糖，他语法简短，精确简捷。通常使用 Ruby 的人喜欢用。
+* [TypeScript](http://www.typescriptlang.org/) 主要是是添加了严格类型系统。这样就能简化开发，也能用于开发复杂的系统。TypeScript 是微软开发的。
+* [Dart](https://www.dartlang.org/) 是一门独立的语言。他拥有自己的引擎，在非浏览器环境中运行（如：在手机应用中运行）。最开始是 Google 提供的用于替代 JavaScript 的，但是现在，浏览器也需要它和上面的语言一样需要被编译成 JavaScript 。
 
-当然，还有更多其他的语言。即使我们在使用这些语言，我们也需要知道 JavaScript。因为学习 JavaScript 可以让我们真正明白我们
-自己在做什么。
+当然，还有更多其他的语言。即使我们在使用这些语言，我们也需要知道 JavaScript。因为学习 JavaScript 可以让我们真正明白我们自己在做什么。
 
 ## 总结
 
-* JavaScript 最开始是为浏览器设计的一门语言，但是现在其他的环境中运行。
-* 现在，JavaScript 是在浏览中使用最广，并且能够很好集成 HTML/CSS 的一门语言。
-* 有很多其他的语言可以编译成 JavaScript，这些语言还提供更多的功能。最好要了解一下这些语言，只是在掌握 JavaScript 之后，
-	需要了解一下。
+* JavaScript 最开始是为浏览器设计的一门语言，但是现在也可以在其它的环境中运行。
+* 现在，JavaScript 是一门在浏览中使用最广、并且能够很好集成 HTML/CSS 的语言。
+* 有很多其他的语言可以编译成 JavaScript，这些语言还提供更多的功能。最好要了解一下这些语言，至少在掌握 JavaScript 之后，需要简单的看一下。
