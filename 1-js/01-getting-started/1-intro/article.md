@@ -1,132 +1,120 @@
 # JavaScript 简介
 
-我们一起来聊一下 JavaScript，用它能做什么，它有哪些特性，以及一些跟它配合使用的技术。
+下面我们将一起来看看 `JavaScript` 能做什么，有哪些特性，以及跟它配合使用的一些技术。
 
-## 什么是 JavaScript ？
+## JavaScript 是什么
 
-**JavaScript** 最初的目的是为了 **“ 让网页动起来 ”**。
+`JavaScript` 最初的目的是为了 `让网页动起来`。
 
-这种编程语言我们称之为**脚本**。把它嵌入到 HTML 当中，在页面加载的时候会自动执行。
+这种编程语言我们称之为 `脚本`，把它嵌入 `HTML` 中，在页面加载时就会自动执行。
 
-脚本作为纯文本存在和执行，并不需要编译执行。
+`脚本` 作为纯文本存在和执行，并不需要编译。
 
-这方面， JavaScript 和 [Java](http://en.wikipedia.org/wiki/Java) 有很大的区别。
+因此，`JavaScript` 和 [Java](https://zh.wikipedia.org/wiki/Java) 有很大的区别。
 
-```smart header="Why <u>Java</u>Script?"
-JavaScript 在创建的时候，它的名字叫 “LiveScript”。因为当时 Java 很流行，所以就取了个名字叫 JavaScript。这样就可以让大家认为， JavaScript 是 Java 的弟弟。
+```md
+最开始的时候，JavaScript 叫 “LiveScript”。当时 Java 很流行，所以就改名叫 JavaScript，这样，大家可能就误认为， JavaScript 是 Java 的弟弟。
 
-随着 JavaScript 的发展，它已经变成了一门独立的语言，同时也有了自己的语言规范 [ECMAScript](http://en.wikipedia.org/wiki/ECMAScript)。现在，Java 和 JavaScript 已经是两门不同的语言，彼此之前也没有任何关系。
+随着 JavaScript 的发展，它成为了一门独立的语言，同时也有了自己的语言规范 ECMAScript。现在，Java 和 JavaScript 是两门不同的语言，彼此之间并没有任何关系。
 ```
 
-现在，JavaScript 不仅仅是在浏览器内执行，也可以在服务端执行。甚至在存在任意 [JavaScript 引擎](https://en.wikipedia.org/wiki/JavaScript_engine)的环境中都可以执行。
+现在，`JavaScript` 不仅可以在 `浏览器` 中执行，也可以在 `服务端` 执行，甚至在存在任意 [JavaScript 引擎](https://zh.wikipedia.org/wiki/V8_(JavaScript%E5%BC%95%E6%93%8E))的环境中执行。
 
-浏览器中嵌入了 JavaScript 引擎，有时也称作 JavaScript 虚拟机。
+浏览器d都嵌入了 `JavaScript 引擎`，有时也叫 `JavaScript 虚拟机`。
 
-不同的引擎有不同的名字，例如：
+不同的引擎，名字也不同，例如：
 
-* [V8](<https://en.wikipedia.org/wiki/V8_(JavaScript_engine)>) --Chrome 和 Opera 中的 JavaScript 引擎 。
-* [Gecko](<https://en.wikipedia.org/wiki/Gecko_(software)>) --Firefox 中的 JavaScript 引擎。
-* ... 也有一些其他的 JavaScript 引擎，“Trident” 和 “Chakra” 是不同版本 IE 的 JavaScript 引擎，“ChakraCore” 是 Microsoft
-	Edge 的 JavaScript 引擎 , “Nitro” 和 “SquirrelFish” 是 Safari 的 JavaScript 引擎，等等。
+* [V8](<https://en.wikipedia.org/wiki/V8>) -- Chrome 和 Opera 使用。
+* [Gecko](<https://zh.wikipedia.org/wiki/Gecko>) -- Firefox 使用。
+* ... 还有一些其他的 `JavaScript 引擎`，比如 `IE` 使用的是 `Trident` 和 `Chakra`，`Edge` 使用的是 `ChakraCore`，`Safari` 使用的是 `Nitro` 和 `SquirrelFish` 等。
 
-上面这些很容易记忆，因为经常出现在网上关于开发的文章中。我们也会这样用。例如：某个新的功能，JavaScript 引擎 V8 是支持的
-；那么我们可以认为这个功能在 Chrome 和 Opera 中可以正常运行。
+上面这些也容易记忆，因为在开发文档中经常出现，例如：某个功能，支持 `V8`，即在 `Chrome` 和 `Opera` 中可以正常运行。
 
-```smart header="How the engines work?"
-引擎很复杂，但是基本原理很简单。
+```
+引擎比较复杂，但其基本原理很简单。
 
-1. 脚本是纯文本（可以被压缩）。
-2. 引擎（通常嵌入在浏览器中）读取（理解）这些文本并转化（编译）成机器语言。
-3. 然后就可以在机器上飞速的运行。
+1. 引擎编译和执行脚本。
+2. 将脚本转换为机器可以理解的语言。
+3. 然后在机器上运行。
 
-在每一个阶段，引擎都会做一些优化。引擎甚至会监视脚本的执行，分析数据流，从而采取相应的优化措施。
+引擎还会监听整个脚本的执行，分析数据流等，尝试优化以上每一个阶段，最终达到整个过程十分流畅的目的
 ```
 
-## 浏览器中的 JavaScript 能干什么 ?
+## 浏览器中的 JavaScript 能做什么
 
-现在的 JavaScript 是一种安全语言。它不会去操作计算机的内存和 CPU。因为 JavaScript 最开始就是为浏览器准备的，浏览器也不需
-要操作这些。
+现在的 `JavaScript` 是一种安全的语言。它不会去操作计算机的内存和 CPU，因为 `JavaScript` 最开始是为浏览器而生的，浏览器并不需要。
 
-JavaScript 的能力依赖于它执行的环境。例如：[Node.JS](https://wikipedia.org/wiki/Node.js) 就可以读写文件，可以发送响应网
+`JavaScript` 的能力依赖它执行的环境。例如，[Node.JS](https://zh.wikipedia.org/wiki/Node.js) 支持读写文件，执行网
 络请求。
 
-浏览器中的 JavaScript 只处理和网页相关的操作，处理网页和用户的交互以及网页和服务端的网络请求。
+浏览器中的 `JavaScript` 可以处理来自用户或服务器的任何操作或交互。
 
-浏览器中的 JavaScript，可以干下面这些事：
+比如：
 
-* 在网页中插入新的 HTML，修改现有的网页内容和网页的样式。
-* 响应用户的行为，响应鼠标的点击或移动，键盘的敲击。
-* 向远程服务器发送请求，下载或上传文件（[AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>) 和
-	[COMET](<https://en.wikipedia.org/wiki/Comet_(programming)>)技术）。
-* 获取或修改 cookie，向用访问者发送消息，提问题。
-* 存储浏览器端的一些本地数据（本地存储）。
+* 在网页中插入新的 `HTML`，修改网页的内容和样式。
+* 响应用户的行为，比如鼠标的点击,移动和用户的按键。
+* 向远程服务器发送请求，下载或上传文件（[AJAX](<https://zh.wikipedia.org/wiki/AJAX>)，[COMET](<https://en.wikipedia.org/wiki/Comet_(programming)>)）。
+* 获取或修改 `cookie`。
+* 在用户浏览器对数据j进行本地的存储（本地存储）。
 
-## 浏览器中的 JavaScript **不**能干什么？
+## 浏览器中的 JavaScript 不能做什么
 
-为了用户的（信息）安全，在浏览器中的 JavaScript 的能力是有限的。这样主要是为了阻止邪恶的网站获得或修改用户的私人数据。
+为了用户的安全，浏览器对 `JavaScript` 做了一定的限制，主要是为了阻止一些网站不法获得或修改用户的私人数据。
 
-例如：
+比如：
 
-* 网页中的 JavaScript 不能读、写、复制及执行用户磁盘上的文件或程序。也不能直接控制操作系统。
+* 浏览器中的 `JavaScript` 不能读、写、复制及执行用户磁盘上的文件或程序，也不能直接控制操作系统。
 
-	现代浏览器允许 JavaScript 做一些文件相关的操作，但是这个操作是受到限制的。仅当用户使用某个特定的动作，JavaScript 才能
-	操作这个文件。例如，把文件 “ 拖 ” 到浏览器中，或者通过 `<input>` 标签选择文件。
+	现代浏览器允许 `JavaScript` 做一些文件相关的操作，但这个操作是有限制的，比如仅当用户把文件 “拖” 到浏览器中，或者通过 `<input>` 标签来选择文件等。
 
-	JavaScript 有很多方式和设备的照相机 / 麦克风交互，这些都需要提前获得用户的允许。所以，JavaScript 并不会偷偷的通过你的
-	摄像头观察你，更不会把你的信息发送到 [NSA](https://en.wikipedia.org/wiki/National_Security_Agency)。
+	用户有很多场景需要使用照相机或麦克风，`JavaScript` 可以实现，但都需要提前获得用户的允许，所以，`JavaScript` 不会偷偷地通过你的摄像头观察你，更不会把你的信息发送到 [NSA](https://zh.wikipedia.org/wiki/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80)。
 
-- 不同的浏览器标签页基本彼此不相关。有时候，也会有一些关系。例如，通过 JavaScript 打开另外一个新的标签页。如果两个标签页
-	打开的不是同一个网站，他们不能够相互通信（域名、协议或者端口任一不相同的网站，都认为是不同的网站）。
+- 浏览器不同的标签页打开的网站彼此是不相关的，有时，也可能有关，简单讲，就是如果两个标签页打开的不是同一个网站，它们之间将不能相互通信（域名、协议或端口有一个不同，都认为是不同的网站）。
 
-	这就是 “ 同源策略 ”。为了解决不同标签页交互的问题，两个同源的网站必须**都**包含特殊的 JavaScript 代码，才能够实现数据
-	交换。
+	这就是所谓的 `同源策略`，它限制了从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。
 
-	这个限制也是为了用户的信息安全。例如，来自 `http://anysite.com` 的网页的 JavaScript 不能够获取任何
-	`http://gmail.com`（另外一个标签页打开的网页）页面的数据。
+	这也是为用户的安全考虑。比如，来自 `http://anysite.com` 网页的 `JavaScript` 不能获取任何来自 `http://gmail.com` 网页的数据。
 
-- JavaScript 通过互联网可以很容易的和服务器通讯（当前网页域名的服务器）通讯。但是从其他的服务器中获取数据的功能是受限的
-	，需要（在 HTTP 头中）添加某些参数。这也是为了用户的数据安全。
+- `JavaScript` 通过互联网可以很容易和来自当前页面的服务器进行通信，但要从其他服务器获取数据是需要条件的，比如需要（在 `HTTP` 头中）添加某些参数，这也是为用户的安全考虑。
 
-![](limitations.png)
+![limitations](limitations.png)
 
-非浏览器中的 JavaScript ，一般没有这些限制。例如服务端的 JavaScript 就没有这些限制。现代浏览器还允许通过 JavaScript 来安装浏览器插件或扩展，当然这也是在用户授权的前提下。
+非浏览器中的 `JavaScript` 并没有这些限制，比如服务端的 `JavaScript`，另外，现代浏览器还允许通过 `JavaScript` 来安装浏览器插件或扩展，当然这也是在用户授权的前提下。
 
-## JavaScript 为什么与众不同？
+## 为什么 JavaScript 与众不同
 
-至少有 **3** 件事值得一提：
+这里，至少有 3 点值得一提：
 
-```compare
-+ 和 HTML/CSS 完全的集成。
-+ 使用简单的工具（语言）完成简单的任务。
-+ 被所有的主流浏览器支持，并且默认开启。
+```
+- 与 HTML/CSS 完美集成。
+- 本身简单，做的事也简单。
+- 主流浏览器都支持，并且默认开启。
 ```
 
-满足这三条的浏览器技术也只有 JavaScript 了。
+满足这三点的浏览器技术也只有 `JavaScript` 了。
 
-这就是为什么 JavaScript 与众不同！这也是为什么大家都通过 JavaScript 来跟浏览器交互。
+这就是为什么 `JavaScript` 与众不同，也是为什么大家都通过 `JavaScript` 来跟浏览器打交道。
 
-当然，学习一项新技术的时候，最好先看一下他的前景。所以，接下来，我们来看看新的趋势（包含一些新的语言）。
+当然，学习一门新技术，最好还是先看一下它的前景，所以，接下来，我们来看看它们的趋势。
 
-## 比 JavaScript “ 好 ” 的语言
+## 比 JavaScript 更好的语言
 
-不同的人喜欢不同的功能，JavaScript 的语法也不能够满足所有人。
+每个人的需求不一样，即 `JavaScript` 并不能满足所有人
 
-这是正常的，因为每个人的项目和需求都不一样。
+所以，目前出现了很多不同的语言，但这些语言在浏览器中执行之前，都会被编译成 `JavaScript`。
 
-所以，最近出现了很多不同的语言，这些语言在浏览器中执行之前，都会被**编译**（转化）成 JavaScript。
+现代工具编译的速度是惊人的，可以让用户毫无察觉，这就允许开发者选择一门新的语言，并且做到最终的效果和 JavaScript 一样。
 
-现代的工具编译得很快，并且让用户不可感知。这就允许开发中使用一种新的语言，就和使用 JavaScript 一样。
+比如：
 
-例如：
+* [CoffeeScript](http://coffeescript.org/) `JavaScript` 的语法糖，增强了 `JavaScript` 的简洁性与可读性，通常，使用 `Ruby` 的人最为喜爱。
+* [TypeScript](http://www.typescriptlang.org/) 微软开发的一种自由和开源的编程语言，设计目的是开发大型应用。
+* [Dart](https://www.dartlang.org/) 一门独立的语言，拥有自己的引擎，在非浏览器环境中运行（如手机应用），最开始由 Google 提供用于替代 `JavaScript`，但现在，也需要和上面的语言一样在浏览器中编译成 `JavaScript` 。
 
-* [CoffeeScript](http://coffeescript.org/) 是 JavaScript 的语法糖，他语法简短，精确简捷。通常使用 Ruby 的人喜欢用。
-* [TypeScript](http://www.typescriptlang.org/) 主要是是添加了严格类型系统。这样就能简化开发，也能用于开发复杂的系统。TypeScript 是微软开发的。
-* [Dart](https://www.dartlang.org/) 是一门独立的语言。他拥有自己的引擎，在非浏览器环境中运行（如：在手机应用中运行）。最开始是 Google 提供的用于替代 JavaScript 的，但是现在，浏览器也需要它和上面的语言一样需要被编译成 JavaScript 。
-
-当然，还有更多其他的语言。即使我们在使用这些语言，我们也需要知道 JavaScript。因为学习 JavaScript 可以让我们真正明白我们自己在做什么。
+当然，还存在其他的语言，但即使我们使用这些语言，也需要了解 `JavaScript`，因为它可以让我们明白最终我们到底都做了什么。
 
 ## 总结
 
-* JavaScript 最开始是为浏览器设计的一门语言，但是现在也可以在其它的环境中运行。
-* 现在，JavaScript 是一门在浏览中使用最广、并且能够很好集成 HTML/CSS 的语言。
-* 有很多其他的语言可以编译成 JavaScript，这些语言还提供更多的功能。最好要了解一下这些语言，至少在掌握 JavaScript 之后，需要简单的看一下。
+* `JavaScript` 最初是为浏览器设计的一门语言，但现在也可以在其它的环境中运行。
+* `JavaScript` 是在浏览中使用最广、并且能与 `HTML/CSS` 完美集成的一门语言。
+* 存在很多其他的语言可以编译成 `JavaScript`，这些语言可能还提供更多的功能，我们可以适当了解下。
