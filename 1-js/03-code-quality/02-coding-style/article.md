@@ -121,13 +121,7 @@ if (n < 0) {
 
 每一个语句后面都应该有一个分号。即使它可能会被跳过。
 
-（以下两行存在疑问，在校对时需要探讨一下）
-
-There are languages where a semicolon is truly optional. It's rarely used there.
-
 有一些语言的分号是可选的。那些语言中很少使用分号。
-
-But in JavaScript there are few cases when a line break is sometimes not interpreted as a semicolon. That leaves a place for programming errors, so semicolons should be at place.
 
 但是在 JavaScript 中不会将换行解释为分号的情况很少。这些地方会造成编程错误，所以分号应该出现在这些位置。
 
