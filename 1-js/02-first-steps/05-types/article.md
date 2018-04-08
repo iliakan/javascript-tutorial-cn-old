@@ -66,7 +66,7 @@ n = 12.345;
 
 ## string 类型
 
-JavaScript 中的字符串必须被引。
+JavaScript 中的字符串必须被包含在引号里面。
 
 ```js
 let str = "Hello";
@@ -74,7 +74,7 @@ let str2 = 'Single quotes are ok too';
 let phrase = `can embed ${str}`;
 ```
 
-在 JavaScript 中，有三种被引方式。
+在 JavaScript 中，有三种包含字符串的方式。
 
 1. 双引号： `"Hello"`.
 2. 单引号： `'Hello'`.
