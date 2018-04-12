@@ -153,7 +153,6 @@ alert( Boolean(" ") ); // 空白, 也是 true (任何非空字符串是 true)
 |`0`, `null`, `undefined`, `NaN`, `""` |`false`|
 |其他值| `true` |
 
-
 上述的大多数规则都容易理解和记忆。经常犯错的例外有：
 
 - `undefined` 进行 `ToNumber` 时变成 `NaN`，而非 `0`。
