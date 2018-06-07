@@ -138,7 +138,8 @@ alert( +apples + +oranges ); // 5
 
 在JavaScript中有许多的运算符，每一个运算符都有一个与之对应的优先度，优先度较大的运算符先执行。如果两个运算符优先度相等，则从左往右执行。
 
-这是一个优先度表[precedence table](https://developer.mozilla.org/en/JavaScript/Reference/operators/operator_precedence)(你):
+这是一个优先度表[precedence table](https://developer.mozilla.org/en/JavaScript/Reference/operators/operator_precedence)
+(你不需要记住所有的优先度，但是要注意一点，一元运算符的优先度高于其二元形态):
 
 | Precedence | Name | Sign |
 |------------|------|------|
@@ -153,13 +154,15 @@ alert( +apples + +oranges ); // 5
 | 3 | assignment | `=` |
 | ... | ... | ... |
 
-As we can see, the "unary plus" has a priority of `15`, higher than `13` for the "addition" (binary plus). That's why in the expression `"+apples + +oranges"` unary pluses work first, and then the addition.
 
-## Assignment
+如上表所示，一元加号(unary plus)的优先度是15，比"加法"(二元加号)的13要高。
+这就是为什么表达式`"+apples + +oranges"`中的一元加号先执行，然后再做加法。
 
-Let's note that an assignment `=` is also an operator. It is listed in the precedence table with the very low priority of `3`.
+## 赋值
 
-That's why when we assign a variable, like `x = 2 * 2 + 1`, then the calculations are done first, and afterwards the `=` is evaluated, storing the result in `x`.
+赋值`=`也是一个运算符，根据上面的优先度表所示，它的优先度是3。
+
+这就是为什么当我们对一个变量进行赋值操作时，例如`x = 2 * 2 + 1`，会先进行计算，再进行赋值，把结果储存到`x`中
 
 ```js
 let x = 2 * 2 + 1;
@@ -167,7 +170,7 @@ let x = 2 * 2 + 1;
 alert( x ); // 5
 ```
 
-It is possible to chain assignments:
+允许链式赋值：
 
 ```js run
 let a, b, c;
@@ -181,9 +184,10 @@ alert( b ); // 4
 alert( c ); // 4
 ```
 
-Chained assignments evaluate from right to left. First the rightmost expression `2+2` is evaluated then assigned to the variables on the left: `c`, `b` and `a`. At the end, all variables share a single value.
 
-````smart header="The assignment operator `\"=\"` returns a value"
+链式赋值的运算从右到左。首先最右边的表达式`2+2`先执行，然后赋值给左边的变量`c`，`b`，`a`。最终，所有的变量都会用到同一个值。
+
+````smart header="赋值运算符`\"=\"`会返回一个值"
 An operator always returns a value. That's obvious for most of them like an addition `+` or a multiplication `*`. But the assignment operator follows that rule too.
 
 The call `x = value` writes the `value` into `x` *and then returns it*.
