@@ -1,17 +1,17 @@
-# Operators
+# 运算符
 
-Many operators are known to us from school. It is an addition `+`, a multiplication `*`, a substraction `-` and so on.
+我们在学校学过很多运算符，例如加号`+`，乘号`*`，减号`-`等等。
 
-In this chapter we concentrate on aspects that are not covered by the school arithmetic.
-
+在本章中，我们将重点放在学校算术未涉及的部分。
 [cut]
 
-## Terms: "unary", "binary", "operand"
+## 术语: "一元", "二元", "操作数"
 
-Before we move on, let's grasp the common terminology.
+在我们继续学习之前，先来了解一些通用术语。
 
-- *An operand* -- is what operators are applied to. For instance in multiplication `5 * 2` there are two operands: the left operand is `5`, and the right operand is `2`. Sometimes people say "arguments" instead of "operands".
-- An operator is *unary* if it has a single operand. For example, the unary minus `"-"` reverses the sign of the number:
+- *操作数* -- 是运算的对象。例如在 `5 * 2`这个乘法运算中就有2个操作数:左操作数 
+`5`, 和右操作数`2`。有时也会把操作数称为参数。
+- 一个运算符如果只有一个操作数则为一元运算符。例如一元求反运算符`-`可以反转一个数字的正负：
 
     ```js run
     let x = 1;
@@ -21,42 +21,48 @@ Before we move on, let's grasp the common terminology.
     */!*
     alert( x ); // -1, unary minus was applied
     ```
-- An operator is *binary* if it has two operands. The same minus exists in the binary form as well:
+- 一个运算符如果有两个操作数则为二元运算符，例如减号：
 
     ```js run no-beautify
     let x = 1, y = 3;
     alert( y - x ); // 2, binary minus substracts values
     ```
+    
+    形式上，这里我们讨论的是两个不同的运算符(虽然它们符号相同)：一元求反运算符(只有一个操作数，反转它的符号)和二元运算符减号(两个操作数，作减法)。
 
-    Formally, we're talking about the two different operators here: the unary minus (single operand, reverses the sign) and the binary minus (two operands, substracts).
+## 使用二元运算符`+`连接字符串
 
-## Strings concatenation, binary +
+现在让我们来看看JavaScript运算符的特别功能，和学校所学的不太一样。
 
-Now let's see special features of JavaScript operators that are beyond school arithmetics.
+通常我们使用`+`对两个数字进行加法运算。
 
-Usually the plus operator `'+'` sums numbers.
-
-But if the binary `+` is applied to strings, it merges (concatenates) them:
+但如果`+`应用于两个字符串，则会合并它们(连接)：
 
 ```js
 let s = "my" + "string";
 alert(s); // mystring
 ```
 
-Note that if any of operands is a string, then the other one is converted to string too.
+注意，如果有任意一个操作数是字符串，那么另外一个操作数也会转换成字符串
 
-For example:
+例如:
 
 ```js run
 alert( '1' + 2 ); // "12"
 alert( 2 + '1' ); // "21"
 ```
 
-See, it doesn't matter whether the first operand is a string or the second one. The rule is simple: if any of operands is a string, then convert the other one into a string as well.
+看到了吗，第一个操作数和第二个操作数谁是字符串并不重要。规则很简单：如果任一操作数是一个字符串，则将另一个操作数转换为一个字符串。
 
-The string concatenation and conversion is the special feature of the binary plus `"+"`. Other arithmetic operators work only with numbers. They always convert their operands to numbers.
+但是要注意一点，运算操作是从左往右的(满足数学运算法则)，如果在两个数字后面跟着一个字符串，那么这两个数字会先相加然后再转换为字符串：
 
-For instance, subtraction and division:
+```js
+alert(2 + 2 + '1'); //"41" and not "221"
+```
+
+字符串的连接和转换是二元运算符`+`的特别功能。其他算术运算符只会对数字起作用。它们总会把操作数转化为数字。
+
+例如减法和除法：
 
 ```js run
 alert( 2 - '1' ); // 1
@@ -65,11 +71,13 @@ alert( '6' / '2' ); // 3
 
 ## Numeric conversion, unary +
 
-The plus `+` exist in two forms. The binary form that we used above and the unary form.
+##使用一元运算符`+`进行数字转换
 
-The unary plus or, in other words, the plus operator `+` applied to a single value, doesn't do anything with numbers, but if the operand is not a number, then it is converted into it.
+加号`+`存在两种形态，上面我们使用的二元形态和下面的一元形态
 
-For example:
+一元形态的加号，或者说是加号运算符`+`应用于一个操作数的时候，不会对这个操作数做任何操作，但如果这个操作数不是一个数字，那么就会把它转换为数字。
+
+例如:
 
 ```js run
 // No effect on numbers
@@ -79,20 +87,20 @@ alert( +x ); // 1
 let y = -2;
 alert( +y ); // -2
 
-*!*
-// Converts non-numbers
+*!*注意
+// 转换了一个非数字
 alert( +true ); // 1
 alert( +"" );   // 0
 */!*
 ```
 
-It actually does the same as `Number(...)`, but shorter.
+这和使用`Number(..)`的结果是一致的，但更简洁。
 
-A need to convert string to number arises very often. For example, if we are getting values from HTML form fields, then are usually strings.
+将字符串转换为数字的需求是很常见的。假设我们从HTML输入域获取到的一些值，这些值一般都是字符串。
 
-What if we want to sum them?
+这个时候如果我们将这些值相加，会怎样？
 
-The binary plus would add them as strings:
+二元加号会把它们连接成一个字符串：
 
 ```js run
 let apples = "2";
@@ -101,7 +109,7 @@ let oranges = "3";
 alert( apples + oranges ); // "23", the binary plus concatenates strings
 ```
 
-If we want to treat them as numbers, then we can convert and then sum:
+如果想把它们当作一个数字对待，那我们可以先进行转换然后再相加：
 
 ```js run
 let apples = "2";
@@ -116,21 +124,21 @@ alert( +apples + +oranges ); // 5
 // alert( Number(apples) + Number(oranges) ); // 5
 ```
 
-From a mathematician's standpoint the abundance of pluses may seem strange. But from a programmer's standpoint -- there's nothing special: unary pluses are applied first, they convert strings to numbers, and then the binary plus sums them up.
+对于一个数学家而言，这样的行为似乎有点奇怪。但从一个程序员的角度来看，这并没有什么特别：一元加号首先将字符串转换为数字，然后二元加号将它们加起来。
 
-Why are unary pluses applied to values before the binary one? As we're going to see, that's because of their *higher precedence*.
+为什么一元加号的操作先于二元加号？这就是下面要说的，它们之间存在优先级。
 
-## Operators precedence
+## 运算符的优先级
 
-If an expression has more than one operator, the execution order is defined by their *precedence*, or, in other words, there's an implicit priority order among the operators.
+如果一个表达式有超过一个运算符，那么执行顺序由它们的优先级来决定，换句话说，运算符之间存在隐式的优先级。
 
-From the school we all know that the multiplication in the expression `1 + 2 * 2` should be calculated before the addition. That's exactly the precedence thing. The multiplication is said to have *a higher precedence* than the addition.
+我们都知道，表达式`1 + 2 * 2`中的乘法应该在加法之前计算。这正是一种优先关系。乘法比加法有更高的优先级。
 
-Parentheses override any precedence, so if we're not satisfied with the order, we can use them, like: `(1 + 2) * 2`.
+圆括号会覆盖所有优先级(即圆括号拥有最高优先级)，因此如果我们对现在的执行顺序不满意，我们可以使用圆括号来改变它，像这样：`(1 + 2) * 2`。
 
-There are many operators in JavaScript. Every operator has a corresponding precedence number. The one with the bigger number executes first. If the precedence is same -- the execution order is from left to right.
+在JavaScript中有许多的运算符，每一个运算符都有一个与之对应的优先度，优先度较大的运算符先执行。如果两个运算符优先度相等，则从左往右执行。
 
-An extract from the [precedence table](https://developer.mozilla.org/en/JavaScript/Reference/operators/operator_precedence):
+这是一个优先度表[precedence table](https://developer.mozilla.org/en/JavaScript/Reference/operators/operator_precedence)(你):
 
 | Precedence | Name | Sign |
 |------------|------|------|
