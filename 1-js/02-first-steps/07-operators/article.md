@@ -1,4 +1,4 @@
-# 运算符
+  # 运算符
 
 我们在学校学过很多运算符，例如加号`+`，乘号`*`，减号`-`等等。
 
@@ -11,7 +11,7 @@
 
 - *操作数* -- 是运算的对象。例如在 `5 * 2`这个乘法运算中就有2个操作数:左操作数 
 `5`, 和右操作数`2`。有时也会把操作数称为参数。
-- 一个运算符如果只有一个操作数则为一元运算符。例如一元求反运算符`-`可以反转一个数字的正负：
+- 一个运算符如果只有一个操作数则为一元运算符。例如一元减法`-`可以反转一个数字的正负：
 
     ```js run
     let x = 1;
@@ -28,7 +28,7 @@
     alert( y - x ); // 2, binary minus substracts values
     ```
     
-    形式上，这里我们讨论的是两个不同的运算符(虽然它们符号相同)：一元求反运算符(只有一个操作数，反转它的符号)和二元运算符减号(两个操作数，作减法)。
+    形式上，这里我们讨论的是两个不同的运算符(虽然它们符号相同)：一元减法(只有一个操作数，反转它的符号)和二元运算符减号(两个操作数，作减法)。
 
 ## 使用二元运算符`+`连接字符串
 
@@ -68,8 +68,6 @@ alert(2 + 2 + '1'); //"41" and not "221"
 alert( 2 - '1' ); // 1
 alert( '6' / '2' ); // 3
 ```
-
-## Numeric conversion, unary +
 
 ##使用一元运算符`+`进行数字转换
 
@@ -188,11 +186,12 @@ alert( c ); // 4
 链式赋值的运算从右到左。首先最右边的表达式`2+2`先执行，然后赋值给左边的变量`c`，`b`，`a`。最终，所有的变量都会用到同一个值。
 
 ````smart header="赋值运算符`\"=\"`会返回一个值"
-An operator always returns a value. That's obvious for most of them like an addition `+` or a multiplication `*`. But the assignment operator follows that rule too.
 
-The call `x = value` writes the `value` into `x` *and then returns it*.
+一个运算符总会返回一个值，这对于大多数的运算符如加号`+`和乘号`*`是显而易见，对于赋值运算符来说也是如此。
 
-Here's the demo that uses an assignment as the part of a more complex expression:
+执行`x = value`意味着把`value`赋值给`x`*然后返回x*
+
+这里有一个demo，在一个复杂的表达式里进行赋值操作：
 
 ```js run
 let a = 1;
@@ -206,18 +205,18 @@ alert( a ); // 3
 alert( c ); // 0
 ```
 
-In the example above, the result of `(a = b + 1)` is the value which is assigned to `a` (that is `3`). It is then used to substract from `3`.
+如例所示，`(a = b + 1)`的运算结果等于赋值给`a`的值（为3），然后和`3`作减法。
 
-Funny code, isn't it? We should understand how it works, because sometimes we can see it in 3rd-party libraries, but shouldn't write anything like that ourselves. Such tricks definitely don't make the code clearer and readable.
+很有意思，不是吗？我们应该理解它是如何运行的，因为有时候我们会在很多第三方的库见到这种写法，但我们不应该这样写。这些小技巧并不会让代码变得清晰可读。（注：这样的写法会降低代码可读性）
 ````
 
-## Remainder %
+## 取余 %
 
-The remainder operator `%` despite it's look does not have a relation to percents.
+取余运算符`%`看起来像百分号，但是它和百分号并没有关系
 
-The result of `a % b` is the remainder of the integer division of `a` by `b`.
+`a % b` 的结果等于`a`除以`b`所得余数。
 
-For instance:
+例如：
 
 ```js run
 alert( 5 % 2 ); // 1 is a remainder of 5 divided by 2
@@ -225,13 +224,12 @@ alert( 8 % 3 ); // 2 is a remainder of 8 divided by 3
 alert( 6 % 3 ); // 0 is a remainder of 6 divided by 3
 ```
 
-## Exponentiation **
+求幂运算符`**`是最近才添加到语言中的。
+## 求幂 **
 
-The exponentiation operator `**` is a recent addition to the language.
+对于自然数`b`,`a ** b`的结果等于`a`与自身相乘`b`次。
 
-For a natural number `b`, the result of `a ** b` is `a` multiplied by itself `b` times.
-
-For instance:
+例如:
 
 ```js run
 alert( 2 ** 2 ); // 4  (2 * 2)
@@ -239,52 +237,53 @@ alert( 2 ** 3 ); // 8  (2 * 2 * 2)
 alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2)
 ```
 
-The operator works for non-integer numbers of `a` and `b` as well, for instance:
+`a`和`b`不是整数运算符也能正常运算，例如：
 
 ```js run
 alert( 4 ** (1/2) ); // 2 (power of 1/2 is the same as a square root, that's maths)
 alert( 8 ** (1/3) ); // 2 (power of 1/3 is the same as a cubic root)
 ```
 
-## Increment/decrement
+## 自增/自减
 
 <!-- Can't use -- in title, because built-in parse turns it into – -->
 
-Increasing or decreasing a number by one is among the most common numerical operations.
+加一和减一几乎是最经常进行数字操作
 
-So, there are special operators for that:
+因此有一些运算符可以专门做这样的事情：
 
-- **Increment** `++` increases a variable by 1:
+- **自增** `++` 变量自增1:
 
     ```js run no-beautify
     let counter = 2;
-    counter++;      // works same as counter = counter + 1, but shorter
+    counter++;      // 作用与counter = counter + 1相同, 但更简洁
     alert( counter ); // 3
     ```
-- **Decrement** `--` decreases a variable by 1:
+- **自减** `--` 变量自减1:
 
     ```js run no-beautify
     let counter = 2;
-    counter--;      // works same as counter = counter - 1, but shorter
+    counter--;      // 作用与counter = counter - 1相同, 但更简洁
     alert( counter ); // 1
     ```
 
 ```warn
-Increment/decrement can be applied only to a variable. An attempt to use it on a value like `5++` will give an error.
+自增/自减只能作用于一个变量，像这样`5++`直接作用在值上会抛出错误。
 ```
 
-Operators `++` and `--` can be placed both after and before the variable.
+`++`和`--`可以放在变量前或变量后
 
-- When the operator goes after the variable, it is called a "postfix form": `counter++`.
-- The "prefix form" is when the operator stands before the variable: `++counter`.
+- 当运算符放在变量后，称为后置形式，如：`counter++`。
 
-Both of these records do the same: increase `i` by `1`.
+- 当运算符放在变量前，称为前置形式，如：`++counter`。
 
-Is there any difference? Yes, but we can only see it if we use the retured value of `++/--`.
+示例的两种形式都只做了一件事：使变量`counter`增加一。
 
-Let's clarify. As we know, all operators return a value. Increment/decrement is not an exception here. The prefix form returns the new value, while the postfix form returns the old value (prior to increment/decrement).
+那么这两种形式之间有什么不一样吗？有的，但我们只有用到`++/--`的返回值时才能看到它们的不同之处。
 
-To see the difference -- here's the example:
+如我们所知，所有的运算符都会返回一个值。自增/自减运算符也不例外吗，前置形式返回运算后的值，后置形式运算前的值
+
+来看看这个例子：
 
 ```js run
 let counter = 1;
@@ -293,9 +292,9 @@ let a = ++counter; // (*)
 alert(a); // *!*2*/!*
 ```
 
-Here in the line `(*)` the prefix call `++counter` increments `i` and returns the new value that is `2`. So the `alert` shows `2`.
+带`(*)`处前置调用`++counter`，使变量`counter`自增并返回变量自增后的值（2），因此`alert`结果为2
 
-Now let's use the postfix form:
+现在来看看后置形式：
 
 ```js run
 let counter = 1;
@@ -304,53 +303,51 @@ let a = counter++; // (*) changed ++counter to counter++
 alert(a); // *!*1*/!*
 ```
 
-In the line `(*)` the *postfix* form `counter++` also increments `i`, but returns the *old* value (prior to increment). So the `alert` shows `1`.
+带`(*)`处后置调用`counter++`，同样的使`counter`自增，但是却返回了自增前的值（1），因此`alter`结果为1
 
-To summarize:
+总结:
 
-- If the result of increment/decrement is not used, then there is no difference which form to use:
-
+- 如果不使用自增/自减的运算结果，那么两种形式并没有什么不同：
     ```js run
     let counter = 0;
     counter++;
     ++counter;
     alert( counter ); // 2, the lines above did the same
     ```
-- If we'd like to increase the value *and* use the result of the operator right now, then we need the prefix form:
-
+- 如果我们要自增/自减一个值*同时*马上使用运算后的值，那么我们应该使用前置形式：
     ```js run
     let counter = 0;
     alert( ++counter ); // 1
     ```
 - If we'd like to increment, but use the previous value, then we need the postfix form:
-
+- 如果我们要自增/自减一个值但需要用到运算前的值，那么我们应该使用后置形式：
     ```js run
     let counter = 0;
     alert( counter++ ); // 0
     ```
 
 ````smart header="Increment/decrement among other operators"
-Operators `++/--` can be used inside an expression as well. Their precedence is higher than most other arithmetical operations.
+`++/--`可以在表达式中使用，它们的优先级几乎大于所有算术运算符。
 
-For instance:
+例如:
 
 ```js run
 let counter = 1;
 alert( 2 * ++counter ); // 4
 ```
 
-Compare with:
+对比:
 
 ```js run
 let counter = 1;
 alert( 2 * counter++ ); // 2, because counter++ returns the "old" value
 ```
 
-Though technically allowable, such notation usually makes the code less readable. One line does multiple things -- not good.
+这些写法在技术上来说是允许的，但这样会使代码的可读性变差，一行代码做多件事并不好。
 
-While reading the code, a fast "vertical" eye-scan can easily miss such `counter++`, and it won't be obvious that the variable increases.
+当我们在阅读代码时，快速的扫视很容易错过像`counter++`这的操作，同时这也让增加一个变量的操作难以被发现。
 
-The "one line -- one action" style is advised:
+因此推荐一行代码只做一件事的风格：
 
 ```js run
 let counter = 1;
@@ -359,25 +356,28 @@ counter++;
 ```
 ````
 
-## Bitwise operators
+## 位运算符
 
-Bitwise operators treat arguments as 32-bit integer numbers and work on the level of their binary representation.
 
-These operators are not JavaScript-specific. They are supported in most programming languages.
+位运算符将参数视为32位的整数并在其二进制表示上进行运算。
 
-The list of operators:
+这些运算符不是JavaScript独有的，所有的编程语言都支持这些运算符。
 
-- AND ( `&` )
-- OR ( `|` )
-- XOR ( `^` )
-- NOT ( `~` )
-- LEFT SHIFT ( `<<` )
-- RIGHT SHIFT ( `>>` )
-- ZERO-FILL RIGHT SHIFT ( `>>>` )
+下面列出了这些运算符：
 
-These operators are used very rarely. To understand them, we should delve into low-level number representation, and it would not be optimal to do that right now. Especially because we won't need them any time soon. If you're curious, you can read the [Bitwise Operators](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators) article in MDN. It would be more practical to do that when a real need arises.
+- 按位与 ( `&` )
+- 按位或 ( `|` )
+- 按位异或 ( `^` )
+- 按位非 ( `~` )
+- 按位左移 ( `<<` )
+- 按位右移 ( `>>` )
+- 无符号右移 ( `>>>` )
 
-## Modify-in-place
+这些运算符很少用到。为了理解它们，我们要需要深入到数字的底层表示，但现在不是做这些的好时候，因为我们不会马上需要用到它们，
+如果你很好奇，可以在MDN上阅读这篇文章[Bitwise Operators](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators)。
+当你真的需要用到它们时候再深入研究它们，这样会更好。
+
+## 就地修改
 
 We often need to apply an operator to a variable and store the new result in it.
 
@@ -411,7 +411,7 @@ n *= 3 + 5;
 alert( n ); // 16  (right part evaluated first, same as n *= 8)
 ```
 
-## Comma
+## 逗号
 
 The comma operator `','` is one of most rare and unusual operators. Sometimes it's used to write shorter code, so we need to know it in order to understand what's going on.
 
