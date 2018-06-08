@@ -228,7 +228,6 @@ alert(num); // 5
 num = 5; // error: num is not defined
 */!*
 ```
-
 ````
 
 ## 常量
