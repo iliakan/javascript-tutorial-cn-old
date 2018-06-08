@@ -30,7 +30,7 @@
     
     形式上，这里我们讨论的是两个不同的运算符(虽然它们符号相同)：一元减法(只有一个操作数，反转它的符号)和二元运算符减号(两个操作数，作减法)。
 
-## 使用二元运算符`+`连接字符串
+## 使用二元加号`+`连接字符串
 
 现在让我们来看看JavaScript运算符的特别功能，和学校所学的不太一样。
 
@@ -60,7 +60,7 @@ alert( 2 + '1' ); // "21"
 alert(2 + 2 + '1'); //"41" and not "221"
 ```
 
-字符串的连接和转换是二元运算符`+`的特别功能。其他算术运算符只会对数字起作用。它们总会把操作数转化为数字。
+字符串的连接和转换是二元加号`+`的特别功能。其他算术运算符只会对数字起作用。它们总会把操作数转化为数字。
 
 例如减法和除法：
 
@@ -69,9 +69,9 @@ alert( 2 - '1' ); // 1
 alert( '6' / '2' ); // 3
 ```
 
-##使用一元运算符`+`进行数字转换
+##使用一元加号`+`进行数字转换
 
-加号`+`存在两种形态，上面我们使用的二元形态和下面的一元形态
+加号`+`存在两种形态，上面我们使用的二元形态和下面的一元形态。
 
 一元形态的加号，或者说是加号运算符`+`应用于一个操作数的时候，不会对这个操作数做任何操作，但如果这个操作数不是一个数字，那么就会把它转换为数字。
 
@@ -160,7 +160,7 @@ alert( +apples + +oranges ); // 5
 
 赋值`=`也是一个运算符，根据上面的优先度表所示，它的优先度是3。
 
-这就是为什么当我们对一个变量进行赋值操作时，例如`x = 2 * 2 + 1`，会先进行计算，再进行赋值，把结果储存到`x`中
+这就是为什么当我们对一个变量进行赋值操作时，例如`x = 2 * 2 + 1`，会先进行计算，再进行赋值，把结果储存到变量中：
 
 ```js
 let x = 2 * 2 + 1;
@@ -212,7 +212,7 @@ alert( c ); // 0
 
 ## 取余 %
 
-取余运算符`%`看起来像百分号，但是它和百分号并没有关系
+取余运算符`%`看起来像百分号，但是它和百分号并没有关系。
 
 `a % b` 的结果等于`a`除以`b`所得余数。
 
@@ -224,8 +224,9 @@ alert( 8 % 3 ); // 2 is a remainder of 8 divided by 3
 alert( 6 % 3 ); // 0 is a remainder of 6 divided by 3
 ```
 
-求幂运算符`**`是最近才添加到语言中的。
 ## 求幂 **
+
+求幂运算符`**`是最近才添加到语言中的。
 
 对于自然数`b`,`a ** b`的结果等于`a`与自身相乘`b`次。
 
@@ -237,7 +238,7 @@ alert( 2 ** 3 ); // 8  (2 * 2 * 2)
 alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2)
 ```
 
-`a`和`b`不是整数运算符也能正常运算，例如：
+`a`和`b`不是整数，运算符也能正常运算，例如：
 
 ```js run
 alert( 4 ** (1/2) ); // 2 (power of 1/2 is the same as a square root, that's maths)
@@ -248,7 +249,7 @@ alert( 8 ** (1/3) ); // 2 (power of 1/3 is the same as a cubic root)
 
 <!-- Can't use -- in title, because built-in parse turns it into – -->
 
-加一和减一几乎是最经常进行数字操作
+加一和减一几乎是最经常进行数字操作。
 
 因此有一些运算符可以专门做这样的事情：
 
@@ -281,7 +282,7 @@ alert( 8 ** (1/3) ); // 2 (power of 1/3 is the same as a cubic root)
 
 那么这两种形式之间有什么不一样吗？有的，但我们只有用到`++/--`的返回值时才能看到它们的不同之处。
 
-如我们所知，所有的运算符都会返回一个值。自增/自减运算符也不例外吗，前置形式返回运算后的值，后置形式运算前的值
+如我们所知，所有的运算符都会返回一个值。自增/自减运算符也不例外，前置形式返回运算后的值，后置形式运算前的值
 
 来看看这个例子：
 
@@ -345,7 +346,7 @@ alert( 2 * counter++ ); // 2, because counter++ returns the "old" value
 
 这些写法在技术上来说是允许的，但这样会使代码的可读性变差，一行代码做多件事并不好。
 
-当我们在阅读代码时，快速的扫视很容易错过像`counter++`这的操作，同时这也让增加一个变量的操作难以被发现。
+当我们在阅读代码时，快速的扫视很容易错过像`counter++`这样的操作，同时这也让增加一个变量的操作难以被发现。
 
 因此推荐一行代码只做一件事的风格：
 
@@ -379,9 +380,9 @@ counter++;
 
 ## 就地修改
 
-We often need to apply an operator to a variable and store the new result in it.
+我们经常需要对一个变量进行运算，然后把运算后得到的新结果储存到这个变量里。
 
-For example:
+例如:
 
 ```js
 let n = 2;
@@ -389,7 +390,7 @@ n = n + 5;
 n = n * 2;
 ```
 
-This notation can be shortened using operators `+=` and `*=`:
+这些写法可以通过使用`+=`和`*=`这些运算符进行简化：
 
 ```js run
 let n = 2;
@@ -399,9 +400,9 @@ n *= 2; // now n=14 (same as n = n * 2)
 alert( n ); // 14
 ```
 
-Short "modify-and-assign" operators exist for all arithmetical and bitwise operators: `/=`, `-=` etc.
+所有的算术运算符和位运算符都有这些简洁的"就地修改"形式：如`/=`, `-=`。
 
-Such operators have the same precedence as a normal assignment, so they run after most other calculations:
+这些运算符和赋值运算符有着相同的优先度，因此它们会在所有的计算完成后执行：
 
 ```js run
 let n = 2;
@@ -413,11 +414,11 @@ alert( n ); // 16  (right part evaluated first, same as n *= 8)
 
 ## 逗号
 
-The comma operator `','` is one of most rare and unusual operators. Sometimes it's used to write shorter code, so we need to know it in order to understand what's going on.
+逗号运算符`,`是最不寻常的运算符。有时候它被用来书写更简短的代码，因此我们需要理解它是如何运行的。
 
-The comma operator allows to evaluate several expressions, dividing them with a comma `','`. Each of them is evaluated, but result of only the last one is returned.
+逗号运算符允许我们执行几个表达式，并用逗号隔开它们。每一个表达式都会被执行，但只有最后一个会返回结果。
 
-For example:
+例如：
 
 ```js run
 *!*
@@ -427,19 +428,20 @@ a = (1+2, 3+4);
 alert( a ); // 7 (the result of 3+4)
 ```
 
-Here, the first expression `1+2` is evaluated, and it's result is thrown away, then `3+4` is evaluated and returned as the result.
 
-```smart header="Comma has a very low precedence"
-Please note that the comma operator has very low precedence, lower than `=`, so parentheses are important in the example above.
+在这里，第一个表达式`1+2`执行了，但它的结果被丢弃，然后执行`3+4`并返回结果。
 
-Without them: `a=1+2,3+4` evaluates `+` first, summing the numbers into `a=3,7`, then the assignment operator `=` assigns `a=3`, and then the number after the comma `7` is not processed anyhow, so it's ignored.
+```smart header="逗号的优先度非常低"
+逗号运算符的优先度非常低，低过`=`，因此例子中的圆括号是必须的。
+
+如果没有圆括号：`a=1+2,3+4`会先执行加法`+`，把数字加起来，表达式变成`a=3,7`,然后执行赋值操作`a=3`，最后逗号后的数字`7`没有任何操作，因此被忽略掉。
 ```
 
-Why do we need such an operator which throws away everything except the last part?
+为什么我们需要这样一个丢弃所有东西，只会返回最后一个结果的操作符呢？
 
-Sometimes people use it in more complex constructs to put several actions in one line.
+有的时候可以在一些复杂的结构里使用它，把几个操作合在一行
 
-For example:
+例如：
 
 ```js
 // three operations in one line
@@ -448,4 +450,4 @@ for (*!*a = 1, b = 3, c = a * b*/!*; a < 10; a++) {
 }
 ```
 
-Such tricks are used in many JavaScript frameworks, that's why we mention about them. But usually they don't improve the code readability, so we should think well before writing like that.
+这样的小技巧在许多JavaScript的框架中都有用到，这也是为什么我们要提及它。但是这些小技巧并不会提高代码的可读性，因此我们在使用它们之前要好好想清楚。
