@@ -1,18 +1,18 @@
-importance: 4
+重要度: 4
 
 ---
 
-# Calculate factorial
+# 计算斐波拉契数
 
-The [factorial](https://en.wikipedia.org/wiki/Factorial) of a natural number is a number multiplied by `"number minus one"`, then by `"number minus two"`, and so on till `1`. The factorial of `n` is denoted as `n!`
+自然数的阶乘[factorial](https://en.wikipedia.org/wiki/Factorial) 是一个数乘以该数减一，然后再乘以该数减二，一直到1为止。`n`的阶乘表示为：`n!`
 
-We can write a definition of factorial like this:
+我们可以这样定义阶乘：:
 
 ```js
 n! = n * (n - 1) * (n - 2) * ...*1
 ```
 
-Values of factorials for different `n`:
+不同自然数阶乘的结果 `n`:
 
 ```js
 1! = 1
@@ -22,10 +22,10 @@ Values of factorials for different `n`:
 5! = 5 * 4 * 3 * 2 * 1 = 120
 ```
 
-The task is to write a function `factorial(n)` that calculates `n!` using recursive calls.
+这个任务是使用递归的方法编写一个函数 `factorial(n)` 来计算 `n!` .
 
 ```js
 alert( factorial(5) ); // 120
 ```
 
-P.S. Hint: `n!` can be written as `n * (n-1)!` For instance: `3! = 3*2! = 3*2*1! = 6`
+附注，提示: `n!` 可被写作 `n * (n-1)!` ，例如: `3! = 3*2! = 3*2*1! = 6`

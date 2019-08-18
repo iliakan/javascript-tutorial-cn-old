@@ -1,18 +1,18 @@
-importance: 5
+重要度: 5
 
 ---
 
 # Fibonacci numbers
 
-The sequence of [Fibonacci numbers](https://en.wikipedia.org/wiki/Fibonacci_number) has the formula <code>F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n-2</sub></code>. In other words, the next number is a sum of the two preceding ones.
+满足公式 <code>F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n-2</sub></code> 的数列被称为： [Fibonacci numbers](https://en.wikipedia.org/wiki/Fibonacci_number) ， 也即：下一个数是前两个数的和。
 
-First two numbers are `1`, then `2(1+1)`, then `3(1+2)`, `5(2+3)` and so on: `1, 1, 2, 3, 5, 8, 13, 21...`.
+最前的两个数都是 `1`, 接着是 `2(1+1)`, 然后是 `3(1+2)`, `5(2+3)` ，以此类推，后续的数字为: `1, 1, 2, 3, 5, 8, 13, 21...`.
 
-Fibonacci numbers are related to the [Golden ratio](https://en.wikipedia.org/wiki/Golden_ratio) and many natural phenomena around us.
+斐波拉契数列与黄金分割 [Golden ratio](https://en.wikipedia.org/wiki/Golden_ratio) 以及很多身边的自然现象有关。
 
-Write a function `fib(n)` that returns the `n-th` Fibonacci number.
+请编写一个返回第n `n-th` 个斐波拉契数字的函数 `fib(n)` 。
 
-An example of work:
+示例:
 
 ```js
 function fib(n) { /* your code */ }
@@ -22,4 +22,4 @@ alert(fib(7)); // 13
 alert(fib(77)); // 5527939700884757
 ```
 
-P.S. The function should be fast. The call to `fib(77)` should take no more than a fraction of a second.
+附注： 这个函数运行起来应该足够快，调用 `fib(77)` 所需的时间应该不超过一秒钟。

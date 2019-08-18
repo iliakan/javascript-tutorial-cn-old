@@ -1,4 +1,4 @@
-The solution using a loop:
+使用循环的解法:
 
 ```js run
 function sumTo(n) {
@@ -12,7 +12,7 @@ function sumTo(n) {
 alert( sumTo(100) );
 ```
 
-The solution using recursion:
+使用递归的解法:
 
 ```js run
 function sumTo(n) {
@@ -23,7 +23,7 @@ function sumTo(n) {
 alert( sumTo(100) );
 ```
 
-The solution using the formula: `sumTo(n) = n*(n+1)/2`:
+使用右边公式的解法: `sumTo(n) = n*(n+1)/2`:
 
 ```js run
 function sumTo(n) {
@@ -33,8 +33,8 @@ function sumTo(n) {
 alert( sumTo(100) );
 ```
 
-P.S. Naturally, the formula is the fastest solution. It uses only 3 operations for any number `n`. The math helps!
+附注：使用公式的解法显然是最快的，针对任何数字，它都只需要三个运算；关键时刻还是数学有用啊！
 
-The loop variant is the second in terms of speed. In both the recursive and the loop variant we sum the same numbers. But the recursion involves nested calls and execution stack management. That also takes resources, so it's slower.
+以速度论，使用循环变量的方法第二快。无论是使用递归方法还是使用循环的方法，我们都要累加相同的数字，但递归方法需要嵌套调用并需要在执行中管理堆栈，这些都需要额外的资源，因此慢些。
 
-P.P.S. The standard describes a "tail call" optimization: if the recursive call is the very last one in the function (like in `sumTo` above), then the outer function will not need to resume the execution and we don't need to remember its execution context. In that case `sumTo(100000)` is countable. But if your JavaScript engine does not support it, there will be an error: maximum stack size exceeded, because there's usually a limitation on the total stack size.
+又注：标准中关于“尾部调用”优化的描述是如果递归调用发生在函数的最后（如同上面的`sumTo`），那么外部调用函数就不用记忆执行的上下文背景，因为在调用返回后没有需要继续执行的代码。在这种情况下，即便是`sumTo(100000)`也不是什么问题。但如果你的JavaScript引擎不支持这样的优化，那么因为通常的引擎对堆栈的总数有限制，你会遇到“超过最大堆栈尺寸”的错误。
