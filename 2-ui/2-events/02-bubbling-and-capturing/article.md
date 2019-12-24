@@ -1,8 +1,8 @@
-# Bubbling and capturing
+# 事件冒泡（bubbling）和事件捕获（capturing）
 
-Let's start with an example.
+让我们先看一个例子。
 
-This handler is assigned to `<div>`, but also runs if you click any nested tag like `<em>` or `<code>`:
+下面的事件处理器被绑定到 `<div>` 元素，但是如果你点击任何嵌套的标签，如 `<em>` 或者是 `<code>`，依然会执行事件：
 
 ```html autorun height=60
 <div onclick="alert('The handler !')">
@@ -10,15 +10,15 @@ This handler is assigned to `<div>`, but also runs if you click any nested tag l
 </div>
 ```
 
-Isn't it a bit strange? Why the handler on `<div>` runs if the actual click was on `<em>`?
+这是不是有点奇怪？为什么实际上我们点击的是 `<em>`，然而绑定在 `<div>` 上事件被执行了呢？
 
-## Bubbling
+## 事件冒泡（Bubbling）
 
-The bubbling principle is simple.
+事件冒泡的原理其实很简单。
 
-**When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.**
+**当在某个元素上发生事件时，首先执行绑定在该元素上的事件处理器，然后执行其父节点上的，然后以此类推，执行其他祖先节点上的事件处理器。**
 
-Let's say, we have 3 nested elements `FORM > DIV > P` with a handler on each of them:
+假设我们有3个嵌套元素 `FORM > DIV > P`，每个元素都有一个处理函数：
 
 ```html run autorun
 <style>
@@ -35,57 +35,57 @@ Let's say, we have 3 nested elements `FORM > DIV > P` with a handler on each of 
 </form>
 ```
 
-A click on the inner `<p>` first runs `onclick`:
-1. On that `<p>`.
-2. Then on the outer `<div>`.
-3. Then on the outer `<form>`.
-4. And so on upwards till the `document` object.
+点击内部的 `<p>` 标签，执行 `onclick` 事件的顺序如下：
+1. 执行在 `<p>` 元素上的事件。
+2. 然后在外面的 `<div>` 元素上的事件。
+3. 然后在外层的 `<form>` 元素上的事件。
+4. 以此类推，直到 `document` 对象。
 
 ![](event-order-bubbling.png)
 
-So if we click on `<p>`, then we'll see 3 alerts: `p` -> `div` -> `form`.
+所以如果我们点击 `<p>` 标签，那么我们会看到3个弹出框：`p` -> `div` -> `form`。
 
-The process is called "bubbling", because events "bubble" from the inner element up through parents like a bubble in the water.
+这个过程被称为“冒泡”，因为事件像“气泡”在水中浮起一样，从内部元素自下而上传递。
 
-```warn header="*Almost* all events bubble."
-The key word in this phrase is "almost".
+```warn header="*几乎* 所有的事件都是冒泡的"
+注意这里用的是“几乎”。
 
-For instance, a `focus` event does not bubble. There are other examples too, we'll meet them. But still it's an exception, rather then a rule, most events do bubble.
+例如，`focus` 事件不会冒泡。还有一些其他的例子，之后我们将会看到。但这些是例外情况，并不是通用的，大多数事件还是冒泡事件。
 ```
 
 ## event.target
 
-A handler on a parent element can always get the details about where it actually happened.
+父元素上的事件处理器，总是可以获取事件实际发生位置的详细信息。
 
-**The most deeply nested element that caused the event is called a *target* element, accessible as `event.target`.**
+**最深层的嵌套元素，即产生事件的元素被称为*target*元素，可以用 `event.target` 来访问。**
 
-Note the differences from `this` (=`event.currentTarget`):
+注意与 `this` 的区别（this=`event.currentTarget`）：
 
-- `event.target` -- is the "target" element that initiated the event, it doesn't change through the bubbling process.
-- `this` -- is the "current" element, the one that has a currently running handler on it.
+- `event.target` - 是最开始产生事件的“目标” 元素，它不会在冒泡过程而改变。
+- `this` - 是“当前”元素，它取决于当前正在执行的事件处理器。
 
-For instance, if we have a single handler `form.onclick`, then it can "catch" all clicks inside the form. No matter where the click happened, it bubbles up to `<form>` and runs the handler.
+例如，如果我们有一个单独的事件处理器 `form.onclick`，那么它可以“捕获”表单中的所有点击事件。无论点击了哪里，当事件冒泡到 `<form>` 元素时，就会执行事件处理器。
 
-In `form.onclick` handler:
+在 `form.onclick` 事件处理器中：
 
-- `this` (`=event.currentTarget`) is the `<form>` element, because the handler runs on it.
-- `event.target` is the concrete element inside the form that actually was clicked.
+- `this` (`=event.currentTarget`) 是 `<form>` 元素，事件处理器绑定在该元素上。
+- `event.target` 是表单中实际被点击的的元素。
 
-Check it out:
+具体例子如下：
 
 [codetabs height=220 src="bubble-target"]
 
-It's possible that `event.target` equals `this` -- when the click is made directly on the `<form>` element.
+`event.target` 有可能和 `this` 是一样的 -- 当点击直接发生在表单元素上的时候（译者注：比如点击了表单余白部分）.
 
-## Stopping bubbling
+## 停止冒泡
 
-A bubbling event goes from the target element straight up. Normally it goes upwards till `<html>`, and then to `document` object, and some events even reach `window`, calling all handlers on the path.
+冒泡事件会从目标元素开始，向上移动。 通常事件会向上移动到 `<html>`，然后到 `document` 对象，一些事件甚至可以到达 `window`，在事件向上移动时，会调用路径上的所有的事件处理器。
 
-But any handler may decide that the event has been fully processed and stop the bubbling.
+但注意，任何的事件处理器，都可以完成事件处理，并停止事件冒泡。
 
-The method for it is `event.stopPropagation()`.
+这个方法是 `event.stopPropagation()`。
 
-For instance, here `body.onclick` doesn't work if you click on `<button>`:
+比如下面的例子，如果点击 `<button>` 按钮，`body.onclick` 并不会执行：
 
 ```html run autorun height=60
 <body onclick="alert(`the bubbling doesn't reach here`)">
@@ -94,60 +94,60 @@ For instance, here `body.onclick` doesn't work if you click on `<button>`:
 ```
 
 ```smart header="event.stopImmediatePropagation()"
-If an element has multiple event handlers on a single event, then even if one of them stops the bubbling, the other ones still execute.
+如果一个元素对于某个事件，绑定了多个事件处理器，那么即使在其中一个处理器中停止冒泡，其他的事件处理器仍然会执行。
 
-In other words, `event.stopPropagation()` stops the move upwards, but on the current element all other handlers will run.
+换句话说，`event.stopPropagation()` 停止事件向上移动，但在当前元素上，所有的事件处理器都会执行。
 
-To stop the bubbling and prevent handlers on the current element from running, there's a method `event.stopImmediatePropagation()`. After it no other handlers execute.
+要停止冒泡并停止执行当前元素的其他事件处理器，有一个方法 `event.stopImmediatePropagation()`。调用这个函数后，其他的事件处理器就不会执行。
 ```
 
-```warn header="Don't stop bubbling without a need!"
-Bubbling is convenient. Don't stop it without a real need: obvious and architecturally well-thought.
+```warn header="如果没有充分的必要，不要停止事件冒泡"
+事件冒泡是很自然的。如果没有真正的需求，不要停止它：事件冒泡是显而易见的，架构时请慎重考虑。
 
-Sometimes `event.stopPropagation()` creates hidden pitfalls that later may become problems.
+有时候 `event.stopPropagation()` 会产生隐患，之后可能会带来问题。
 
-For instance:
+例如：
 
-1. We create a nested menu. Each submenu handles clicks on its elements and calls `stopPropagation` so that outer parts don't trigger.
-2. Later we decide to catch clicks inside the whole window, to track users' behavior (where people click). Some counters do that. Usually a counter code does that by `document.addEventListener('click'…)`.
-3. Our counter won't work over the area where clicks are stopped by `stopPropagation`. We've got a "dead zone".
+1. 我们来创建一个嵌套式菜单。每个子菜单处理点击事件时，调用 `stopPropagation`，这样外部元素的事件就不会被触发。
+2. 之后我们决定捕捉整个窗口内的点击，并跟踪用户的行为（用户点击的地方）。一些计数程序会这样做。通常，计数器的代码会通过 `document.addEventListener('click'…)` 来实现。
+3. 我们的计数器无法正常在 `stopPropagation` 之后执行，即停止点击的区域。这里就是所谓的“代码死区”。
 
-There's usually no real need to prevent the bubbling. One of them is to use custom events, we'll cover them later. Also we can write our data into the `event` object in one handler and read it in another one, so we can pass to handlers on parents information about the processing below.
+通常来说，没有必要停止冒泡。其实可以使用自定义事件，我们稍后会介绍。此外，我们可以将数据写入处理器中的 `event` 对象，并在另外一个处理器中读取这个对象，这样我们就可以把子节点的信息传递给父节点的处理器了。
 ```
 
 
-## Capturing
+## 事件捕获（Capturing）
 
-There's another phase of event processing called "capturing". It is rarely used in real code, but sometimes can be useful.
+还有另一个事件处理的阶段，该阶段被称为“事件捕获”。在实际代码中很少使用它，但有时它却很有用。
 
-The standard [DOM Events](http://www.w3.org/TR/DOM-Level-3-Events/) describes 3 phases of event propagation:
+标准 [DOM 事件](http://www.w3.org/TR/DOM-Level-3-Events/) 有3个阶段的事件传播：
 
-1. Capturing phase -- the event goes down to the element.
-2. Target phase -- the event reached the target element.
-3. Bubbling phase -- the event bubbles up from the element.
+1. 捕获阶段 - 事件从上至下传播到目标元素。
+2. 目标阶段 - 事件抵达目标元素。
+3. 冒泡阶段 - 事件从目标元素开始向上冒泡。
 
-Here's the picture of a click on `<td>` inside a table, taken from the specification:
+下面的示例图是当点击表格中的 `<td>` 元素时的不同阶段，该图片来自 W3 官方文档：
 
 ![](eventflow.png)
 
-That is: for a click on `<td>` the event first goes through the ancestors chain down to the element (capturing), then it reaches the target, and then it goes up (bubbles), calling handlers on its way.
+说明：对于 `<td>` 元素的点击，事件首先从根节点（window 对象）沿着树的路径抵达目标元素（事件捕获），然后开始向上回溯到根结点（事件冒泡），并在回溯的路径上调用事件处理器。
 
-**Before we only talked about bubbling, because the capturing phase is rarely used. Normally it is invisible to us.**
+**由于捕获阶段的事件很少使用，之前我们所谈到的事件都是冒泡阶段的事件。通常我们不会注意捕获阶段的事件。**
 
-Handlers added using `on<event>`-property or using HTML attributes or using `addEventListener(event, handler)` don't know anything about capturing, they only run on the 2nd and 3rd phases.
+使用 `on<event>`绑定事件，或是使用 HTML 属性，或使用 `addEventListener(event, handler)` 添加的处理程序并不知道事件捕获，它们只在第 2 和第 3 阶段运行。
 
-To catch an event on the capturing phase, we need to set the 3rd argument of `addEventListener` to `true`.
+要截获捕获阶段的事件，我们需要将 `addEventListener` 的第三个参数设置为 `true`。
 
-Actually, there are two possible values for that optional last argument:
+实际上，`addEventListener` 函数的最后一个参数有两个可能的值：
 
-- If it's `false` (default), then the handler is set on the bubbling phase.
-- If it's `true`, then the handler is set on the capturing phase.
+- 如果最后一个参数是 `false`（默认值），那么在事件处理器会在冒泡阶段执行。
+- 如果最后一个参数是 `true`，则事件处理器会在捕获阶段执行。
 
-Note that while formally there are 3 phases, the 2nd phase ("target phase": the event reached the element) is not handled separately: handlers on both capturing and bubbling phases trigger at that phase.
+这里请注意，事件处理实际上是有 3 个阶段，第二阶段（“目标阶段”：当事件到达该元素的时候）不是单独处理的：事件捕获和事件冒泡都会触发目标阶段。
 
-Handlers on the target element trigger last on the capturing state, and then trigger first on the bubbling stage.
+目标元素的事件，在捕获阶段中最后触发，然后首先在冒泡阶段最先触发。
 
-Let's see it in action:
+让我们看一个例子：
 
 ```html run autorun height=140 edit
 <style>
@@ -171,37 +171,37 @@ Let's see it in action:
 </script>
 ```
 
-The code sets click handlers on *every* element in the document to see which ones are working.
+该代码在 HTML 文档中的*每个*元素上都设置了点击事件的处理器，以便于查看哪些处理器是正在执行的。
 
-If you click on `<p>`, then the sequence is:
+如果你点击 `<p>`，那么执行顺序是：
 
-1. `HTML` -> `BODY` -> `FORM` -> `DIV` -> `P` (capturing phase, the first listener), and then:
-2. `P` -> `DIV` -> `FORM` -> `BODY` -> `HTML` (bubbling phase, the second listener).
+1. `HTML` -> `BODY` -> `FORM` -> `DIV` -> `P` (捕获阶段, for 循环中的第一个事件监听), 然后是:
+2. `P` -> `DIV` -> `FORM` -> `BODY` -> `HTML` (冒泡阶段, for 循环中的第二个事件监听).
 
-Please note that `P` shows up two times: at the end of capturing and at the start of bubbling.
+请注意，`P` 显示了两次：分别是在捕获结束时和冒泡开始时。
 
-There's a property `event.eventPhase` that tells us the number of the phase on which the event was caught. But it's rarely used, because we usually know it in the handler.
+还有一个属性 `event.eventPhase`，这个属性表示当前的事件正处于那个阶段。但是这个参数很少使用，因为通常在绑定事件处理器时，我们会预先绑定到相应的阶段。
 
-## Summary
+## 总结
 
-The event handling process:
+事件处理流程：
 
-- When an event happens -- the most nested element where it happens gets labeled as the "target element" (`event.target`).
-- Then the event first moves from the document root down the `event.target`, calling handlers assigned with `addEventListener(...., true)` on the way.
-- Then the event moves from `event.target` up to the root, calling handlers assigned using  `on<event>` and `addEventListener` without the 3rd argument or with the 3rd argument `false`.
+- 当一个事件发生时 - 产生事件的嵌套在最内层的元素被标记为“目标元素”（`event.target`）。
+- 然后事件首先从HTML文档树的根元素开始，向下移动到 `event.target`，在路径上调用 `addEventListener(...., true)` 绑定的事件处理器。
+- 然后事件从 `event.target` 移动到HTML文档树的根元素，调用使用 `on<event>` 和 `addEventListener` 绑定的事件处理器，使用 `addEventListener` 绑定时不传第3个参数或第3个参数要用 `false`。
 
-Each handler can access `event` object properties:
+每个事件处理器都可以访问 `event` 对象的属性：
 
-- `event.target` -- the deepest element that originated the event.
-- `event.currentTarget` (=`this`) -- the current element that handles the event (the one that has the handler on it)
-- `event.eventPhase` -- the current phase (capturing=1, bubbling=3).
+- `event.target` - 触发事件的最内层的元素。
+- `event.currentTarget` (=`this`) - 当前正在处理事件的元素（当前的元素已经绑定某事件处理器）
+- `event.eventPhase` - 当前事件的阶段（capture = 1，bubbling = 3）。
 
-Any event handler can stop the event by calling `event.stopPropagation()`, but that's not recommended, because we can't really be sure we won't need it above, maybe for completely different things.
+任意的事件处理器都可以通过调用 `event.stopPropagation()` 来阻止事件继续，但是不推荐这样做，因为我们不能确定接下去的处理是否需要，可能完全是些不一样的处理。
 
-The capturing phase is used very rarely, usually we handle events on bubbling. And there's a logic behind that.
+捕获阶段的事件很少使用，通常我们处理冒泡阶段的事件。这里面的逻辑是这样的。
 
-In real world, when an accident happens, local authorities react first. They know best the area where it happened. Then higher-level authorities if needed.
+在现实世界中，当事故发生时，地方当局首先作出反应。因为他们最了解事故发生的地区。然后根据需要，再上报高层机关。
 
-The same for event handlers. The code that set the handler on a particular element knows maximum  details about the element and what it does. A handler on a particular `<td>` may be suited for that exactly `<td>`, it knows everything about it, so it should get the chance first. Then its immediate parent also knows about the context, but a little bit less, and so on till the very top element that handles general concepts and runs the last.
+事件处理程序也是一样。绑定在特定元素上的处理器，这个处理器会处理关于该元素的各种细节。绑定在元素 `<td>` 上的处理器应该是最适用于 `<td>` 的，因为该处理器知道该元素的各种信息，所以它应该先执行。然后执行父元素的事件处理器，该处理器处于事件发生的上下文中，只是相对于目标元素少一些信息，以此类推，直到顶层元素，最后进行通用的处理。
 
-Bubbling and capturing lay the foundation for "event delegation" -- an extremely powerful event handling pattern that we study in the next chapter.
+事件冒泡和事件捕获是“事件代理”的基础，"事件代理"是非常强大的事件处理模式，在下一章中，我们会进一步来学习。
